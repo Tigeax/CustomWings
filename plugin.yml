@@ -10,7 +10,7 @@ commands:
 
 
 permissions:
-    customwings.opengui:
+    customwings.command:
         default: op
     customwings.setwing:
         default: op

@@ -1,7 +1,3 @@
-#-------------------------#
-# Main Plugin Settings
-#-------------------------#
-
 #The distance players have to be within to see each others wings
 wingViewDistance: 30
 
@@ -129,7 +125,7 @@ wings:
           speed: 0
           
           #Redstone can have a color value. This is given in an RGB int
-          color: 1
+          color: 0
 
           #Some particles (ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST) require a blockType to work correctly
           blockType: QUARTZ_BLOCK    

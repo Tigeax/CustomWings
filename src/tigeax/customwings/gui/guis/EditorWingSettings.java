@@ -155,6 +155,9 @@ public class EditorWingSettings {
 				cwPlayer.openCWGUI(CWGUIType.EDITOR);
 				break;
 		}
+		
+		if (cwPlayer.getWaitingSetting() == null)
+			return;
 
 		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
 			cwPlayer.getPlayer().sendMessage(messages.getTypeSettingInChat());
