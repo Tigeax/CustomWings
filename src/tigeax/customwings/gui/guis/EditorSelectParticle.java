@@ -34,7 +34,11 @@ public class EditorSelectParticle {
 		int counter = 0;
 		for (ParticleItem particleItem : ParticleItem.values()) {
 
-			if (particleItem.getVersion().equals("1.14") && VERSION.equals("v1_13_R1")) continue;
+			if (particleItem.getVersion().equals("1.14")) {
+				if (!VERSION.equals("v1_14_R1")) {
+					continue;
+				}
+			}
 
 			ItemStack item = CWGUIManager.getItem(particleItem.getMaterial(), "&f" + particleItem.getName());
 

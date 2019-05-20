@@ -126,7 +126,6 @@ public class EditorMainSettings {
 		if (cwPlayer.getWaitingSetting() == null)
 			return;
 
-
 		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
 			cwPlayer.getPlayer().sendMessage(messages.getTypeSettingInChat());
 			return;
