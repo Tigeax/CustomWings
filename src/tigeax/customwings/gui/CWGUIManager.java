@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.InventoryView;
@@ -35,9 +34,7 @@ import tigeax.customwings.main.WingParticle;
  */
 
 public class CWGUIManager {
-
-	private final String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
-
+	
 	private Settings settings;
 
 	private WingSelect wingSelectGUI;
@@ -69,13 +66,20 @@ public class CWGUIManager {
 		this.editorSelectIntegerGUI = new EditorSelectInteger();
 		this.editorSelectDoubleGUI = new EditorSelectDouble();
 
-		switch (VERSION) {
+		switch (CustomWings.getServerVersion()) {
 			case "v1_13_R1":
+				skull = new Skull_1_13();
+				break;
+			case "v1_13_R2":
 				skull = new Skull_1_13();
 				break;
 			case "v1_14_R1":
 				skull = new Skull_1_14();
 				break;
+			default:
+				skull = new Skull_1_14();
+				break;
+				
 		}
 	}
 

@@ -128,14 +128,14 @@ public class CWPlayer {
 			Location currentLocation;
 
 			public void run() {
-
-				if (lastLocation == null) {
-					lastLocation = getPlayer().getLocation();
-					return;
-				}
-
+				
 				currentLocation = getPlayer().getLocation();
 
+				if (lastLocation == null || currentLocation.getWorld() != lastLocation.getWorld()) {
+					lastLocation = currentLocation;
+					return;
+				}
+				
 				// If the player is moving more then 1 blocks per 0.5 second, the player is moving
 				isMoving = lastLocation.distance(currentLocation) > 1 ? true : false; 
 

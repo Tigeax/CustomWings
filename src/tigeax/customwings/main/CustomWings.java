@@ -1,9 +1,10 @@
 package tigeax.customwings.main;
 
 import java.io.File;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -40,9 +41,17 @@ public class CustomWings extends JavaPlugin {
 	private static HashMap<UUID, CWPlayer> cwPlayerList;
 	private static ArrayList<Wing> wings;
 
+	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
+
 	public void onEnable() {
 
 		plugin = this;
+
+		plugin.getLogger().info("Server running on: " + VERSION);
+
+		if (!isServerVersionSupported()) {
+			sendError("Server version is not supported!");
+		}
 
 		loadConfig();
 
@@ -80,10 +89,16 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been disabled");
 	}
 
+	public static String getServerVersion() { return VERSION; }
+
 	public static Settings getSettings() { return settings; }
+
 	public static Messages getMessages() { return messages; }
+
 	public static EditorConfigManager getEditorConfigManager() { return editorConfigManager; }
+
 	public static CWGUIManager getCWGUIManager() { return cwGUIManager; }
+
 	public static ArrayList<Wing> getWings() { return wings; }
 
 	public static void reload() {
@@ -91,7 +106,7 @@ public class CustomWings extends JavaPlugin {
 		messages.reload();
 		setupWings();
 	}
-	
+
 	public static void sendError(Exception e) {
 		sendError(e + "");
 	}
@@ -103,29 +118,40 @@ public class CustomWings extends JavaPlugin {
 
 	public static Wing getWingByID(String ID) {
 		Wing getWing = null;
-		for (Wing wing : getWings()) 
+		for (Wing wing : getWings())
 			if (wing.getID().equals(ID)) getWing = wing;
 		return getWing;
 	}
 
 	public static Wing getWingByGUISlot(int slot) {
 		Wing getWing = null;
-		for (Wing wing : getWings()) 
+		for (Wing wing : getWings())
 			if (wing.getGuiSlot() == slot) getWing = wing;
 		return getWing;
-	}
+	} 
 
 	public static CWPlayer getCWPlayer(Player player) {
 		UUID uuid = player.getUniqueId();
-		
+
 		CWPlayer cwPlayer = cwPlayerList.get(uuid);
-		
+
 		if (cwPlayer == null) {
 			cwPlayer = new CWPlayer(uuid, plugin);
 			cwPlayerList.put(uuid, cwPlayer);
 		}
-		
+
 		return cwPlayer;
+	}
+
+	private boolean isServerVersionSupported() {
+
+		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1");
+
+		if (supportedVersions.contains(VERSION)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	private void loadConfig() {

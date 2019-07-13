@@ -1,6 +1,7 @@
 package tigeax.customwings.gui.guis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
@@ -15,8 +16,6 @@ import tigeax.customwings.main.CustomWings;
 import tigeax.customwings.main.Settings;
 
 public class EditorSelectParticle {
-
-	private final String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
 
 	Settings settings;
 	EditorConfigManager editorConfigManager;
@@ -34,11 +33,8 @@ public class EditorSelectParticle {
 		int counter = 0;
 		for (ParticleItem particleItem : ParticleItem.values()) {
 
-			if (particleItem.getVersion().equals("1.14")) {
-				if (!VERSION.equals("v1_14_R1")) {
-					continue;
-				}
-			}
+			if (particleItem.getVersion().equals("1.14")
+					&& Arrays.asList("v1_13_R1", "v1_13_R2").contains(CustomWings.getServerVersion())) continue;
 
 			ItemStack item = CWGUIManager.getItem(particleItem.getMaterial(), "&f" + particleItem.getName());
 
