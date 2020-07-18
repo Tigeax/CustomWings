@@ -1,7 +1,7 @@
-name: CustomWings
+name: ${pom.name}
 main: tigeax.customwings.main.CustomWings
 author: Tigeax
-version: 3.4
+version: ${pom.version}
 api-version: 1.13
 
 commands:
