@@ -3,7 +3,7 @@ package tigeax.customwings.gui.skullAPI.skullVersions;
 import java.util.UUID;
 
 import tigeax.customwings.gui.CWGUIManager;
-import org.apache.commons.codec.binary.Base64;
+import org.bukkit.craftbukkit.libs.org.apache.commons.codec.binary.Base64;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,7 +12,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 
-import main.java.tigeax.customwings.gui.skullAPI.Reflections;
+import tigeax.customwings.gui.skullAPI.Reflections;
 
 
 public class Skull_1_13 implements CWGUIManager.Skull {
