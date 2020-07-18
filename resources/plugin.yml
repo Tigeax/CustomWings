@@ -1,0 +1,19 @@
+name: CustomWings
+main: main.java.customwings.main.CustomWings
+author: Tigeax
+version: 3.4
+api-version: 1.13
+
+commands:
+  wings:
+    aliases: [w]
+
+permissions:
+    customwings.command:
+        default: op
+    customwings.setwing:
+        default: op
+    customwings.reload:
+        default: op
+    customwings.editor:
+        default: op
