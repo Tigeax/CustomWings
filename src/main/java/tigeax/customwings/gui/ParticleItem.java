@@ -68,12 +68,31 @@ public enum ParticleItem {
 	WATER_DROP("WATER_BUCKET", "Water Drop", "1.13"),
 	WATER_SPLASH("WATER_BUCKET", "Water Splash", "1.13"),
 	WATER_WAKE("WATER_BUCKET", "Water Wake", "1.13"),
-	
+
 	//1.14
-	CAMPFIRE_COSY_SMOKE("CAMPFIRE", "Campfire Cosy Smoke", "1.14"),
-	CAMPFIRE_SIGNAL_SMOKE("CAMPFIRE", "Campfire Signal Smoke", "1.14"),
 	COMPOSTER("WATER_BUCKET", "Composter", "1.14"),
-	SNEEZE("WATER_BUCKET", "Sneeze", "1.14");
+	CAMPFIRE_SIGNAL_SMOKE("CAMPFIRE", "Campfire Signal Smoke", "1.14"),
+	CAMPFIRE_COSY_SMOKE("CAMPFIRE", "Campfire Cosy Smoke", "1.14"),
+	SNEEZE("WATER_BUCKET", "Sneeze", "1.14"),
+
+	//1.15
+	DRIPPING_HONEY("HONEYCOMB", "Dripping Honey", "1.15"),
+	FALLING_HONEY("HONEYCOMB", "Falling Honey", "1.15"),
+	FALLING_NECTAR("HONEYCOMB", "Falling Nectar", "1.15"),
+	LANDING_HONEY("HONEYCOMB", "Landing Honey", "1.15"),
+
+	//1.16
+	ASH("SOUL_SAND", "Ash", "1.16"),
+	CRIMSON_SPORE("CRIMSON_FUNGUS", "Crimson Spore", "1.16"),
+	DRIPPING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Dripping Crying Obsidian", "1.16"),
+	FALLING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Falling Crying Obsidian", "1.16"),
+	FLASH("CRYING_OBSIDIAN", "Flash", "1.16"),
+	LANDING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Landing Crying Obsidian", "1.16"),
+	REVERSE_PORTAL("CRYING_OBSIDIAN", "Reverse Portal", "1.16"),
+	SOUL("SOUL_SOIL", "Soul", "1.16"),
+	SOUL_FIRE_FLAME("SOUL_SOIL", "SoulFire Flame", "1.16"),
+	WARPED_SPORE("WARPED_FUNGUS", "Warped Spore", "1.16"),
+	WHITE_ASH("SOUL_SOIL", "White Ash", "1.16");
 	//formatter:on
 
 	private String material;
