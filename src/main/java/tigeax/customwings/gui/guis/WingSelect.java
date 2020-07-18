@@ -110,7 +110,6 @@ public class WingSelect {
 
 			if (wing != null) {
 				player.sendMessage(CustomWings.getMessages().getWingSelected(wing));
-				return;
 			}
 		}
 	}

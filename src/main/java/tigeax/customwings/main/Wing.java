@@ -58,6 +58,8 @@ public class Wing {
 
 	private ArrayList<WingParticle> wingParticles;
 
+	private int wingPrice;
+
 	// Hasmap containing the coordinates relative to the player
 	// And the assinged particle at that coordinate
 	// double[] functions as double[distance from player, height]
@@ -113,6 +115,13 @@ public class Wing {
 
 		wingParticles = parseWingParticles(getConfigFileWing().getConfigurationSection("particles"));
 		particleCoordinates = parseParticleCoordinates(getConfigFileWing().getConfigurationSection("particleLayout"));
+
+		try {
+			wingPrice = getConfigFileWing().getInt("price");
+		} catch (NullPointerException e) {
+			// If price was not supplied make it not purchaseable
+			wingPrice = -1;
+		}
 
 	}
 
@@ -201,6 +210,10 @@ public class Wing {
 			if (wingParticle.getID().equals(ID)) { return wingParticle; }
 		}
 		return null;
+	}
+
+	public int getWingPrice() {
+		return wingPrice;
 	}
 
 	private ConfigurationSection getConfigFileWing() { return config.getConfigurationSection("wings." + ID); }

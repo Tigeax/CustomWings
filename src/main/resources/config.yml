@@ -42,6 +42,10 @@ wings:
     whitelistedWorlds:
       - "all"
       - "world_nether2"
+
+    #Price to pay to unlock the wings
+    # -1 = cannot buy; 0 = free
+    price: 10
   
     #Item that will show up in the main GUI
     guiItem:
@@ -134,7 +138,10 @@ wings:
     showWhenMoving: false
     whitelistedWorlds:
       - "all"
-  
+
+    price: 10
+
+
     guiItem:
       hideInGUI: false
       
@@ -197,6 +204,8 @@ wings:
     showWhenMoving: false
     whitelistedWorlds:
       - "all"
+
+    price: 10
   
     guiItem:
       hideInGUI: false
@@ -260,6 +269,8 @@ wings:
     showWhenMoving: false
     whitelistedWorlds:
       - "all"
+
+    price: 10
   
     guiItem:
       hideInGUI: false
@@ -341,6 +352,8 @@ wings:
     showWhenMoving: false
     whitelistedWorlds:
       - "all"
+
+    price: 10
   
     guiItem:
       hideInGUI: false
