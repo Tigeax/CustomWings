@@ -19,18 +19,20 @@ import tigeax.customwings.gui.CWGUIType;
 public class Settings {
 
 	private FileConfiguration config;
+	private CustomWings plugin;
 
 	private int wingViewDistance, mainGUISize, removeWingSlot, hideWingsToggleSlot, editorMainSettingsSlot;
 	private String mainGUIName, editorGUIName;
 	private ItemStack removeWingItem, hideWingsToggleONItem, hideWingsToggleOFFItem, editorMainSettingsItem;
 
 	public Settings(CustomWings plugin) {
-		this.config = plugin.getConfig();
+		this.plugin = plugin;
 		load();
 	}
 
 	public void reload() {
 
+		CustomWings.setupConfig();
 		load();
 
 		// Reload players CustomWings GUI's
@@ -52,6 +54,8 @@ public class Settings {
 	}
 
 	public void load() {
+		
+		this.config = plugin.getCWConfig();
 
 		wingViewDistance = config.getInt("wingViewDistance");
 

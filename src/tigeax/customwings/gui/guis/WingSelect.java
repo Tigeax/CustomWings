@@ -106,7 +106,7 @@ public class WingSelect {
 		if (!playerEquipWingEvent.isCancelled()) {
 
 			cwPlayer.setEquippedWing(wing);
-			player.closeInventory();
+			cwPlayer.closeInventory();
 
 			if (wing != null) {
 				player.sendMessage(CustomWings.getMessages().getWingSelected(wing));

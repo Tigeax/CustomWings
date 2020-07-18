@@ -56,12 +56,12 @@ public class EditorMainSettings {
 		switch (itemName) {
 			case "View Distance":
 				cwPlayer.setWaitingSetting(SettingType.VIEWDISTANCE);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Main GUI Name":
 				cwPlayer.setWaitingSetting(SettingType.MAINGUINAME);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Main GUI Size":
@@ -70,12 +70,12 @@ public class EditorMainSettings {
 
 			case "Remove Wing Item name":
 				cwPlayer.setWaitingSetting(SettingType.REMOVEWINGNAME);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Remove Wing Item material":
 				cwPlayer.setWaitingSetting(SettingType.REMOVEWINGMATERIAL);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Remove Wing Item slot":
@@ -85,22 +85,22 @@ public class EditorMainSettings {
 
 			case "Hide Wings Toggle Itemname ON":
 				cwPlayer.setWaitingSetting(SettingType.HIDEWINGTOGGLENAMEON);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Hide Wings Toggle Itemname OFF":
 				cwPlayer.setWaitingSetting(SettingType.HIDEWINGTOGGLENAMEOFF);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Hide Wings Toggle Item material ON":
 				cwPlayer.setWaitingSetting(SettingType.HIDEWINGTOGGLEMATERIALON);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Hide Wings Toggle Item material OFF":
 				cwPlayer.setWaitingSetting(SettingType.HIDEWINGTOGGLEMATERIALOFF);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Hide Wings Toggle Item slot":
@@ -110,7 +110,7 @@ public class EditorMainSettings {
 
 			case "Editor GUI name":
 				cwPlayer.setWaitingSetting(SettingType.EDITORGUINAME);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Editor Main Settings Slot":

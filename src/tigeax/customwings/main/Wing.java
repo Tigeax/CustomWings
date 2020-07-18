@@ -67,7 +67,7 @@ public class Wing {
 		this.plugin = plugin;
 		this.ID = wingID;
 
-		this.config = plugin.getConfig();
+		this.config = plugin.getCWConfig();
 		this.playersWithWingActive = new ArrayList<>();
 		this.wingPreview = new HashMap<>();
 
@@ -75,15 +75,18 @@ public class Wing {
 	}
 
 	public void reload() {
-		if (wingRunnable != null) wingRunnable.cancel();
-
+		if (wingRunnable != null) wingRunnable.cancel(); //Temperatry stop the runnable
+		
+		CustomWings.setupConfig();
 		load();
-
-		if (wingRunnable != null) startWingRunnable();
+		
+		if (wingRunnable != null) startWingRunnable(); //Restart the runnable again with the (possibly new) settings
 	}
 
 	// Get all the wing data from the config and parse them if needed
 	private void load() {
+		
+		this.config = plugin.getCWConfig();
 
 		hideInGUI = Boolean.parseBoolean(getConfigFileWing().getString("guiItem.hideInGUI"));
 
@@ -96,7 +99,7 @@ public class Wing {
 		loreWhenNoPermission = parseLore(getConfigFileWing().getStringList("guiItem.loreWhenNoPermission").toString());
 
 		showWhenMoving = Boolean.parseBoolean(getConfigFileWing().getString("showWhenMoving"));
-		whitelistedWorlds = parseWhitelistedWorlds(plugin.getConfig().getStringList("wings.SoulShadow.whitelistedWorlds").toString());
+		whitelistedWorlds = parseWhitelistedWorlds(getConfigFileWing().getStringList("whitelistedWorlds").toString());
 
 		startVertical = getConfigFileWing().getDouble("wingLayout.startVertical");
 		startHorizontal = getConfigFileWing().getDouble("wingLayout.startHorizontal");

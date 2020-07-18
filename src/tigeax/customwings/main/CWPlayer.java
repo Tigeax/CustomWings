@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -56,6 +57,7 @@ public class CWPlayer {
 	public Wing getEquippedWing() { return equippedWing; }
 
 	public boolean getHideOtherPlayerWings() { return hideOtherPlayerWings; }
+	
 	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) { this.hideOtherPlayerWings = hideOtherPlayerWings; }
 	
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
@@ -146,6 +148,13 @@ public class CWPlayer {
 
 	public void stopMovementChecker() {
 		movementChecker.cancel();
+	}
+	
+	public void closeInventory() {
+		//Open an empty inventory and then close it to make sure they cannot shift click items out of their inventory
+		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
+		this.getPlayer().openInventory(emptyInv);
+		this.getPlayer().closeInventory();
 	}
 
 }
