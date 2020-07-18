@@ -2,6 +2,8 @@ package tigeax.customwings.main;
 
 import java.util.ArrayList;
 
+import org.bukkit.GameMode;
+import org.bukkit.metadata.MetadataValue;
 import tigeax.customwings.gui.ParticleItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -26,7 +28,7 @@ public class WingParticle {
 	private double distance, height, speed;
 	private int angle;
 
-	private Object partileData;
+	private Object particleData;
 	private DustOptions dustOptions;
 	private Material material;
 
@@ -43,18 +45,18 @@ public class WingParticle {
 		this.material = material;
 
 		if (particle == Particle.REDSTONE) {
-			partileData = dustOptions;
+			particleData = dustOptions;
 		}
 
 		if (particle == Particle.BLOCK_CRACK || particle == Particle.BLOCK_DUST || particle == Particle.FALLING_DUST) {
 			try {
-				partileData = material.createBlockData();
+				particleData = material.createBlockData();
 			} catch (Exception e) {
 				CustomWings.sendError(e);
-				partileData = Material.BARRIER.createBlockData();
+				particleData = Material.BARRIER.createBlockData();
 			}
 		} else
-			if (particle == Particle.ITEM_CRACK) partileData = new ItemStack(material);
+			if (particle == Particle.ITEM_CRACK) particleData = new ItemStack(material);
 	}
 
 	public Wing getWing() { return this.wing; }
@@ -85,8 +87,8 @@ public class WingParticle {
 
 		float yaw = loc.getYaw() - 90;
 
-		if (wingSide == "left") yaw = (float) (yaw + angle);
-		if (wingSide == "right") yaw = (float) (yaw - angle);
+		if (wingSide.equals("left")) yaw = (float) (yaw + angle);
+		if (wingSide.equals("right")) yaw = (float) (yaw - angle);
 
 		yaw = (float) (yaw * Math.PI) / 180;
 
@@ -94,9 +96,20 @@ public class WingParticle {
 		double z = Math.sin(yaw) * distance;
 
 		for (Player player : players) {
-			player.spawnParticle(particle, loc, 0, x, height, z, speed, partileData);
-		}
 
+			if (player.getGameMode().equals(GameMode.SPECTATOR) || isVanished(player))
+				return;
+
+			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
+		}
+	}
+
+	//vanish check
+	private boolean isVanished(Player player) {
+		for (MetadataValue meta : player.getMetadata("vanished")) {
+			if (meta.asBoolean()) return true;
+		}
+		return false;
 	}
 
 }

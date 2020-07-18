@@ -3,7 +3,6 @@ main: tigeax.customwings.main.CustomWings
 author: Tigeax
 version: ${pom.version}
 api-version: 1.13
-
 commands:
   wings:
     aliases: [w]
