@@ -74,7 +74,7 @@
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>LATEST</version>
-            <scope>provided</scope>
+            <scope>system</scope>
             <systemPath>${project.basedir}/lib/craftbukkit-1.15.2.jar</systemPath>
         </dependency>
     </dependencies>
