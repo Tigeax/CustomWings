@@ -1,12 +1,12 @@
-package main.java.tigeax.customwings.eventlisteners;
+package tigeax.customwings.eventlisteners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
 
 /*
  * This EventListener Listends for when a player leaves the game

@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.main;
+package tigeax.customwings.main;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import main.java.tigeax.customwings.command.Wings;
-import main.java.tigeax.customwings.editor.EditorConfigManager;
-import main.java.tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.command.Wings;
+import tigeax.customwings.editor.EditorConfigManager;
+import tigeax.customwings.gui.CWGUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,12 +18,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import main.java.tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
-import main.java.tigeax.customwings.eventlisteners.InventoryClickEventListener;
-import main.java.tigeax.customwings.eventlisteners.InventoryCloseEventListener;
-import main.java.tigeax.customwings.eventlisteners.PlayerCommandPreprocessEventListener;
-import main.java.tigeax.customwings.eventlisteners.PlayerJoinEventListener;
-import main.java.tigeax.customwings.eventlisteners.PlayerQuitEventListener;
+import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
+import tigeax.customwings.eventlisteners.InventoryClickEventListener;
+import tigeax.customwings.eventlisteners.InventoryCloseEventListener;
+import tigeax.customwings.eventlisteners.PlayerCommandPreprocessEventListener;
+import tigeax.customwings.eventlisteners.PlayerJoinEventListener;
+import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
 
 /*
  * Main class of the CustomWings plugin

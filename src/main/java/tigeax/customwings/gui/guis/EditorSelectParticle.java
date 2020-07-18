@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.gui.guis;
+package tigeax.customwings.gui.guis;
 
 import java.util.ArrayList;
 import java.util.Arrays;

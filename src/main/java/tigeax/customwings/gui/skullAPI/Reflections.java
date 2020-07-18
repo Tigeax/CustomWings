@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.gui.skullAPI;
+package tigeax.customwings.gui.skullAPI;
 
 import java.lang.reflect.Field;
 

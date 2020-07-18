@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.gui;
+package tigeax.customwings.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,24 +13,24 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import main.java.tigeax.customwings.gui.guis.Editor;
-import main.java.tigeax.customwings.gui.guis.EditorMainSettings;
-import main.java.tigeax.customwings.gui.guis.EditorSelectDouble;
-import main.java.tigeax.customwings.gui.guis.EditorSelectInteger;
-import main.java.tigeax.customwings.gui.guis.EditorSelectMainGUISize;
-import main.java.tigeax.customwings.gui.guis.EditorSelectParticle;
-import main.java.tigeax.customwings.gui.guis.EditorSelectSlot;
-import main.java.tigeax.customwings.gui.guis.EditorWingParticleSettings;
-import main.java.tigeax.customwings.gui.guis.EditorWingParticlesSelect;
-import main.java.tigeax.customwings.gui.guis.EditorWingSettings;
-import main.java.tigeax.customwings.gui.guis.WingSelect;
-import main.java.tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_13;
-import main.java.tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14_and_up;
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
-import main.java.tigeax.customwings.main.Settings;
-import main.java.tigeax.customwings.main.Wing;
-import main.java.tigeax.customwings.main.WingParticle;
+import tigeax.customwings.gui.guis.Editor;
+import tigeax.customwings.gui.guis.EditorMainSettings;
+import tigeax.customwings.gui.guis.EditorSelectDouble;
+import tigeax.customwings.gui.guis.EditorSelectInteger;
+import tigeax.customwings.gui.guis.EditorSelectMainGUISize;
+import tigeax.customwings.gui.guis.EditorSelectParticle;
+import tigeax.customwings.gui.guis.EditorSelectSlot;
+import tigeax.customwings.gui.guis.EditorWingParticleSettings;
+import tigeax.customwings.gui.guis.EditorWingParticlesSelect;
+import tigeax.customwings.gui.guis.EditorWingSettings;
+import tigeax.customwings.gui.guis.WingSelect;
+import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_13;
+import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14_and_up;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.Settings;
+import tigeax.customwings.main.Wing;
+import tigeax.customwings.main.WingParticle;
 
 /*
  * Manager class for all the CustomWings GUI'ss

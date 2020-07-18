@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.gui.guis;
+package tigeax.customwings.gui.guis;
 
 import main.java.tigeax.customwings.editor.EditorConfigManager;
 import main.java.tigeax.customwings.gui.CWGUIManager;

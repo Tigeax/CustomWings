@@ -1,5 +1,5 @@
 name: CustomWings
-main: main.java.customwings.main.CustomWings
+main: tigeax.customwings.main.CustomWings
 author: Tigeax
 version: 3.4
 api-version: 1.13

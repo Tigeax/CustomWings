@@ -1,13 +1,13 @@
-package main.java.tigeax.customwings.editor;
+package tigeax.customwings.editor;
 
 import java.util.Arrays;
 
-import main.java.tigeax.customwings.main.WingParticle;
+import tigeax.customwings.main.WingParticle;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import main.java.tigeax.customwings.main.CustomWings;
-import main.java.tigeax.customwings.main.Wing;
+import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.Wing;
 
 /*
  * This classe is used to change settings in the config.yml

@@ -1,6 +1,6 @@
-package main.java.tigeax.customwings.main;
+package tigeax.customwings.main;
 
-import main.java.tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

@@ -1,15 +1,15 @@
-package main.java.tigeax.customwings.command;
+package tigeax.customwings.command;
 
-import main.java.tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
-import main.java.tigeax.customwings.main.Wing;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.Wing;
 
 /*
  * Main command for CustomWings

@@ -1,11 +1,11 @@
-package main.java.tigeax.customwings.events;
+package tigeax.customwings.events;
 
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.Wing;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.Wing;
 
 /*
  * This Event is fired whenever a player equips a wing trough the selectWing GUI

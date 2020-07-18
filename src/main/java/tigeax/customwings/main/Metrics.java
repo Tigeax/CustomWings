@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.main;
+package tigeax.customwings.main;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

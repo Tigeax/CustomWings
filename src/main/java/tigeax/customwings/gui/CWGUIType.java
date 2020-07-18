@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.gui;
+package tigeax.customwings.gui;
 
 /*
  * CustomWings GUI Types

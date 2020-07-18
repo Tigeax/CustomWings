@@ -1,10 +1,10 @@
-package main.java.tigeax.customwings.main;
+package tigeax.customwings.main;
 
 import java.util.UUID;
 
-import main.java.tigeax.customwings.editor.SettingType;
-import main.java.tigeax.customwings.gui.CWGUIManager;
-import main.java.tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.editor;
+package tigeax.customwings.editor;
 
 /* 
  * The different settings that can be changed trough the editor GUI's

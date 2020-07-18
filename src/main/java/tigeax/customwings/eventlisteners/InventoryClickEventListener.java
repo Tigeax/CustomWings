@@ -1,6 +1,6 @@
-package main.java.tigeax.customwings.eventlisteners;
+package tigeax.customwings.eventlisteners;
 
-import main.java.tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,11 +9,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import main.java.tigeax.customwings.editor.EditorConfigManager;
-import main.java.tigeax.customwings.editor.SettingType;
-import main.java.tigeax.customwings.events.PlayerCWGUIClickEvent;
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
+import tigeax.customwings.editor.EditorConfigManager;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.events.PlayerCWGUIClickEvent;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
 
 /*
  * This EventListener gets the value from a players inventory when we are waiting from a chat input from a player

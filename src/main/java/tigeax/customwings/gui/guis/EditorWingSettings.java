@@ -1,4 +1,4 @@
-package main.java.tigeax.customwings.gui.guis;
+package tigeax.customwings.gui.guis;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

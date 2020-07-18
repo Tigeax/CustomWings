@@ -1,13 +1,13 @@
-package main.java.tigeax.customwings.events;
+package tigeax.customwings.events;
 
-import main.java.tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import main.java.tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CWPlayer;
 
 /*
  * This Event will fire whenever a Player clicks an item in a CustomWings GUI

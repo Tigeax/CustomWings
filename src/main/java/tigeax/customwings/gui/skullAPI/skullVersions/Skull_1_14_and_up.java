@@ -1,8 +1,8 @@
-package main.java.tigeax.customwings.gui.skullAPI.skullVersions;
+package tigeax.customwings.gui.skullAPI.skullVersions;
 
 import java.util.UUID;
 
-import main.java.tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIManager;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.libs.org.apache.commons.codec.binary.Base64;
 import org.bukkit.inventory.ItemStack;
