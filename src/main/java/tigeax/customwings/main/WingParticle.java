@@ -2,7 +2,6 @@ package tigeax.customwings.main;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.Particle;
 import tigeax.customwings.gui.ParticleItem;
 import org.bukkit.Location;
 import org.bukkit.Material;

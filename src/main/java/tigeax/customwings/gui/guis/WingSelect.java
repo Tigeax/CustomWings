@@ -6,12 +6,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import main.java.tigeax.customwings.events.PlayerEquipWingEvent;
-import main.java.tigeax.customwings.gui.CWGUIType;
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
-import main.java.tigeax.customwings.main.Settings;
-import main.java.tigeax.customwings.main.Wing;
+import tigeax.customwings.events.PlayerEquipWingEvent;
+import tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.Settings;
+import tigeax.customwings.main.Wing;
 
 public class WingSelect {
 

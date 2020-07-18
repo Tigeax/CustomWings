@@ -12,7 +12,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 
-import main.java.tigeax.customwings.gui.skullAPI.Reflections;
+import tigeax.customwings.gui.skullAPI.Reflections;
 
 
 public class Skull_1_14_and_up implements CWGUIManager.Skull {

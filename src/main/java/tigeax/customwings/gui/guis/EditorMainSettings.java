@@ -1,12 +1,12 @@
 package tigeax.customwings.gui.guis;
 
-import main.java.tigeax.customwings.editor.SettingType;
-import main.java.tigeax.customwings.gui.CWGUIManager;
-import main.java.tigeax.customwings.gui.CWGUIType;
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
-import main.java.tigeax.customwings.main.Messages;
-import main.java.tigeax.customwings.main.Settings;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.Messages;
+import tigeax.customwings.main.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;

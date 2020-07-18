@@ -1,17 +1,17 @@
 package tigeax.customwings.gui.guis;
 
-import main.java.tigeax.customwings.editor.SettingType;
-import main.java.tigeax.customwings.gui.CWGUIManager;
-import main.java.tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import main.java.tigeax.customwings.main.CWPlayer;
-import main.java.tigeax.customwings.main.CustomWings;
-import main.java.tigeax.customwings.main.Messages;
-import main.java.tigeax.customwings.main.Settings;
-import main.java.tigeax.customwings.main.WingParticle;
+import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.main.Messages;
+import tigeax.customwings.main.Settings;
+import tigeax.customwings.main.WingParticle;
 
 public class EditorWingParticleSettings {
 
