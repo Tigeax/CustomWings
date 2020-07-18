@@ -69,7 +69,7 @@ public class EditorWingSettings {
 
 			case "Whitelisted Worlds":
 				cwPlayer.setWaitingSetting(SettingType.WINGWHITELISTEDWORLDS, wing);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Hide in GUI":
@@ -79,12 +79,12 @@ public class EditorWingSettings {
 
 			case "GUI Itemname":
 				cwPlayer.setWaitingSetting(SettingType.WINGGUINAME, wing);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "GUI Item material":
 				cwPlayer.setWaitingSetting(SettingType.WINGGUIMATERIAL, wing);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "GUI Item slot":
@@ -94,17 +94,17 @@ public class EditorWingSettings {
 
 			case "Lore When Equipped":
 				cwPlayer.setWaitingSetting(SettingType.WINGGUILOREHWENEQUIPPED, wing);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Lore When Unequipped":
 				cwPlayer.setWaitingSetting(SettingType.WINGGUILOREWHENUNEQUIPPED, wing);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Lore When No Permission":
 				cwPlayer.setWaitingSetting(SettingType.WINGGUILOREWHENNOPERMISSION, wing);
-				cwPlayer.getPlayer().closeInventory();
+				cwPlayer.closeInventory();
 				break;
 
 			case "Start Vertical":

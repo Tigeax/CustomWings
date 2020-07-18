@@ -68,7 +68,7 @@ public class InventoryClickEventListener implements Listener {
 		// Check if the clicked inventory is the CustomWings GUI
 		if (inventoryTitle.equals(CustomWings.getSettings().getMainGUIName())
 				|| inventoryTitle.contains(CustomWings.getSettings().getEditorGUIName())) {
-
+			
 			event.setCancelled(true);
 
 			if (player.getInventory() == event.getClickedInventory()) { return; }

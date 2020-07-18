@@ -75,12 +75,12 @@ public class EditorWingParticleSettings {
 			case "Block Type":
 				cwPlayer.setWaitingSetting(SettingType.WINGPARTICLEBLOCKTYPE, wingParticle);
 				player.sendMessage(messages.getSelectSettingMaterial());
-				player.closeInventory();
+				cwPlayer.closeInventory();
 				return;
 			case "Color":
 				cwPlayer.setWaitingSetting(SettingType.WINGPARTICLECOLOR, wingParticle);
 				player.sendMessage(messages.getTypeSettingInChat());
-				player.closeInventory();
+				cwPlayer.closeInventory();
 				return;
 			case "Previous page":
 				cwPlayer.openCWGUI(CWGUIType.EDITORWINGPARITCLESSELECT, wingParticle.getWing());

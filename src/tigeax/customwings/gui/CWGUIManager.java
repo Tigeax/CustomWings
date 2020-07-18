@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -22,7 +25,7 @@ import tigeax.customwings.gui.guis.EditorWingParticlesSelect;
 import tigeax.customwings.gui.guis.EditorWingSettings;
 import tigeax.customwings.gui.guis.WingSelect;
 import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_13;
-import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14;
+import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14_and_up;
 import tigeax.customwings.main.CWPlayer;
 import tigeax.customwings.main.CustomWings;
 import tigeax.customwings.main.Settings;
@@ -74,10 +77,16 @@ public class CWGUIManager {
 				skull = new Skull_1_13();
 				break;
 			case "v1_14_R1":
-				skull = new Skull_1_14();
+				skull = new Skull_1_14_and_up();
+				break;
+			case "v1_15_R1":
+				skull = new Skull_1_14_and_up();
+				break;
+			case "v1_16_R1":
+				skull = new Skull_1_14_and_up();
 				break;
 			default:
-				skull = new Skull_1_14();
+				skull = new Skull_1_14_and_up();
 				break;
 				
 		}
@@ -163,9 +172,16 @@ public class CWGUIManager {
 				|| guiType == CWGUIType.EDITORWINGPARITCLESSELECT
 				|| guiType == CWGUIType.EDITORWINGPARTICLESETTINGS) {
 			
-			if (clickedSlot == 4) return; 
+			if (clickedSlot == 4) return;
 		}
-
+		
+		Player player = cwPlayer.getPlayer();
+		
+		//Open an empty invertory and then close it to make sure they cannot shift click items out of their inventory
+		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
+		player.openInventory(emptyInv);
+		player.closeInventory();
+		
 		switch (guiType) {
 			
 			case WINGSELECT:

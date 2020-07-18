@@ -9,6 +9,8 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,6 +45,8 @@ public class CustomWings extends JavaPlugin {
 
 	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
 
+	private static FileConfiguration configFile;
+	
 	public void onEnable() {
 
 		plugin = this;
@@ -50,10 +54,16 @@ public class CustomWings extends JavaPlugin {
 		plugin.getLogger().info("Server running on: " + VERSION);
 
 		if (!isServerVersionSupported()) {
-			sendError("Server version is not supported!");
+			sendError("CustomWings is not tested on this server version! And therefore might not work.");
 		}
+		
+		// bStats setup
+		int pluginId = 8227;
+		
+        @SuppressWarnings("unused")
+		Metrics metrics = new Metrics(this, pluginId);
 
-		loadConfig();
+		setupConfig();
 
 		settings = new Settings(this);
 		messages = new Messages(this);
@@ -88,6 +98,8 @@ public class CustomWings extends JavaPlugin {
 
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been disabled");
 	}
+	
+	public FileConfiguration getCWConfig() { return configFile; }
 
 	public static String getServerVersion() { return VERSION; }
 
@@ -102,9 +114,22 @@ public class CustomWings extends JavaPlugin {
 	public static ArrayList<Wing> getWings() { return wings; }
 
 	public static void reload() {
+		setupConfig();
 		settings.reload();
 		messages.reload();
 		setupWings();
+		
+		//If the player had a wing equiped, update it with the newest created winglist
+		for (CWPlayer cwPlayer : cwPlayerList.values()) {
+			Wing wing = cwPlayer.getEquippedWing();
+			if (wing == null) {
+				return;
+			}
+			String wingID = wing.getID();
+			Wing newWing = getWingByID(wingID);
+			cwPlayer.setEquippedWing(newWing);
+		}
+		
 	}
 
 	public static void sendError(Exception e) {
@@ -145,7 +170,7 @@ public class CustomWings extends JavaPlugin {
 
 	private boolean isServerVersionSupported() {
 
-		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1");
+		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1");
 
 		if (supportedVersions.contains(VERSION)) {
 			return true;
@@ -153,22 +178,32 @@ public class CustomWings extends JavaPlugin {
 			return false;
 		}
 	}
+	
+	public static void setupConfig() {
 
-	private void loadConfig() {
-		File file = new File(plugin.getDataFolder(), "config.yml");
+		File cFile = new File(plugin.getDataFolder(), "config.yml");
+		configFile = new YamlConfiguration();
 
-		if (!file.exists()) {
+		if (!cFile.exists()) {
 			plugin.getLogger().info("CustomWings config.yml not found, creating!");
-			plugin.saveDefaultConfig();
+			cFile.getParentFile().mkdirs();
+			plugin.saveResource("config.yml", false);
 		} else {
 			plugin.getLogger().info("CustomWings config.yml found, loading!");
 		}
+
+		try {
+			configFile.load(cFile);
+		} catch (Exception e) {
+			CustomWings.sendError(e);
+		}
+
 	}
 
 	private static void setupWings() {
 		wings = new ArrayList<>();
 
-		for (String wingID : plugin.getConfig().getConfigurationSection("wings").getKeys(false)) {
+		for (String wingID : configFile.getConfigurationSection("wings").getKeys(false)) {
 
 			Wing wing = new Wing(wingID, plugin);
 			wings.add(wing);
