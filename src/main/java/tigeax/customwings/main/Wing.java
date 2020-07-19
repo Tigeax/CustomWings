@@ -43,7 +43,7 @@ public class Wing {
 	private String guiItemName;
 	private int guiSlot;
 
-	private List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission;
+	private List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission, loreWhenCanBuy;
 
 	private boolean showWhenMoving;
 	private List<String> whitelistedWorlds;
@@ -61,7 +61,6 @@ public class Wing {
 	private int wingPrice;
 	private String priceType;
 	private String buyMessage;
-	private List<String> loreWhenCanBuy = new ArrayList<>();
 
 	// Hasmap containing the coordinates relative to the player
 	// And the assinged particle at that coordinate
@@ -137,13 +136,8 @@ public class Wing {
 			// If buy message was not supplied set it to this
 			buyMessage = "&3You just bought "+guiItemName;
 		}
-		try {
-			List<String> loreWhenCanBuy = new ArrayList<>(getConfigFileWing().getStringList("guiItem.loreWhenCanBuy"));
 
-		} catch (NullPointerException e) {
-			List<String> loreWhenCanBuy = new ArrayList<>();
-			loreWhenCanBuy.add("&3You can buy that for "+wingPrice);
-		}
+		loreWhenCanBuy = getConfigFileWing().getStringList("guiItem.loreWhenCanBuy");
 
 	}
 
@@ -167,15 +161,18 @@ public class Wing {
 
 		List<String> lore = new ArrayList<>();
 
-		if (!loreWhenCanBuy.isEmpty()) {
-			for (String s : loreWhenCanBuy) {
-				s = s.replaceAll("%price%", String.valueOf(wingPrice));
-				lore.add(ChatColor.translateAlternateColorCodes('&',s));
-			}
-		} else {
+		try {
+			loreWhenCanBuy.isEmpty();
+		} catch (NullPointerException e) {
 			lore.add(ChatColor.translateAlternateColorCodes('&',"You can buy this for "+wingPrice));
+			return lore;
 		}
 
+
+		for (String s : loreWhenCanBuy) {
+			s = s.replaceAll("%price%", String.valueOf(wingPrice));
+			lore.add(ChatColor.translateAlternateColorCodes('&',s));
+		}
 
 		return lore;
 	}
