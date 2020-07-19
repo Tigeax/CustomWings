@@ -61,7 +61,7 @@ public class Wing {
 	private int wingPrice;
 	private String priceType;
 	private String buyMessage;
-	private List<String> loreWhenCanBuy;
+	private List<String> loreWhenCanBuy = new ArrayList<>();
 
 	// Hasmap containing the coordinates relative to the player
 	// And the assinged particle at that coordinate
@@ -139,7 +139,6 @@ public class Wing {
 		}
 		try {
 			List<String> loreWhenCanBuy = new ArrayList<>(getConfigFileWing().getStringList("guiItem.loreWhenCanBuy"));
-			List<String> lore = new ArrayList<>(getConfigFileWing().getStringList("guiItem.loreWhenCanBuy"));
 
 		} catch (NullPointerException e) {
 			List<String> loreWhenCanBuy = new ArrayList<>();
@@ -167,10 +166,17 @@ public class Wing {
 	public List<String> getloreWhenCanBuy() {
 
 		List<String> lore = new ArrayList<>();
-		for (String s : loreWhenCanBuy) {
-			s = s.replaceAll("%price%", String.valueOf(wingPrice));
-			lore.add(ChatColor.translateAlternateColorCodes('&',s));
+
+		if (!loreWhenCanBuy.isEmpty()) {
+			for (String s : loreWhenCanBuy) {
+				s = s.replaceAll("%price%", String.valueOf(wingPrice));
+				lore.add(ChatColor.translateAlternateColorCodes('&',s));
+			}
+		} else {
+			lore.add(ChatColor.translateAlternateColorCodes('&',"You can buy this for "+wingPrice));
 		}
+
+
 		return lore;
 	}
 
