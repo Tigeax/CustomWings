@@ -18,7 +18,7 @@ public class Messages {
 	private String noPermissionForCommand, noPermissionEquipWing, wingSelected, seeOtherPlayersWingsON,
 			seeOtherPlayersWingsOFF, missingArgumentsSetwing, notAPlayerError, invalidPlayerError,
 			setWingCommandWingSet, settingChanged, noWingToPreview, typeSettingInChat, selectSettingMaterial,
-			reloadSucces;
+			reloadSucces, cannotAffordWing;
 
 	public Messages(CustomWings plugin) {
 		this.plugin = plugin;
@@ -47,6 +47,7 @@ public class Messages {
 		typeSettingInChat = parseColors(messagesConfigFile.getString(("typeSettingInChat")));
 		selectSettingMaterial = parseColors(messagesConfigFile.getString(("selectSettingMaterial")));
 		reloadSucces = parseColors(messagesConfigFile.getString(("reloadSucces")));
+		cannotAffordWing = parseColors(messagesConfigFile.getString("cantAffordWing"));
 	}
 
 	public String getNoPermissionForCommand() { return noPermissionForCommand; }
@@ -72,6 +73,8 @@ public class Messages {
 	public String getNoPermissionEquipWing(Wing wing) {
 		return noPermissionEquipWing.replace("{WINGNAME}", wing.getGUIItemName());
 	}
+
+	public String getCannotAffordWing(Wing wing) { return cannotAffordWing.replace("{WINGNAME}", wing.getGUIItemName()); }
 
 	public String getWingSelected(Wing wing) {
 		return wingSelected.replace("{WINGNAME}", wing.getGUIItemName());

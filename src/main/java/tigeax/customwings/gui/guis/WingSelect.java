@@ -102,7 +102,7 @@ public class WingSelect {
 			if (!cwPlayer.hasPermissionForWing(wing)) {
 				if (CustomWings.isVaultEnabled()) {
 					if (!BuyWings.buyWing(wing, player)) {
-						player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+						player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
 					}
 				} else {
 					player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));

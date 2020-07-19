@@ -1,5 +1,6 @@
 noPermissionForCommand: "&b&l{CustomWings} &cYou do not have the required permission to use this command"
 noPermissionEquipWing: "&b&l{CustomWings} &cYou do not have the required permission to equip the &f{WINGNAME} &cwing"
+cantAffordWing: "&b&l{CustomWings} &cYou cannot afford {WINGNAME}"
 wingSelected: "&b&l{CustomWings} &3You have equiped the {WINGNAME} &3wing"
 seeOtherPlayersWingsON: "&b&l{CustomWings} &3Other players wings are now hidden for you"
 seeOtherPlayersWingsOFF: "&b&l{CustomWings} &3You can now see other players wings"
