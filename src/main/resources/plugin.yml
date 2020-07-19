@@ -4,6 +4,7 @@ author: Tigeax
 version: ${pom.version}
 api-version: 1.13
 softdepend:
+  - Vault
   - TokenManager
 commands:
   wings:

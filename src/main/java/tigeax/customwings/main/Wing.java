@@ -59,6 +59,9 @@ public class Wing {
 	private ArrayList<WingParticle> wingParticles;
 
 	private int wingPrice;
+	private String priceType;
+	private String buyMessage;
+	private List<String> loreWhenCanBuy;
 
 	// Hasmap containing the coordinates relative to the player
 	// And the assinged particle at that coordinate
@@ -119,8 +122,28 @@ public class Wing {
 		try {
 			wingPrice = getConfigFileWing().getInt("price");
 		} catch (NullPointerException e) {
-			// If price was not supplied make it not purchaseable
+			// If price was not supplied make wings not purchaseable
 			wingPrice = -1;
+		}
+		try {
+			priceType = getConfigFileWing().getString("price-type");
+		} catch (NullPointerException e) {
+			// If price type was not supplied make it none
+			priceType = "none";
+		}
+		try {
+			buyMessage = getConfigFileWing().getString("buyMessage");
+		} catch (NullPointerException e) {
+			// If buy message was not supplied set it to this
+			buyMessage = "&3You just bought "+guiItemName;
+		}
+		try {
+			List<String> loreWhenCanBuy = new ArrayList<>(getConfigFileWing().getStringList("guiItem.loreWhenCanBuy"));
+			List<String> lore = new ArrayList<>(getConfigFileWing().getStringList("guiItem.loreWhenCanBuy"));
+
+		} catch (NullPointerException e) {
+			List<String> loreWhenCanBuy = new ArrayList<>();
+			loreWhenCanBuy.add("&3You can buy that for "+wingPrice);
 		}
 
 	}
@@ -140,6 +163,16 @@ public class Wing {
 	public List<String> getLoreWhenUnequipped() { return loreWhenUnequipped; }
 
 	public List<String> getLoreWhenNoPermission() { return loreWhenNoPermission; }
+
+	public List<String> getloreWhenCanBuy() {
+
+		List<String> lore = new ArrayList<>();
+		for (String s : loreWhenCanBuy) {
+			s = s.replaceAll("%price%", String.valueOf(wingPrice));
+			lore.add(ChatColor.translateAlternateColorCodes('&',s));
+		}
+		return lore;
+	}
 
 	public String getLoreWhenEquippedString() {
 		return getLoreWhenEquipped().toString().replace("[", "").replace("]", "");
@@ -215,6 +248,12 @@ public class Wing {
 	public int getWingPrice() {
 		return wingPrice;
 	}
+
+	public String getPriceType() {
+		return priceType;
+	}
+
+	public String getBuyMessage() {return buyMessage;}
 
 	private ConfigurationSection getConfigFileWing() { return config.getConfigurationSection("wings." + ID); }
 

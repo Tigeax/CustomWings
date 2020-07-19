@@ -43,9 +43,16 @@ wings:
       - "all"
       - "world_nether2"
 
+    #Type of price to pay
+    # "economy" - Default vault economy
+    # "token" - TokenManager
+    price-type: token
     #Price to pay to unlock the wings
     # -1 = cannot buy; 0 = free
     price: 10
+
+    #Message that displays when the wing is bought
+    buyMessage: "&3You just bought &5Soulshadow Wing"
   
     #Item that will show up in the main GUI
     guiItem:
@@ -61,6 +68,8 @@ wings:
         - "&3You do not have the &5Soulshadow Wing &3equipped"
       loreWhenNoPermission:
         - "&cYou do not own the &5Soulshadow Wing"
+      loreWhenCanBuy:
+        - "&eYou can buy this for %price% $"
   
     wingLayout:
       #The starting height of the wing, starting from the players feet. Accepts negative numbers

@@ -6,7 +6,7 @@
 
     <groupId>tigeax.customwings</groupId>
     <artifactId>CustomWings</artifactId>
-    <version>3.4.2-better</version>
+    <version>pre3.4.3-better</version>
     <packaging>jar</packaging>
 
     <name>CustomWings</name>
@@ -91,6 +91,12 @@
                     <artifactId>*</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.github.MilkBowl</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

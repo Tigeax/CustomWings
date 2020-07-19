@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import tigeax.customwings.command.Wings;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.gui.CWGUIManager;
@@ -46,6 +49,11 @@ public class CustomWings extends JavaPlugin {
 	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
 
 	private static FileConfiguration configFile;
+
+	private static Economy econ = null;
+	private static Permission perms = null;
+
+	private static boolean vault = false;
 	
 	public void onEnable() {
 
@@ -82,6 +90,15 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerQuitEventListener(), plugin);
 
+		try {
+			setupEconomy();
+			setupPermissions();
+			vault = true;
+		} catch (Exception e) {
+			getLogger().info(ChatColor.translateAlternateColorCodes('&', "&4Vault not detected. Buy functionality disabled."));
+		}
+
+
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been enabled");
 	}
 
@@ -113,6 +130,18 @@ public class CustomWings extends JavaPlugin {
 
 	public static ArrayList<Wing> getWings() { return wings; }
 
+	public static boolean isVaultEnabled() {
+		return vault;
+	}
+
+	public static Economy getEconomy() {
+		return econ;
+	}
+
+	public static Permission getPermissions() {
+		return perms;
+	}
+
 	public static void reload() {
 		setupConfig();
 		settings.reload();
@@ -130,6 +159,24 @@ public class CustomWings extends JavaPlugin {
 			cwPlayer.setEquippedWing(newWing);
 		}
 		
+	}
+
+	private boolean setupEconomy() {
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			return false;
+		}
+		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
+		if (rsp == null) {
+			return false;
+		}
+		econ = rsp.getProvider();
+		return econ != null;
+	}
+
+	private boolean setupPermissions() {
+		RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+		perms = rsp.getProvider();
+		return perms != null;
 	}
 
 	public static void sendError(Exception e) {
