@@ -18,7 +18,7 @@ public class Messages {
 	private String noPermissionForCommand, noPermissionEquipWing, wingSelected, seeOtherPlayersWingsON,
 			seeOtherPlayersWingsOFF, missingArgumentsSetwing, notAPlayerError, invalidPlayerError,
 			setWingCommandWingSet, settingChanged, noWingToPreview, typeSettingInChat, selectSettingMaterial,
-			reloadSucces, cannotAffordWing;
+			reloadSucces, cannotAffordWing, missingArgumentsTakeAwayWing, invalidWingsError, wingsRemoved;
 
 	public Messages(CustomWings plugin) {
 		this.plugin = plugin;
@@ -48,6 +48,9 @@ public class Messages {
 		selectSettingMaterial = parseColors(messagesConfigFile.getString(("selectSettingMaterial")));
 		reloadSucces = parseColors(messagesConfigFile.getString(("reloadSucces")));
 		cannotAffordWing = parseColors(messagesConfigFile.getString("cantAffordWing"));
+		missingArgumentsTakeAwayWing = parseColors(messagesConfigFile.getString("missingArgumentsTakeAwayWing"));
+		invalidWingsError = parseColors(messagesConfigFile.getString("invalidWingsError"));
+		wingsRemoved = parseColors(messagesConfigFile.getString("wingsRemoved"));
 	}
 
 	public String getNoPermissionForCommand() { return noPermissionForCommand; }
@@ -86,6 +89,17 @@ public class Messages {
 
 	public String getSetWingCommandWingSet(String playerName, String wingName) {
 		return setWingCommandWingSet.replace("{PLAYERNAME}", playerName).replace("{WINGNAME}", wingName);
+	}
+
+	public String getMissingArgumentsTakeAwayWing() { return missingArgumentsTakeAwayWing; }
+
+	public String getInvalidWingsError(String wings) {return invalidWingsError.replace("{WINGNAME}", wings);}
+
+	public String getWingsRemoved(String player, Wing wing) {
+		String s = "";
+		s = wingsRemoved.replace("{PLAYERNAME}", player);
+		s = s.replace("{WINGNAME}", wing.getGUIItemName());
+		return s;
 	}
 
 	private String parseColors(String string) {

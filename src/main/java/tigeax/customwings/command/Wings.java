@@ -1,5 +1,6 @@
 package tigeax.customwings.command;
 
+import org.bukkit.OfflinePlayer;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -47,6 +48,10 @@ public class Wings implements CommandExecutor {
 			case "reload":
 			case "r":
 				reload(sender);
+				return true;
+
+			case "takeaway":
+				takeAwayWings(sender, args);
 				return true;
 
 			default:
@@ -178,6 +183,46 @@ public class Wings implements CommandExecutor {
 
 		CustomWings.reload();
 		sender.sendMessage(CustomWings.getMessages().getReloadSucces());
+	}
+
+	//Take wings away from player
+	public void takeAwayWings(CommandSender sender, String[] args) {
+		if (!sender.hasPermission("customwings.takeawaywings")) {
+
+			// If no player or wing ID is specified send an error
+			if (args.length == 1 || args.length == 2) {
+				sender.sendMessage(CustomWings.getMessages().getMissingArgumentsTakeAwayWing());
+
+			} else if (args.length == 3) {
+
+				if (CustomWings.isVaultEnabled()) {
+
+					try {
+						OfflinePlayer player = Bukkit.getOfflinePlayer(args[1]);
+						Wing wing = CustomWings.getWingByID(args[2]);
+						if (wing != null) {
+							CustomWings.getPermissions().playerRemove(null, player.getPlayer(), "customwings.wing."+wing.getID().toLowerCase());
+							sender.sendMessage(CustomWings.getMessages().getWingsRemoved(args[1], wing));
+						} else {
+							sender.sendMessage(CustomWings.getMessages().getInvalidWingsError(args[2]));
+						}
+
+					} catch (NullPointerException e) {
+						sender.sendMessage(CustomWings.getMessages().getInvalidPlayerError(args[1]));
+					}
+
+				} else {
+					sender.sendMessage("Vault is needed for that action");
+				}
+
+			} else {
+				sender.sendMessage(CustomWings.getMessages().getMissingArgumentsTakeAwayWing());
+
+			}
+
+
+
+		}
 	}
 
 }
