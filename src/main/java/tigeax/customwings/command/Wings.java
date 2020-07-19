@@ -27,41 +27,32 @@ public class Wings implements CommandExecutor {
 		}
 
 		// If arguments are given switch between possible commands
-		if (args.length > 0) {
 
-			switch (args[0]) {
+		switch (args[0]) {
 
-				case "setwing":
-					setWing(sender, args);
-					return true;
+			case "setwing":
+				setWing(sender, args);
+				return true;
 
-				case "preview":
-					preview(sender);
-					return true;
-				case "p":
-					preview(sender);
-					return true;
+			case "preview":
+			case "p":
+				preview(sender);
+				return true;
 
-				case "edit":
-					openEditorGUI(sender);
-					return true;
-				case "e":
-					openEditorGUI(sender);
-					return true;
+			case "edit":
+			case "e":
+				openEditorGUI(sender);
+				return true;
 
-				case "reload":
-					reload(sender);
-					return true;
-				case "r":
-					reload(sender);
-					return true;
+			case "reload":
+			case "r":
+				reload(sender);
+				return true;
 
-				default:
-					openMainGUI(sender);
-					return true;
-			}
+			default:
+				openMainGUI(sender);
+				return true;
 		}
-		return false;
 	}
 
 	// Open the wings GUI
