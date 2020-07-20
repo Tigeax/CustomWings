@@ -101,8 +101,15 @@ public class WingSelect {
 
 			if (!cwPlayer.hasPermissionForWing(wing)) {
 				if (CustomWings.isVaultEnabled()) {
-					if (!BuyWings.buyWing(wing, player)) {
-						player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
+					try {
+						String type = wing.getPriceType();
+						int price = wing.getWingPrice();
+
+						if (!BuyWings.buyWing(wing, player)) {
+							player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+						}
+					} catch (NullPointerException e) {
+						player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
 					}
 				} else {
 					player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));

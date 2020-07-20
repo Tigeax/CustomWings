@@ -187,7 +187,7 @@ public class Wings implements CommandExecutor {
 
 	//Take wings away from player
 	public void takeAwayWings(CommandSender sender, String[] args) {
-		if (!sender.hasPermission("customwings.takeawaywings")) {
+		if (sender.hasPermission("customwings.takeawaywings")) {
 
 			// If no player or wing ID is specified send an error
 			if (args.length == 1 || args.length == 2) {
@@ -206,22 +206,19 @@ public class Wings implements CommandExecutor {
 						} else {
 							sender.sendMessage(CustomWings.getMessages().getInvalidWingsError(args[2]));
 						}
-
 					} catch (NullPointerException e) {
 						sender.sendMessage(CustomWings.getMessages().getInvalidPlayerError(args[1]));
 					}
-
 				} else {
 					sender.sendMessage("Vault is needed for that action");
 				}
 
 			} else {
 				sender.sendMessage(CustomWings.getMessages().getMissingArgumentsTakeAwayWing());
-
 			}
 
-
-
+		} else {
+			sender.sendMessage(CustomWings.getMessages().getNoPermissionForCommand());
 		}
 	}
 

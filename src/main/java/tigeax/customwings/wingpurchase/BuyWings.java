@@ -23,6 +23,9 @@ public class BuyWings {
                         CustomWings.getPermissions().playerAdd(null, player, "customwings.wing."+wing.getID().toLowerCase());
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
                         return true;
+                    } else {
+                        player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
+                        return true;
                     }
                 }
                 return false;
@@ -32,6 +35,9 @@ public class BuyWings {
                     CustomWings.getEconomy().withdrawPlayer(player, wing.getWingPrice() );
                     CustomWings.getPermissions().playerAdd(null, player, "customwings.wing." + wing.getID().toLowerCase());
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
+                    return true;
+                } else {
+                    player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
                     return true;
                 }
             }

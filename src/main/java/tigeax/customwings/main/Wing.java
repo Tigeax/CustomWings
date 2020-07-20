@@ -118,18 +118,10 @@ public class Wing {
 		wingParticles = parseWingParticles(getConfigFileWing().getConfigurationSection("particles"));
 		particleCoordinates = parseParticleCoordinates(getConfigFileWing().getConfigurationSection("particleLayout"));
 
-		try {
-			wingPrice = getConfigFileWing().getInt("price");
-		} catch (NullPointerException e) {
-			// If price was not supplied make wings not purchaseable
-			wingPrice = -1;
-		}
-		try {
-			priceType = getConfigFileWing().getString("price-type");
-		} catch (NullPointerException e) {
-			// If price type was not supplied make it none
-			priceType = "none";
-		}
+
+		wingPrice = getConfigFileWing().getInt("price");
+		priceType = getConfigFileWing().getString("price-type");
+
 		try {
 			buyMessage = getConfigFileWing().getString("buyMessage");
 		} catch (NullPointerException e) {
@@ -168,12 +160,10 @@ public class Wing {
 			return lore;
 		}
 
-
 		for (String s : loreWhenCanBuy) {
 			s = s.replaceAll("%price%", String.valueOf(wingPrice));
 			lore.add(ChatColor.translateAlternateColorCodes('&',s));
 		}
-
 		return lore;
 	}
 
