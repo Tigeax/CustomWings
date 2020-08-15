@@ -19,7 +19,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class CWPlayer {
 
-	private CustomWings plugin;
+	private final CustomWings plugin;
 	private final CWGUIManager cwGUIManager;
 
 	private final UUID uuid;
@@ -57,7 +57,14 @@ public class CWPlayer {
 
 	public boolean getHideOtherPlayerWings() { return hideOtherPlayerWings; }
 	
-	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) { this.hideOtherPlayerWings = hideOtherPlayerWings; }
+	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) {
+		this.hideOtherPlayerWings = hideOtherPlayerWings;
+		if (hideOtherPlayerWings) {
+			this.getPlayer().sendMessage(CustomWings.getMessages().getSeeOtherPlayersWingsON());
+		} else {
+			this.getPlayer().sendMessage(CustomWings.getMessages().getSeeOtherPlayersWingsOFF());
+		}
+	}
 	
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
@@ -78,10 +85,7 @@ public class CWPlayer {
 	}
 
 	public boolean hasPermissionForWing(Wing wing) {
-		if (getPlayer().hasPermission("customwings.wing." + wing.getID()) || getPlayer().hasPermission(("customwings.wing.*")))
-			return true;
-		else
-			return false;
+		return getPlayer().hasPermission("customwings.wing." + wing.getID()) || getPlayer().hasPermission(("customwings.wing.*"));
 	}
 
 	public void openCWGUI(CWGUIType cwGUIType) {
@@ -105,13 +109,11 @@ public class CWPlayer {
 
 		if (this.equippedWing == null) {
 			stopMovementChecker();
-			return;
 		} else {
 			this.equippedWing.addPlayersWithWingActive(getPlayer());
 			startMovementChecker();
 		}
 
-		return;
 	}
 
 	// Start checking if the player is moving
@@ -138,7 +140,7 @@ public class CWPlayer {
 				}
 				
 				// If the player is moving more then 1 blocks per 0.5 second, the player is moving
-				isMoving = lastLocation.distance(currentLocation) > 1 ? true : false; 
+				isMoving = lastLocation.distance(currentLocation) > 1;
 
 				lastLocation = currentLocation;
 			}

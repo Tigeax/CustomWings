@@ -1,6 +1,7 @@
 package tigeax.customwings.command;
 
 import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -19,7 +20,7 @@ import tigeax.customwings.main.Wing;
 public class Wings implements CommandExecutor {
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
 
 		// Open the wing gui if no arguments are given
 		if (args.length == 0) {
@@ -108,7 +109,7 @@ public class Wings implements CommandExecutor {
 			return;
 		}
 
-		// If an invalid wing was specified set the winng to null
+		// If an invalid wing was specified set the wing to null
 		Wing wing = CustomWings.getWingByID(args[2]);
 
 		if (wing == null) {

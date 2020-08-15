@@ -12,7 +12,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Messages {
 
-	private CustomWings plugin;
+	private final CustomWings plugin;
 	private FileConfiguration messagesConfigFile;
 
 	private String noPermissionForCommand, noPermissionEquipWing, wingSelected, seeOtherPlayersWingsON,

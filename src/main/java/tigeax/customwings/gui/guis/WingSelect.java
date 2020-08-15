@@ -40,9 +40,9 @@ public class WingSelect {
 		if (guiSize > hideWingsToggleSlot) {
 
 			if (cwPlayer.getHideOtherPlayerWings()) {
-				hideWingsToggleItem = settings.getHideWingsToggleONItem();
-			} else {
 				hideWingsToggleItem = settings.getHideWingsToggleOFFItem();
+			} else {
+				hideWingsToggleItem = settings.getHideWingsToggleONItem();
 			}
 
 			gui.setItem(hideWingsToggleSlot, hideWingsToggleItem);
