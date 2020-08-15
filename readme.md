@@ -1,10 +1,8 @@
 <h1>Custom Wings</h1>
 
-This is the fork of [Tigeax's CustomWings Plugin]
+[Tigeax's CustomWings Plugin]
 
 [Tigeax's CustomWings Plugin]: https://www.spigotmc.org/resources/customwings-1-13-1-16-1.59912/
-
-This fork moves entire project to maven so you can use it as a dependency!
 
 [![](https://jitpack.io/v/YouHaveTrouble/CustomWings.svg)](https://jitpack.io/#YouHaveTrouble/CustomWings)
 
@@ -22,9 +20,9 @@ This fork moves entire project to maven so you can use it as a dependency!
 ---
 
     <dependency>
-	    <groupId>com.github.YouHaveTrouble</groupId>
+	    <groupId>com.github.Tigeax</groupId>
 	    <artifactId>CustomWings</artifactId>
-	    <version>Tag</version>
+	    <version>master-815be0cbab-1</version>
 	</dependency>
 	
 ## Gradle:
@@ -38,6 +36,6 @@ This fork moves entire project to maven so you can use it as a dependency!
 	
 ---
 	
-	dependencies {
-    	        implementation 'com.github.YouHaveTrouble:CustomWings:Tag'
-    	}
+    dependencies {
+                implementation 'com.github.Tigeax:CustomWings:master-815be0cbab-1'
+        }

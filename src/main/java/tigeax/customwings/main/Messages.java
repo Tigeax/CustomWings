@@ -16,9 +16,9 @@ public class Messages {
 	private FileConfiguration messagesConfigFile;
 
 	private String noPermissionForCommand, noPermissionEquipWing, wingSelected, seeOtherPlayersWingsON,
-			seeOtherPlayersWingsOFF, missingArgumentsSetwing, notAPlayerError, invalidPlayerError,
-			setWingCommandWingSet, settingChanged, noWingToPreview, typeSettingInChat, selectSettingMaterial,
-			reloadSucces, cannotAffordWing, missingArgumentsTakeAwayWing, invalidWingsError, wingsRemoved;
+			seeOtherPlayersWingsOFF, missingArgumentsSetWing, notAPlayerError, invalidPlayerError,
+			setWingCommandWingSet, settingChanged, settingCanceled, noWingToPreview, typeSettingInChat, selectSettingMaterial,
+			reloadSuccess, cannotAffordWing, missingArgumentsTakeAwayWing, invalidWingsError, wingsRemoved;
 
 	public Messages(CustomWings plugin) {
 		this.plugin = plugin;
@@ -38,15 +38,16 @@ public class Messages {
 		wingSelected = parseColors(messagesConfigFile.getString(("wingSelected")));
 		seeOtherPlayersWingsON = parseColors(messagesConfigFile.getString(("seeOtherPlayersWingsON")));
 		seeOtherPlayersWingsOFF = parseColors(messagesConfigFile.getString(("seeOtherPlayersWingsOFF")));
-		missingArgumentsSetwing = parseColors(messagesConfigFile.getString(("missingArgumentsSetwing")));
+		missingArgumentsSetWing = parseColors(messagesConfigFile.getString(("missingArgumentsSetwing")));
 		notAPlayerError = parseColors(messagesConfigFile.getString(("notAPlayerError")));
 		invalidPlayerError = parseColors(messagesConfigFile.getString(("invalidPlayerError")));
 		setWingCommandWingSet = parseColors(messagesConfigFile.getString(("setWingCommandWingSet")));
 		settingChanged = parseColors(messagesConfigFile.getString(("settingChanged")));
+		settingCanceled = parseColors(messagesConfigFile.getString(("settingCanceled")));
 		noWingToPreview = parseColors(messagesConfigFile.getString(("noWingToPreview")));
 		typeSettingInChat = parseColors(messagesConfigFile.getString(("typeSettingInChat")));
 		selectSettingMaterial = parseColors(messagesConfigFile.getString(("selectSettingMaterial")));
-		reloadSucces = parseColors(messagesConfigFile.getString(("reloadSucces")));
+		reloadSuccess = parseColors(messagesConfigFile.getString(("reloadSucces")));
 		cannotAffordWing = parseColors(messagesConfigFile.getString("cantAffordWing"));
 		missingArgumentsTakeAwayWing = parseColors(messagesConfigFile.getString("missingArgumentsTakeAwayWing"));
 		invalidWingsError = parseColors(messagesConfigFile.getString("invalidWingsError"));
@@ -59,11 +60,13 @@ public class Messages {
 
 	public String getSeeOtherPlayersWingsOFF() { return seeOtherPlayersWingsOFF; }
 
-	public String getMissingArgumentsSetwing() { return missingArgumentsSetwing; }
+	public String getMissingArgumentsSetWing() { return missingArgumentsSetWing; }
 
 	public String getNotAPlayerError() { return notAPlayerError; }
 
 	public String getSettingChanged() { return settingChanged; }
+
+	public String getSettingCanceled() { return settingCanceled; }
 
 	public String getNoWingToPreview() { return noWingToPreview; }
 
@@ -71,7 +74,7 @@ public class Messages {
 
 	public String getSelectSettingMaterial() { return selectSettingMaterial; }
 
-	public String getReloadSucces() { return reloadSucces; }
+	public String getReloadSuccess() { return reloadSuccess; }
 
 	public String getNoPermissionEquipWing(Wing wing) {
 		return noPermissionEquipWing.replace("{WINGNAME}", wing.getGUIItemName());
