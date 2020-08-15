@@ -78,7 +78,7 @@ public class CWPlayer {
 	}
 
 	public boolean hasPermissionForWing(Wing wing) {
-		if (getPlayer().hasPermission("customwings.wing." + wing.getID()))
+		if (getPlayer().hasPermission("customwings.wing." + wing.getID()) || getPlayer().hasPermission(("customwings.wing.*")))
 			return true;
 		else
 			return false;
