@@ -20,9 +20,9 @@
 ---
 
     <dependency>
-	    <groupId>com.github.YouHaveTrouble</groupId>
+	    <groupId>com.github.Tigeax</groupId>
 	    <artifactId>CustomWings</artifactId>
-	    <version>Tag</version>
+	    <version>master-815be0cbab-1</version>
 	</dependency>
 	
 ## Gradle:
@@ -36,6 +36,6 @@
 	
 ---
 	
-	dependencies {
-    	        implementation 'com.github.YouHaveTrouble:CustomWings:Tag'
-    	}
+    dependencies {
+                implementation 'com.github.Tigeax:CustomWings:master-815be0cbab-1'
+        }

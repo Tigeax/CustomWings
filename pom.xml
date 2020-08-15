@@ -6,7 +6,7 @@
 
     <groupId>tigeax.customwings</groupId>
     <artifactId>CustomWings</artifactId>
-    <version>3.4.3.1-better</version>
+    <version>3.4.4</version>
     <packaging>jar</packaging>
 
     <name>CustomWings</name>
