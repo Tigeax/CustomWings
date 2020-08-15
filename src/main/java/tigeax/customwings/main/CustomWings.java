@@ -90,14 +90,18 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerQuitEventListener(), plugin);
 
-		try {
-			setupEconomy();
-			setupPermissions();
-			vault = true;
-		} catch (Exception e) {
-			getLogger().info(ChatColor.translateAlternateColorCodes('&', "&4Vault not detected. Buy functionality disabled."));
+		if (getServer().getPluginManager().getPlugin("Vault") != null) {
+			try {
+				setupEconomy();
+				setupPermissions();
+				vault = true;
+				plugin.getLogger().info("Vault detected. Buy functionality enabled.");
+			} catch (Exception e) {
+				plugin.getLogger().info("Vault not detected. Buy functionality disabled.");
+			}
+		} else {
+			plugin.getLogger().info("Vault not detected. Buy functionality disabled.");
 		}
-
 
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been enabled");
 	}
@@ -162,13 +166,7 @@ public class CustomWings extends JavaPlugin {
 	}
 
 	private boolean setupEconomy() {
-		if (getServer().getPluginManager().getPlugin("Vault") == null) {
-			return false;
-		}
 		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-		if (rsp == null) {
-			return false;
-		}
 		econ = rsp.getProvider();
 		return econ != null;
 	}
