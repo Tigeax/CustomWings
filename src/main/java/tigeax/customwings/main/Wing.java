@@ -43,7 +43,7 @@ public class Wing {
 	private String guiItemName;
 	private int guiSlot;
 
-	private List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission;
+	private List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission, loreWhenCanBuy;
 
 	private boolean showWhenMoving;
 	private List<String> whitelistedWorlds;
@@ -57,6 +57,10 @@ public class Wing {
 	private BukkitTask wingRunnable;
 
 	private ArrayList<WingParticle> wingParticles;
+
+	private int wingPrice;
+	private String priceType;
+	private String buyMessage;
 
 	// Hasmap containing the coordinates relative to the player
 	// And the assinged particle at that coordinate
@@ -114,6 +118,19 @@ public class Wing {
 		wingParticles = parseWingParticles(getConfigFileWing().getConfigurationSection("particles"));
 		particleCoordinates = parseParticleCoordinates(getConfigFileWing().getConfigurationSection("particleLayout"));
 
+
+		wingPrice = getConfigFileWing().getInt("price");
+		priceType = getConfigFileWing().getString("price-type");
+
+		try {
+			buyMessage = getConfigFileWing().getString("buyMessage");
+		} catch (NullPointerException e) {
+			// If buy message was not supplied set it to this
+			buyMessage = "&3You just bought "+guiItemName;
+		}
+
+		loreWhenCanBuy = getConfigFileWing().getStringList("guiItem.loreWhenCanBuy");
+
 	}
 
 	public String getID() { return ID; }
@@ -131,6 +148,24 @@ public class Wing {
 	public List<String> getLoreWhenUnequipped() { return loreWhenUnequipped; }
 
 	public List<String> getLoreWhenNoPermission() { return loreWhenNoPermission; }
+
+	public List<String> getloreWhenCanBuy() {
+
+		List<String> lore = new ArrayList<>();
+
+		try {
+			loreWhenCanBuy.isEmpty();
+		} catch (NullPointerException e) {
+			lore.add(ChatColor.translateAlternateColorCodes('&',"You can buy this for "+wingPrice));
+			return lore;
+		}
+
+		for (String s : loreWhenCanBuy) {
+			s = s.replaceAll("%price%", String.valueOf(wingPrice));
+			lore.add(ChatColor.translateAlternateColorCodes('&',s));
+		}
+		return lore;
+	}
 
 	public String getLoreWhenEquippedString() {
 		return getLoreWhenEquipped().toString().replace("[", "").replace("]", "");
@@ -202,6 +237,16 @@ public class Wing {
 		}
 		return null;
 	}
+
+	public int getWingPrice() {
+		return wingPrice;
+	}
+
+	public String getPriceType() {
+		return priceType;
+	}
+
+	public String getBuyMessage() {return buyMessage;}
 
 	private ConfigurationSection getConfigFileWing() { return config.getConfigurationSection("wings." + ID); }
 
