@@ -33,7 +33,7 @@ public class Wing {
 	public CustomWings plugin;
 	private FileConfiguration config;
 
-	private String ID;
+	private final String ID;
 
 	private ArrayList<Player> playersWithWingActive;
 	private HashMap<Player, Location> wingPreview;
@@ -313,7 +313,7 @@ public class Wing {
 
 				}
 			}
-		}.runTaskTimer(plugin, 0, wingTimer);
+		}.runTaskTimerAsynchronously(plugin, 0, wingTimer);
 	}
 
 	// Spawn all the particles of the wing at a certain location for certain players
@@ -390,7 +390,7 @@ public class Wing {
 
 		HashMap<double[], WingParticle> particleCoordinates = new HashMap<>();
 		Set<String> rows = particleLayout.getKeys(false);
-		double distance = 0;
+		double distance;
 		double height = startVertical + (rows.size() * distanceBetweenParticles); // Highest vertical point of the wing
 
 		// Go through all the horizontal rows
