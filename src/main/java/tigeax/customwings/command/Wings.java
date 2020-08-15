@@ -87,7 +87,7 @@ public class Wings implements CommandExecutor {
 
 		// If no player is specified send an error
 		if (args.length == 1) {
-			sender.sendMessage(CustomWings.getMessages().getMissingArgumentsSetwing());
+			sender.sendMessage(CustomWings.getMessages().getMissingArgumentsSetWing());
 			return;
 		}
 
@@ -182,7 +182,7 @@ public class Wings implements CommandExecutor {
 		}
 
 		CustomWings.reload();
-		sender.sendMessage(CustomWings.getMessages().getReloadSucces());
+		sender.sendMessage(CustomWings.getMessages().getReloadSuccess());
 	}
 
 	//Take wings away from player

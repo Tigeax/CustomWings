@@ -19,3 +19,5 @@ permissions:
         default: op
     customwings.editor:
         default: op
+    customwings.wing.*:
+      default: op
