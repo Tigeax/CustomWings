@@ -54,7 +54,8 @@ public class CustomWings extends JavaPlugin {
 	private static Permission perms = null;
 
 	private static boolean vault = false;
-	
+
+	@Override
 	public void onEnable() {
 
 		plugin = this;
@@ -106,13 +107,13 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been enabled");
 	}
 
+	@Override
 	public void onDisable() {
 
 		// If a player has a CustomWings GUI open, close it
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			InventoryView invView = player.getOpenInventory();
 
-			if (invView == null) continue;
 			if (cwGUIManager.getCWGUITypeByInvTitle(invView.getTitle()) == null) continue;
 			player.closeInventory();
 		}
@@ -183,7 +184,6 @@ public class CustomWings extends JavaPlugin {
 
 	public static void sendError(String error) {
 		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "{CustomWings} " + error);
-		return;
 	}
 
 	public static Wing getWingByID(String ID) {
@@ -217,11 +217,7 @@ public class CustomWings extends JavaPlugin {
 
 		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1");
 
-		if (supportedVersions.contains(VERSION)) {
-			return true;
-		} else {
-			return false;
-		}
+		return supportedVersions.contains(VERSION);
 	}
 	
 	public static void setupConfig() {
