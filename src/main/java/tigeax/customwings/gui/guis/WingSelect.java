@@ -12,6 +12,7 @@ import tigeax.customwings.main.CWPlayer;
 import tigeax.customwings.main.CustomWings;
 import tigeax.customwings.main.Settings;
 import tigeax.customwings.main.Wing;
+import tigeax.customwings.wingpurchase.BuyWings;
 
 public class WingSelect {
 
@@ -60,8 +61,14 @@ public class WingSelect {
 			// Add Lore to item
 			if (cwPlayer.getEquippedWing() == wing)
 				wingItemMeta.setLore(wing.getLoreWhenEquipped());
-			else if (!cwPlayer.hasPermissionForWing(wing))
+			else if (!cwPlayer.hasPermissionForWing(wing)) {
+
+				if (wing.getWingPrice() == -1 || wing.getPriceType() == null || wing.getPriceType().equalsIgnoreCase("none")) {
 					wingItemMeta.setLore(wing.getLoreWhenNoPermission());
+				} else {
+					wingItemMeta.setLore(wing.getloreWhenCanBuy());
+				}
+			}
 				else
 					wingItemMeta.setLore(wing.getLoreWhenUnequipped());
 
@@ -93,9 +100,23 @@ public class WingSelect {
 			wing = CustomWings.getWingByGUISlot(clickedSlot);
 
 			if (!cwPlayer.hasPermissionForWing(wing)) {
-				player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+				if (CustomWings.isVaultEnabled()) {
+					try {
+						String type = wing.getPriceType();
+						int price = wing.getWingPrice();
+
+						if (!BuyWings.buyWing(wing, player)) {
+							player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+						}
+					} catch (NullPointerException e) {
+						player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+					}
+				} else {
+					player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+				}
 				return;
 			}
+
 		}
 
 		// Fire the PlayerEquipWingEvent
@@ -110,7 +131,6 @@ public class WingSelect {
 
 			if (wing != null) {
 				player.sendMessage(CustomWings.getMessages().getWingSelected(wing));
-				return;
 			}
 		}
 	}
