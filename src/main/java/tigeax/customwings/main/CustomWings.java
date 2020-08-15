@@ -90,16 +90,13 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerQuitEventListener(), plugin);
 
-		if (getServer().getPluginManager().getPlugin("Vault") != null) {
-			try {
-				setupEconomy();
-				setupPermissions();
-				vault = true;
-			} catch (Exception e) {
-				getLogger().info(ChatColor.translateAlternateColorCodes('&', "&4Vault not detected. Buy functionality disabled."));
-			}
+		try {
+			setupEconomy();
+			setupPermissions();
+			vault = true;
+		} catch (Exception e) {
+			getLogger().info(ChatColor.translateAlternateColorCodes('&', "&4Vault not detected. Buy functionality disabled."));
 		}
-
 
 
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been enabled");
@@ -161,9 +158,13 @@ public class CustomWings extends JavaPlugin {
 			Wing newWing = getWingByID(wingID);
 			cwPlayer.setEquippedWing(newWing);
 		}
+		
 	}
 
 	private boolean setupEconomy() {
+		if (getServer().getPluginManager().getPlugin("Vault") == null) {
+			return false;
+		}
 		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
 		if (rsp == null) {
 			return false;
