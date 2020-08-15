@@ -23,6 +23,7 @@ public class PlayerCommandPreprocessEventListener implements Listener {
 
 		if (cwPlayer.getWaitingSetting() != null) {
 			cwPlayer.setWaitingSetting(null);
+			player.sendMessage(CustomWings.getMessages().getSettingCanceled());
 		}
 	}
 }
