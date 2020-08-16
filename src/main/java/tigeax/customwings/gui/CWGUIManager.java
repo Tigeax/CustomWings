@@ -24,8 +24,6 @@ import tigeax.customwings.gui.guis.EditorWingParticleSettings;
 import tigeax.customwings.gui.guis.EditorWingParticlesSelect;
 import tigeax.customwings.gui.guis.EditorWingSettings;
 import tigeax.customwings.gui.guis.WingSelect;
-import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_13;
-import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14_and_up;
 import tigeax.customwings.main.CWPlayer;
 import tigeax.customwings.main.CustomWings;
 import tigeax.customwings.main.Settings;
@@ -38,21 +36,19 @@ import tigeax.customwings.main.WingParticle;
 
 public class CWGUIManager {
 	
-	private Settings settings;
+	private final Settings settings;
 
-	private WingSelect wingSelectGUI;
-	private Editor editorGUI;
-	private EditorMainSettings editorMainSettingsGUI;
-	private EditorWingSettings editorWingSettingsGUI;
-	private EditorWingParticlesSelect editorWingParticlesSelectGUI;
-	private EditorWingParticleSettings editorWingParticleSettingsGUI;
-	private EditorSelectMainGUISize editorSelectGuiSizeGUI;
-	private EditorSelectParticle editorSelectParticleGUI;
-	private EditorSelectSlot editorSelectSlotGUI;
-	private EditorSelectInteger editorSelectIntegerGUI;
-	private EditorSelectDouble editorSelectDoubleGUI;
-
-	private static Skull skull;
+	private final WingSelect wingSelectGUI;
+	private final Editor editorGUI;
+	private final EditorMainSettings editorMainSettingsGUI;
+	private final EditorWingSettings editorWingSettingsGUI;
+	private final EditorWingParticlesSelect editorWingParticlesSelectGUI;
+	private final EditorWingParticleSettings editorWingParticleSettingsGUI;
+	private final EditorSelectMainGUISize editorSelectGuiSizeGUI;
+	private final EditorSelectParticle editorSelectParticleGUI;
+	private final EditorSelectSlot editorSelectSlotGUI;
+	private final EditorSelectInteger editorSelectIntegerGUI;
+	private final EditorSelectDouble editorSelectDoubleGUI;
 
 	public CWGUIManager() {
 		this.settings = CustomWings.getSettings();
@@ -68,68 +64,53 @@ public class CWGUIManager {
 		this.editorSelectSlotGUI = new EditorSelectSlot();
 		this.editorSelectIntegerGUI = new EditorSelectInteger();
 		this.editorSelectDoubleGUI = new EditorSelectDouble();
-
-		switch (CustomWings.getServerVersion()) {
-			case "v1_13_R1":
-				skull = new Skull_1_13();
-				break;
-			case "v1_13_R2":
-				skull = new Skull_1_13();
-				break;
-			case "v1_14_R1":
-				skull = new Skull_1_14_and_up();
-				break;
-			case "v1_15_R1":
-				skull = new Skull_1_14_and_up();
-				break;
-			case "v1_16_R1":
-				skull = new Skull_1_14_and_up();
-				break;
-			default:
-				skull = new Skull_1_14_and_up();
-				break;
-				
-		}
 	}
 
 	public void openGUI(CWPlayer cwPlayer, CWGUIType cwGUIType, Object info) {
-		switch (cwGUIType) {
-			case WINGSELECT:
-				wingSelectGUI.open(cwPlayer);
-				return;
-			case EDITOR:
+		try {
+			switch (cwGUIType) {
+				case WINGSELECT:
+					wingSelectGUI.open(cwPlayer);
+					return;
+				case EDITOR:
+					editorGUI.open(cwPlayer);
+					return;
+				case EDITORMAINSETTINGS:
+					editorMainSettingsGUI.open(cwPlayer);
+					return;
+				case EDITORWINGSETTINGS:
+					editorWingSettingsGUI.open(cwPlayer, (Wing) info);
+					return;
+				case EDITORWINGPARITCLESSELECT:
+					editorWingParticlesSelectGUI.open(cwPlayer, (Wing) info);
+					return;
+				case EDITORWINGPARTICLESETTINGS:
+					editorWingParticleSettingsGUI.open(cwPlayer, (WingParticle) info);
+					return;
+				case EDITORSELECTGUISIZE:
+					editorSelectGuiSizeGUI.open(cwPlayer);
+					return;
+				case EDITORSELECTPARTICLE:
+					editorSelectParticleGUI.openPage1(cwPlayer);
+					return;
+				case EDITORSELECTSLOT:
+					editorSelectSlotGUI.open(cwPlayer);
+					return;
+				case EDITORSELECTINTEGER:
+					editorSelectIntegerGUI.open(cwPlayer, (Integer) info);
+					return;
+				case EDITORSELECTDOUBLE:
+					editorSelectDoubleGUI.open(cwPlayer, (double) info);
+					return;
+				case LASTEDITORGUI:
+					openLastEditorGUI(cwPlayer);
+					return;
+			}
+		} catch (Exception e) {
+			CustomWings.sendError(e);
+			if (cwPlayer.getPlayer().hasPermission("customwings.editor")) {
 				editorGUI.open(cwPlayer);
-				return;
-			case EDITORMAINSETTINGS:
-				editorMainSettingsGUI.open(cwPlayer);
-				return;
-			case EDITORWINGSETTINGS:
-				editorWingSettingsGUI.open(cwPlayer, (Wing) info);
-				return;
-			case EDITORWINGPARITCLESSELECT:
-				editorWingParticlesSelectGUI.open(cwPlayer, (Wing) info);
-				return;
-			case EDITORWINGPARTICLESETTINGS:
-				editorWingParticleSettingsGUI.open(cwPlayer, (WingParticle) info);
-				return;
-			case EDITORSELECTGUISIZE:
-				editorSelectGuiSizeGUI.open(cwPlayer);
-				return;
-			case EDITORSELECTPARTICLE:
-				editorSelectParticleGUI.openPage1(cwPlayer);
-				return;
-			case EDITORSELECTSLOT:
-				editorSelectSlotGUI.open(cwPlayer);
-				return;
-			case EDITORSELECTINTEGER:
-				editorSelectIntegerGUI.open(cwPlayer, (Integer) info);
-				return;
-			case EDITORSELECTDOUBLE:
-				editorSelectDoubleGUI.open(cwPlayer, (double) info);
-				return;
-			case LASTEDITORGUI:
-				openLastEditorGUI(cwPlayer);
-				return;
+			}
 		}
 	}
 
@@ -139,9 +120,6 @@ public class CWGUIManager {
 			return CWGUIType.WINGSELECT;
 
 		switch (parseEditorMenuName(invTitle)) {
-
-			case "":
-				return CWGUIType.EDITOR;
 			case "Main Settings":
 				return CWGUIType.EDITORMAINSETTINGS;
 			case "Wing Settings":
@@ -160,8 +138,9 @@ public class CWGUIManager {
 				return CWGUIType.EDITORSELECTDOUBLE;
 			case "Select Particle":
 				return CWGUIType.EDITORSELECTPARTICLE;
+			default:
+				return CWGUIType.EDITOR;
 		}
-		return null;
 	}
 
 	public void CWGUIClick(CWPlayer cwPlayer, CWGUIType guiType, InventoryView invView, ItemStack clickedItem, Integer clickedSlot) {
@@ -177,7 +156,7 @@ public class CWGUIManager {
 		
 		Player player = cwPlayer.getPlayer();
 		
-		//Open an empty invertory and then close it to make sure they cannot shift click items out of their inventory
+		//Open an empty inventory and then close it to make sure they cannot shift click items out of their inventory
 		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
 		player.openInventory(emptyInv);
 		player.closeInventory();
@@ -260,8 +239,7 @@ public class CWGUIManager {
 
 	private Wing getWingFromGUI(InventoryView invView) {
 		String wingID = ChatColor.stripColor(invView.getTopInventory().getItem(4).getItemMeta().getDisplayName());
-		Wing wing = CustomWings.getWingByID(wingID);
-		return wing;
+		return CustomWings.getWingByID(wingID);
 	}
 
 	private WingParticle getWingParticleFromGUI(InventoryView invView) {
@@ -302,33 +280,6 @@ public class CWGUIManager {
 		}
 
 		return lore;
-	}
-
-	//----- Skill API -----
-	public interface Skull {
-
-		public ItemStack getCustomSkull(String url);
-	}
-
-	public static ItemStack getPlayerHeadItem(String playerName, String itemName) {
-		return getPlayerHeadItem(playerName, itemName, null);
-	}
-
-	public static ItemStack getPlayerHeadItem(String url, String itemName, Object loreInfo) {
-
-		ItemStack item = skull.getCustomSkull("http://textures.minecraft.net/texture/" + url);
-
-		ItemMeta itemMeta = item.getItemMeta();
-		itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', itemName));
-
-		if (loreInfo != null) {
-			itemMeta.setLore(parseLore("" + loreInfo));
-		}
-
-		item.setItemMeta(itemMeta);
-
-		return item;
-
 	}
 
 }

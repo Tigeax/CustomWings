@@ -45,7 +45,7 @@ public class EditorMainSettings {
 		gui.setItem(39, CWGUIManager.getItem(Material.CRAFTING_TABLE, "&3Editor GUI name", settings.getEditorGUIName()));
 		gui.setItem(41, CWGUIManager.getItem(Material.CRAFTING_TABLE, "&3Editor Main Settings Slot", settings.getEditorMainSettingsSlot()));
 
-		gui.setItem(53, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Previous page"));
+		gui.setItem(53, CWGUIManager.getItem(Material.WHITE_BED, "&4Previous page"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}

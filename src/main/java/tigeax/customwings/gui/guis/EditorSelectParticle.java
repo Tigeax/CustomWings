@@ -1,12 +1,10 @@
 package tigeax.customwings.gui.guis;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
@@ -14,6 +12,8 @@ import tigeax.customwings.gui.ParticleItem;
 import tigeax.customwings.main.CWPlayer;
 import tigeax.customwings.main.CustomWings;
 import tigeax.customwings.main.Settings;
+
+import java.util.ArrayList;
 
 public class EditorSelectParticle {
 
@@ -33,21 +33,20 @@ public class EditorSelectParticle {
 		int counter = 0;
 		for (ParticleItem particleItem : ParticleItem.values()) {
 
-			String particleVersion = particleItem.getVersion();
+			try {
+				Particle.valueOf(particleItem.toString()); //Check if the particle exists
+				ItemStack item = CWGUIManager.getItem(particleItem.getMaterial(), "&f" + particleItem.getName());
 
-			// Check if particle is supported for this minecraft version, if not skip it
-			if (particleVersion.equals("1.14") && Arrays.asList("v1_13_R1", "v1_13_R2").contains(CustomWings.getServerVersion())) continue;
-			if (particleVersion.equals("1.15") && Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1").contains(CustomWings.getServerVersion())) continue;
-			if (particleVersion.equals("1.16") && Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1").contains(CustomWings.getServerVersion())) continue;
+				if (counter <= 44)
+					page1Items.add(item);
+				else
+					page2Items.add(item);
 
-			ItemStack item = CWGUIManager.getItem(particleItem.getMaterial(), "&f" + particleItem.getName());
+				counter++;
 
-			if (counter <= 44)
-				page1Items.add(item);
-			else
-				page2Items.add(item);
-
-			counter++;
+			} catch(Exception e) {
+				continue;
+			}
 		}
 	}
 
@@ -63,8 +62,8 @@ public class EditorSelectParticle {
 			slot++;
 		}
 
-		gui.setItem(50, CWGUIManager.getPlayerHeadItem("6527ebae9f153154a7ed49c88c02b5a9a9ca7cb1618d9914a3d9df8ccb3c84", "&2Next Page"));
-		gui.setItem(53, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Cancel"));
+		gui.setItem(50, CWGUIManager.getItem(Material.ARROW, "&2Next Page"));
+		gui.setItem(53, CWGUIManager.getItem(Material.RED_WOOL, "&4Cancel"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}
@@ -81,8 +80,8 @@ public class EditorSelectParticle {
 			slot++;
 		}
 
-		gui.setItem(48, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&3Previous page"));
-		gui.setItem(53, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Cancel"));
+		gui.setItem(48, CWGUIManager.getItem(Material.ARROW, "&3Previous Page"));
+		gui.setItem(53, CWGUIManager.getItem(Material.RED_WOOL, "&4Cancel"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}
@@ -100,12 +99,6 @@ public class EditorSelectParticle {
 			case "Previous page":
 				openPage1(cwPlayer);
 				return;
-		}
-
-		if (itemName.equals("Cancel")) {
-			cwPlayer.setWaitingSetting(null);
-			cwPlayer.openCWGUI(CWGUIType.LASTEDITORGUI);
-			return;
 		}
 
 		editorConfigManager.setSetting(cwPlayer.getWaitingSetting(), ParticleItem.getParticleByName(itemName), cwPlayer.getWaitingSettingInfo());
