@@ -33,8 +33,12 @@ public class EditorSelectParticle {
 		int counter = 0;
 		for (ParticleItem particleItem : ParticleItem.values()) {
 
-			if (particleItem.getVersion().equals("1.14")
-					&& Arrays.asList("v1_13_R1", "v1_13_R2").contains(CustomWings.getServerVersion())) continue;
+			String particleVersion = particleItem.getVersion();
+
+			// Check if particle is supported for this minecraft version, if not skip it
+			if (particleVersion.equals("1.14") && Arrays.asList("v1_13_R1", "v1_13_R2").contains(CustomWings.getServerVersion())) continue;
+			if (particleVersion.equals("1.15") && Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1").contains(CustomWings.getServerVersion())) continue;
+			if (particleVersion.equals("1.16") && Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1").contains(CustomWings.getServerVersion())) continue;
 
 			ItemStack item = CWGUIManager.getItem(particleItem.getMaterial(), "&f" + particleItem.getName());
 
