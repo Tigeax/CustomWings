@@ -7,109 +7,104 @@ import tigeax.customwings.main.CustomWings;
 
 /*
  * List of all the minecraft particles
- * Assinged are the material and name that are shows when the particle is referenced in a GUI
- * Version specifies in which version the particle was added (after 1.13)
+ * Assigned are the material and name that are shows when the particle is referenced in a GUI
  */
 
 public enum ParticleItem {
 
 	//formatter:off
 	//1.13
-	BARRIER("BARRIER", "Barrier", "1.13"),
-	BLOCK_CRACK("CRACKED_STONE_BRICKS", "Block Crack", "1.13"),
-	BLOCK_DUST("GLOWSTONE_DUST", "Block Dust", "1.13"),
-	BUBBLE_COLUMN_UP("WATER_BUCKET", "Bubble Column Up", "1.13"),
-	BUBBLE_POP("WATER_BUCKET", "Bubble Pop", "1.13"),
-	CLOUD("FEATHER", "Cloud", "1.13"),
-	CRIT("WOODEN_SWORD", "Crit", "1.13"),
-	CRIT_MAGIC("DIAMOND_SWORD", "Crit Magic", "1.13"),
-	CURRENT_DOWN("WATER_BUCKET", "Current Down", "1.13"),
-	DAMAGE_INDICATOR("GOLDEN_SWORD", "Damage Indicator", "1.13"),
-	DOLPHIN("WATER_BUCKET", "Dolphin", "1.13"),
-	DRAGON_BREATH("DRAGON_HEAD", "Dragon Breath", "1.13"),
-	DRIP_LAVA("LAVA_BUCKET", "Drip Lava", "1.13"),
-	DRIP_WATER("WATER_BUCKET", "Drip Water", "1.13"),
-	ENCHANTMENT_TABLE("ENCHANTING_TABLE", "Enchantment Table", "1.13"),
-	END_ROD("END_ROD", "End Rod", "1.13"),
-	EXPLOSION_HUGE("TNT", "Explosion Huge", "1.13"),
-	EXPLOSION_LARGE("TNT", "Explosion Large", "1.13"),
-	EXPLOSION_NORMAL("TNT", "Explosion Normal", "1.13"),
-	FALLING_DUST("SAND", "Falling Dust", "1.13"),
-	FIREWORKS_SPARK("FIREWORK_ROCKET", "Fireworks Spark", "1.13"),
-	FLAME("BLAZE_POWDER", "Flame", "1.13"),
-	HEART("ROSE_BUSH", "Heart", "1.13"),
-	ITEM_CRACK("ITEM_FRAME", "Item Crack", "1.13"),
-	LAVA("LAVA_BUCKET", "Lava", "1.13"),
-	MOB_APPEARANCE("ELDER_GUARDIAN_SPAWN_EGG", "Mob Appearance", "1.13"),
-	NAUTILUS("CONDUIT", "Nautilus", "1.13"),
-	NOTE("NOTE_BLOCK", "Note", "1.13"),
-	PORTAL("OBSIDIAN", "Portal", "1.13"),
-	REDSTONE("REDSTONE", "Redstone", "1.13"),
-	SLIME("SLIME_BALL", "Slime", "1.13"),
-	SMOKE_LARGE("BLACK_CONCRETE_POWDER", "Smoke Large", "1.13"),
-	SMOKE_NORMAL("BLACK_CONCRETE_POWDER", "Smoke Normal", "1.13"),
-	SNOWBALL("SNOWBALL", "Snowball", "1.13"),
-	SNOW_SHOVEL("SNOWBALL", "Snow Shovel", "1.13"),
-	SPELL("LINGERING_POTION", "Spell", "1.13"),
-	SPELL_INSTANT("SPLASH_POTION", "Spell Instant", "1.13"),
-	SPELL_MOB("POTION", "Spell Mob", "1.13"),
-	SPELL_MOB_AMBIENT("POTION", "Spell Mob Ambient", "1.13"),
-	SPELL_WITCH("WITCH_SPAWN_EGG", "Spell Witch", "1.13"),
-	SPIT("LLAMA_SPAWN_EGG", "Spit", "1.13"),
-	SQUID_INK("SQUID_SPAWN_EGG", "Squid Ink", "1.13"),
-	SUSPENDED("WATER_BUCKET", "Suspended", "1.13"),
-	SUSPENDED_DEPTH("WATER_BUCKET", "Suspended Depth", "1.13"),
-	SWEEP_ATTACK("STONE_SWORD", "Sweep Attack", "1.13"),
-	TOTEM("TOTEM_OF_UNDYING", "Totem", "1.13"),
-	TOWN_AURA("MYCELIUM", "Town Aura", "1.13"),
-	VILLAGER_ANGRY("BLACK_GLAZED_TERRACOTTA", "Villager Angry", "1.13"),
-	VILLAGER_HAPPY("EMERALD", "Villager Happy", "1.13"),
-	WATER_BUBBLE("WATER_BUCKET", "Water Bubble", "1.13"),
-	WATER_DROP("WATER_BUCKET", "Water Drop", "1.13"),
-	WATER_SPLASH("WATER_BUCKET", "Water Splash", "1.13"),
-	WATER_WAKE("WATER_BUCKET", "Water Wake", "1.13"),
+	BARRIER("BARRIER", "Barrier"),
+	BLOCK_CRACK("CRACKED_STONE_BRICKS", "Block Crack"),
+	BLOCK_DUST("GLOWSTONE_DUST", "Block Dust"),
+	BUBBLE_COLUMN_UP("WATER_BUCKET", "Bubble Column Up"),
+	BUBBLE_POP("WATER_BUCKET", "Bubble Pop"),
+	CLOUD("FEATHER", "Cloud"),
+	CRIT("WOODEN_SWORD", "Crit"),
+	CRIT_MAGIC("DIAMOND_SWORD", "Crit Magic"),
+	CURRENT_DOWN("WATER_BUCKET", "Current Down"),
+	DAMAGE_INDICATOR("GOLDEN_SWORD", "Damage Indicator"),
+	DOLPHIN("WATER_BUCKET", "Dolphin"),
+	DRAGON_BREATH("DRAGON_HEAD", "Dragon Breath"),
+	DRIP_LAVA("LAVA_BUCKET", "Drip Lava"),
+	DRIP_WATER("WATER_BUCKET", "Drip Water"),
+	ENCHANTMENT_TABLE("ENCHANTING_TABLE", "Enchantment Table"),
+	END_ROD("END_ROD", "End Rod"),
+	EXPLOSION_HUGE("TNT", "Explosion Huge"),
+	EXPLOSION_LARGE("TNT", "Explosion Large"),
+	EXPLOSION_NORMAL("TNT", "Explosion Normal"),
+	FALLING_DUST("SAND", "Falling Dust"),
+	FIREWORKS_SPARK("FIREWORK_ROCKET", "Fireworks Spark"),
+	FLAME("BLAZE_POWDER", "Flame"),
+	HEART("ROSE_BUSH", "Heart"),
+	ITEM_CRACK("ITEM_FRAME", "Item Crack"),
+	LAVA("LAVA_BUCKET", "Lava"),
+	MOB_APPEARANCE("ELDER_GUARDIAN_SPAWN_EGG", "Mob Appearance"),
+	NAUTILUS("CONDUIT", "Nautilus"),
+	NOTE("NOTE_BLOCK", "Note"),
+	PORTAL("OBSIDIAN", "Portal"),
+	REDSTONE("REDSTONE", "Redstone"),
+	SLIME("SLIME_BALL", "Slime"),
+	SMOKE_LARGE("BLACK_CONCRETE_POWDER", "Smoke Large"),
+	SMOKE_NORMAL("BLACK_CONCRETE_POWDER", "Smoke Normal"),
+	SNOWBALL("SNOWBALL", "Snowball"),
+	SNOW_SHOVEL("SNOWBALL", "Snow Shovel"),
+	SPELL("LINGERING_POTION", "Spell"),
+	SPELL_INSTANT("SPLASH_POTION", "Spell Instant"),
+	SPELL_MOB("POTION", "Spell Mob"),
+	SPELL_MOB_AMBIENT("POTION", "Spell Mob Ambient"),
+	SPELL_WITCH("WITCH_SPAWN_EGG", "Spell Witch"),
+	SPIT("LLAMA_SPAWN_EGG", "Spit"),
+	SQUID_INK("SQUID_SPAWN_EGG", "Squid Ink"),
+	SUSPENDED("WATER_BUCKET", "Suspended"),
+	SUSPENDED_DEPTH("WATER_BUCKET", "Suspended Depth"),
+	SWEEP_ATTACK("STONE_SWORD", "Sweep Attack"),
+	TOTEM("TOTEM_OF_UNDYING", "Totem"),
+	TOWN_AURA("GRAY_WOOL", "Town Aura"),
+	VILLAGER_ANGRY("BLACK_GLAZED_TERRACOTTA", "Villager Angry"),
+	VILLAGER_HAPPY("EMERALD", "Villager Happy"),
+	WATER_BUBBLE("WATER_BUCKET", "Water Bubble"),
+	WATER_DROP("WATER_BUCKET", "Water Drop"),
+	WATER_SPLASH("WATER_BUCKET", "Water Splash"),
+	WATER_WAKE("WATER_BUCKET", "Water Wake"),
 
 	//1.14
-	COMPOSTER("WATER_BUCKET", "Composter", "1.14"),
-	CAMPFIRE_SIGNAL_SMOKE("CAMPFIRE", "Campfire Signal Smoke", "1.14"),
-	CAMPFIRE_COSY_SMOKE("CAMPFIRE", "Campfire Cosy Smoke", "1.14"),
-	SNEEZE("WATER_BUCKET", "Sneeze", "1.14"),
+	COMPOSTER("WATER_BUCKET", "Composter"),
+	CAMPFIRE_SIGNAL_SMOKE("CAMPFIRE", "Campfire Signal Smoke"),
+	CAMPFIRE_COSY_SMOKE("CAMPFIRE", "Campfire Cosy Smoke"),
+	SNEEZE("WATER_BUCKET", "Sneeze"),
 
 	//1.15
-	DRIPPING_HONEY("HONEYCOMB", "Dripping Honey", "1.15"),
-	FALLING_HONEY("HONEYCOMB", "Falling Honey", "1.15"),
-	FALLING_NECTAR("HONEYCOMB", "Falling Nectar", "1.15"),
-	LANDING_HONEY("HONEYCOMB", "Landing Honey", "1.15"),
+	DRIPPING_HONEY("HONEYCOMB", "Dripping Honey"),
+	FALLING_HONEY("HONEYCOMB", "Falling Honey"),
+	FALLING_NECTAR("HONEYCOMB", "Falling Nectar"),
+	LANDING_HONEY("HONEYCOMB", "Landing Honey"),
 
 	//1.16
-	ASH("SOUL_SAND", "Ash", "1.16"),
-	CRIMSON_SPORE("CRIMSON_FUNGUS", "Crimson Spore", "1.16"),
-	DRIPPING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Dripping Crying Obsidian", "1.16"),
-	FALLING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Falling Crying Obsidian", "1.16"),
-	FLASH("CRYING_OBSIDIAN", "Flash", "1.16"),
-	LANDING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Landing Crying Obsidian", "1.16"),
-	REVERSE_PORTAL("CRYING_OBSIDIAN", "Reverse Portal", "1.16"),
-	SOUL("SOUL_SOIL", "Soul", "1.16"),
-	SOUL_FIRE_FLAME("SOUL_SOIL", "SoulFire Flame", "1.16"),
-	WARPED_SPORE("WARPED_FUNGUS", "Warped Spore", "1.16"),
-	WHITE_ASH("SOUL_SOIL", "White Ash", "1.16");
+	ASH("SOUL_SAND", "Ash"),
+	CRIMSON_SPORE("CRIMSON_FUNGUS", "Crimson Spore"),
+	DRIPPING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Dripping Crying Obsidian"),
+	FALLING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Falling Crying Obsidian"),
+	FLASH("CRYING_OBSIDIAN", "Flash"),
+	LANDING_OBSIDIAN_TEAR("CRYING_OBSIDIAN", "Landing Crying Obsidian"),
+	REVERSE_PORTAL("CRYING_OBSIDIAN", "Reverse Portal"),
+	SOUL("SOUL_SOIL", "Soul"),
+	SOUL_FIRE_FLAME("SOUL_SOIL", "SoulFire Flame"),
+	WARPED_SPORE("WARPED_FUNGUS", "Warped Spore"),
+	WHITE_ASH("SOUL_SOIL", "White Ash");
 	//formatter:on
 
-	private String material;
-	private String name;
-	private String version;
+	private final String material;
+	private final String name;
 
-	ParticleItem(final String material, final String name, final String version) {
+	ParticleItem(final String material, final String name) {
 		this.material = material;
 		this.name = name;
-		this.version = version;
 	}
 
 	public Material getMaterial() { return Material.valueOf(material); }
 
 	public String getName() { return name; }
-
-	public String getVersion() { return version; }
 
 	public static Particle getParticleByName(String name) {
 

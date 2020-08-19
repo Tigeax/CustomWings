@@ -39,8 +39,8 @@ public class EditorSelectDouble {
 		gui.setItem(24, CWGUIManager.getItem(Material.GREEN_STAINED_GLASS_PANE, "&2+0.1"));
 		gui.setItem(25, CWGUIManager.getItem(Material.GREEN_STAINED_GLASS_PANE, "&2+1"));
 
-		gui.setItem(48, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Cancel"));
-		gui.setItem(50, CWGUIManager.getPlayerHeadItem("6527ebae9f153154a7ed49c88c02b5a9a9ca7cb1618d9914a3d9df8ccb3c84", "&2Confirm"));
+		gui.setItem(48, CWGUIManager.getItem(Material.RED_WOOL, "&4Cancel"));
+		gui.setItem(50, CWGUIManager.getItem(Material.GREEN_WOOL, "&2Confirm"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}

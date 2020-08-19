@@ -34,7 +34,7 @@ public class EditorSelectMainGUISize {
 		gui.setItem(3, CWGUIManager.getItem(Material.CHEST, "&f36"));
 		gui.setItem(4, CWGUIManager.getItem(Material.CHEST, "&f45"));
 		gui.setItem(5, CWGUIManager.getItem(Material.CHEST, "&f54"));
-		gui.setItem(8, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Cancel"));
+		gui.setItem(8, CWGUIManager.getItem(Material.RED_WOOL, "&4Cancel"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}

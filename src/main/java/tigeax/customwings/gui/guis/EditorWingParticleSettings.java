@@ -1,5 +1,6 @@
 package tigeax.customwings.gui.guis;
 
+import org.bukkit.Material;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
@@ -29,20 +30,19 @@ public class EditorWingParticleSettings {
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 
-		gui.setItem(4, CWGUIManager.getItem(wingParticle.getWing().getGuiItem().getType(), "&f"
-				+ wingParticle.getWing().getID() + " - " + wingParticle.getID()));
+		gui.setItem(4, CWGUIManager.getItem(wingParticle.getWing().getGuiItem().getType(), "&f" + wingParticle.getWing().getID() + " - " + wingParticle.getID()));
 
 		gui.setItem(22, CWGUIManager.getItem(wingParticle.getItemMaterial(), "&3Particle", wingParticle.getParticle().toString()));
 
-		gui.setItem(29, CWGUIManager.getPlayerHeadItem("93971124be89ac7dc9c929fe9b6efa7a07ce37ce1da2df691bf8663467477c7", "&3Distance", wingParticle.getDistance()));
-		gui.setItem(30, CWGUIManager.getPlayerHeadItem("f4628ace7c3afc61a476dc144893aaa642ba976d952b51ece26abafb896b8", "&3Height", wingParticle.getHeight()));
-		gui.setItem(32, CWGUIManager.getPlayerHeadItem("298c77373229d28833c59849744554f9bf62a7bef785e5b618ea732aad3c834", "&3Angle", wingParticle.getAngle()));
-		gui.setItem(33, CWGUIManager.getPlayerHeadItem("7472d245b2a8ab25bd4b9d32601d4aba2c53181ad2bde62c8ed71f8cae99543", "&3Speed", wingParticle.getSpeed()));
+		gui.setItem(29, CWGUIManager.getItem(Material.END_ROD, "&3Distance", wingParticle.getDistance()));
+		gui.setItem(30, CWGUIManager.getItem(Material.END_ROD, "&3Height", wingParticle.getHeight()));
+		gui.setItem(32, CWGUIManager.getItem(Material.END_ROD, "&3Angle", wingParticle.getAngle()));
+		gui.setItem(33, CWGUIManager.getItem(Material.END_ROD, "&3Speed", wingParticle.getSpeed()));
 
 		gui.setItem(39, CWGUIManager.getItem(wingParticle.getMaterialData(), "&3Block Type", wingParticle.getMaterialData().toString()));
-		gui.setItem(41, CWGUIManager.getPlayerHeadItem("c227670d148794915304827b0eb03eff273ca153f874db5e9094d1cdbb6258a2", "&3Color", wingParticle.getDustOptions().getColor().asRGB()));
+		gui.setItem(41, CWGUIManager.getItem(Material.PINK_WOOL, "&3Color", wingParticle.getDustOptions().getColor().asRGB()));
 
-		gui.setItem(53, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Previous page", null));
+		gui.setItem(53, CWGUIManager.getItem(Material.WHITE_BED, "&4Previous page"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}

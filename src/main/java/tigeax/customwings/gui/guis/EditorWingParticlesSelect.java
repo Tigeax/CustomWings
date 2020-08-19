@@ -1,5 +1,6 @@
 package tigeax.customwings.gui.guis;
 
+import org.bukkit.Material;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class EditorWingParticlesSelect {
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 
 		gui.setItem(4, CWGUIManager.getItem(wing.getGuiItem().getType(), "&f" + wing.getID()));
-		gui.setItem(53, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Previous Page"));
+		gui.setItem(53, CWGUIManager.getItem(Material.WHITE_BED, "&4Previous page"));
 
 		int slot = 9;
 
