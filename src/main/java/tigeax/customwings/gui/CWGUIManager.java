@@ -7,12 +7,14 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import org.bukkit.persistence.PersistentDataType;
 import tigeax.customwings.gui.guis.Editor;
 import tigeax.customwings.gui.guis.EditorMainSettings;
 import tigeax.customwings.gui.guis.EditorSelectDouble;
@@ -26,11 +28,11 @@ import tigeax.customwings.gui.guis.EditorWingSettings;
 import tigeax.customwings.gui.guis.WingSelect;
 import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_13;
 import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14_and_up;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Settings;
-import tigeax.customwings.main.Wing;
-import tigeax.customwings.main.WingParticle;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
+import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wings.WingParticle;
 
 /*
  * Manager class for all the CustomWings GUI'ss
@@ -71,19 +73,8 @@ public class CWGUIManager {
 
 		switch (CustomWings.getServerVersion()) {
 			case "v1_13_R1":
-				skull = new Skull_1_13();
-				break;
 			case "v1_13_R2":
 				skull = new Skull_1_13();
-				break;
-			case "v1_14_R1":
-				skull = new Skull_1_14_and_up();
-				break;
-			case "v1_15_R1":
-				skull = new Skull_1_14_and_up();
-				break;
-			case "v1_16_R1":
-				skull = new Skull_1_14_and_up();
 				break;
 			default:
 				skull = new Skull_1_14_and_up();
@@ -185,7 +176,7 @@ public class CWGUIManager {
 		switch (guiType) {
 			
 			case WINGSELECT:
-				wingSelectGUI.click(cwPlayer, clickedSlot);
+				wingSelectGUI.click(cwPlayer, clickedSlot, clickedItem);
 				return;
 			case EDITOR:
 				editorGUI.click(cwPlayer, itemName, clickedSlot);

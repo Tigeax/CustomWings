@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 
 /*
  * This EventListener Listends for when a command is executed by a player

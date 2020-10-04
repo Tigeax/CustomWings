@@ -7,8 +7,8 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 
 /*
  * This EventListener gets the value from chat when we are waiting from a chat input from a player

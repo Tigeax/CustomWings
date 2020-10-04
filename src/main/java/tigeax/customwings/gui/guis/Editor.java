@@ -5,10 +5,10 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import tigeax.customwings.gui.CWGUIType;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Settings;
-import tigeax.customwings.main.Wing;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
+import tigeax.customwings.wings.Wing;
 
 public class Editor {
 

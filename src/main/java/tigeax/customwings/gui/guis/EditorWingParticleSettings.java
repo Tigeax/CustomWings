@@ -7,11 +7,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Messages;
-import tigeax.customwings.main.Settings;
-import tigeax.customwings.main.WingParticle;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Messages;
+import tigeax.customwings.Settings;
+import tigeax.customwings.wings.WingParticle;
 
 public class EditorWingParticleSettings {
 

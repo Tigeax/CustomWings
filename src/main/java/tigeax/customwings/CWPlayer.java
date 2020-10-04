@@ -1,7 +1,6 @@
-package tigeax.customwings.main;
+package tigeax.customwings;
 
 import java.util.UUID;
-
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
@@ -12,6 +11,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import tigeax.customwings.wings.Wing;
 
 /*
  * Class made for every player interacting with the plugin

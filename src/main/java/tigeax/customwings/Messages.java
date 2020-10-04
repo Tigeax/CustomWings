@@ -1,10 +1,10 @@
-package tigeax.customwings.main;
+package tigeax.customwings;
 
 import java.io.File;
-
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import tigeax.customwings.wings.Wing;
 
 /*
  * Class containing all the messages set in the messages.yml file

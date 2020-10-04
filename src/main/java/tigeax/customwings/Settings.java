@@ -1,5 +1,7 @@
-package tigeax.customwings.main;
+package tigeax.customwings;
 
+import org.bukkit.NamespacedKey;
+import org.bukkit.persistence.PersistentDataType;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -55,6 +57,7 @@ public class Settings {
 	public void load() {
 		
 		this.config = plugin.getCWConfig();
+		NamespacedKey CWNamespace = new NamespacedKey(CustomWings.getPlugin(CustomWings.class), "CustomWings");
 
 		wingViewDistance = config.getInt("wingViewDistance");
 
@@ -62,10 +65,20 @@ public class Settings {
 		mainGUISize = config.getInt("mainGUI.size");
 
 		removeWingItem = getItem(config.getString("mainGUI.removeWingItem.name"), config.getString("mainGUI.removeWingItem.material"));
+		ItemMeta removeWingItemMeta =  removeWingItem.getItemMeta();
+		removeWingItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, "CW:REMOVE_WING");
+		removeWingItem.setItemMeta(removeWingItemMeta);
 		removeWingSlot = config.getInt("mainGUI.removeWingItem.slot");
 
 		hideWingsToggleONItem = getItem(config.getString("mainGUI.hideWingsToggleItem.nameON"), config.getString("mainGUI.hideWingsToggleItem.materialON"));
+		ItemMeta hideWingsToggleONItemMeta =  hideWingsToggleONItem.getItemMeta();
+		hideWingsToggleONItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, "CW:HIDE_WINGS_ON");
+		hideWingsToggleONItem.setItemMeta(hideWingsToggleONItemMeta);
+
 		hideWingsToggleOFFItem = getItem(config.getString("mainGUI.hideWingsToggleItem.nameOFF"), config.getString("mainGUI.hideWingsToggleItem.materialOFF"));
+		ItemMeta hideWingsToggleOFFItemMeta =  hideWingsToggleOFFItem.getItemMeta();
+		hideWingsToggleOFFItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, "CW:HIDE_WINGS_OFF");
+		hideWingsToggleOFFItem.setItemMeta(hideWingsToggleOFFItemMeta);
 		hideWingsToggleSlot = config.getInt("mainGUI.hideWingsToggleItem.slot");
 
 		editorGUIName = parseColors(config.getString("editorGUI.name"));

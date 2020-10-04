@@ -1,9 +1,9 @@
-package tigeax.customwings.main;
+package tigeax.customwings.wings;
 
 import java.util.ArrayList;
-
 import org.bukkit.GameMode;
 import org.bukkit.metadata.MetadataValue;
+import tigeax.customwings.CustomWings;
 import tigeax.customwings.gui.ParticleItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,7 +48,9 @@ public class WingParticle {
 			particleData = dustOptions;
 		}
 
-		if (particle == Particle.BLOCK_CRACK || particle == Particle.BLOCK_DUST || particle == Particle.FALLING_DUST) {
+		if (particle == Particle.BLOCK_CRACK
+				|| particle == Particle.BLOCK_DUST
+				|| particle == Particle.FALLING_DUST) {
 			try {
 				particleData = material.createBlockData();
 			} catch (Exception e) {
@@ -89,17 +91,12 @@ public class WingParticle {
 
 		if (wingSide.equals("left")) yaw = (float) (yaw + angle);
 		if (wingSide.equals("right")) yaw = (float) (yaw - angle);
-
 		yaw = (float) (yaw * Math.PI) / 180;
-
 		double x = Math.cos(yaw) * distance;
 		double z = Math.sin(yaw) * distance;
-
 		for (Player player : players) {
-
 			if (player.getGameMode().equals(GameMode.SPECTATOR) || isVanished(player))
 				return;
-
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}
@@ -107,7 +104,8 @@ public class WingParticle {
 	//vanish check
 	private boolean isVanished(Player player) {
 		for (MetadataValue meta : player.getMetadata("vanished")) {
-			if (meta.asBoolean()) return true;
+			if (meta.asBoolean())
+				return true;
 		}
 		return false;
 	}

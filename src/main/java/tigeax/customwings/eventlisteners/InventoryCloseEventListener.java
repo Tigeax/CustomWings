@@ -6,8 +6,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 
 /*
  * This EventLisnter listends when a CustomWings Editor GUI is closed

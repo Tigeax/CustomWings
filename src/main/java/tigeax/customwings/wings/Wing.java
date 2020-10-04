@@ -1,11 +1,10 @@
-package tigeax.customwings.main;
+package tigeax.customwings.wings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -21,6 +20,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 
 /*
  * Class containing all information about a wing
@@ -70,11 +71,9 @@ public class Wing {
 	public Wing(String wingID, CustomWings plugin) {
 		this.plugin = plugin;
 		this.ID = wingID;
-
 		this.config = plugin.getCWConfig();
 		this.playersWithWingActive = new ArrayList<>();
 		this.wingPreview = new HashMap<>();
-
 		this.load();
 	}
 
@@ -124,6 +123,9 @@ public class Wing {
 
 		try {
 			buyMessage = getConfigFileWing().getString("buyMessage");
+			if (buyMessage == null) {
+				buyMessage = "&3You just bought "+guiItemName;
+			}
 		} catch (NullPointerException e) {
 			// If buy message was not supplied set it to this
 			buyMessage = "&3You just bought "+guiItemName;

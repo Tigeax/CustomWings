@@ -8,9 +8,9 @@ import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Settings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
 
 public class EditorSelectMainGUISize {
 

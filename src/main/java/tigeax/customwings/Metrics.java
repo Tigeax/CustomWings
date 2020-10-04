@@ -1,4 +1,4 @@
-package tigeax.customwings.main;
+package tigeax.customwings;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
-
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;

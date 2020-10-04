@@ -9,9 +9,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Wing;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.wings.Wing;
 
 /*
  * Main command for CustomWings

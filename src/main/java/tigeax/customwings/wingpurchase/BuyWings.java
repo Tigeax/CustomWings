@@ -2,8 +2,8 @@ package tigeax.customwings.wingpurchase;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Wing;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.wings.Wing;
 
 public class BuyWings {
 
@@ -22,11 +22,10 @@ public class BuyWings {
                     if (BuyTokenManager.makePayment(wing.getWingPrice(), player)) {
                         CustomWings.getPermissions().playerAdd(null, player, "customwings.wing."+wing.getID().toLowerCase());
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
-                        return true;
                     } else {
                         player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
-                        return true;
                     }
+                    return true;
                 }
                 return false;
             } else if (priceType.equalsIgnoreCase("economy")) {
@@ -35,11 +34,10 @@ public class BuyWings {
                     CustomWings.getEconomy().withdrawPlayer(player, wing.getWingPrice() );
                     CustomWings.getPermissions().playerAdd(null, player, "customwings.wing." + wing.getID().toLowerCase());
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
-                    return true;
                 } else {
                     player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
-                    return true;
                 }
+                return true;
             }
             return false;
         } catch (NullPointerException e) {
