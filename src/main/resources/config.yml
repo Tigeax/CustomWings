@@ -30,7 +30,7 @@ mainGUI:
       slot: 49
 
   filterItem:
-    slot: 46
+    slot: 45
     noFilter:
       name: "&fNo filter"
       lore: []

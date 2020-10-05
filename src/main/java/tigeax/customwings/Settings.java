@@ -75,7 +75,7 @@ public class Settings {
         ItemMeta removeWingItemMeta = removeWingItem.getItemMeta();
         removeWingItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, "CW:REMOVE_WING");
         removeWingItem.setItemMeta(removeWingItemMeta);
-        removeWingSlot = config.getInt("mainGUI.removeWingItem.slot");
+        removeWingSlot = config.getInt("mainGUI.removeWingItem.slot", 53);
 
         hideWingsToggleONItem = getItem(config.getString("mainGUI.hideWingsToggleItem.nameON"), config.getString("mainGUI.hideWingsToggleItem.materialON"), null);
         ItemMeta hideWingsToggleONItemMeta = hideWingsToggleONItem.getItemMeta();
@@ -87,24 +87,24 @@ public class Settings {
         hideWingsToggleOFFItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, "CW:HIDE_WINGS_OFF");
         hideWingsToggleOFFItem.setItemMeta(hideWingsToggleOFFItemMeta);
 
-        hideWingsToggleSlot = config.getInt("mainGUI.hideWingsToggleItem.slot");
+        hideWingsToggleSlot = config.getInt("mainGUI.hideWingsToggleItem.slot", 52);
 
-        navigationBackItem = getItem(config.getString("mainGUI.navigationItem.back.name"), config.getString("mainGUI.navigationItem.back.material"), null);
-        navigationBackSlot = config.getInt("mainGUI.navigationItem.back.slot");
+        navigationBackItem = getItem(config.getString("mainGUI.navigationItem.back.name", "&9Previous Page"), config.getString("mainGUI.navigationItem.back.material", "FEATHER"), null);
+        navigationBackSlot = config.getInt("mainGUI.navigationItem.back.slot", 49);
 
-        navigationNextItem = getItem(config.getString("mainGUI.navigationItem.next.name"), config.getString("mainGUI.navigationItem.next.material"), null);
-        navigationNextSlot = config.getInt("mainGUI.navigationItem.next.slot");
+        navigationNextItem = getItem(config.getString("mainGUI.navigationItem.next.name", "&9Next Page"), config.getString("mainGUI.navigationItem.next.material", "FEATHER"), null);
+        navigationNextSlot = config.getInt("mainGUI.navigationItem.next.slot", 50);
 
         editorGUIName = parseColors(config.getString("editorGUI.name"));
 
         editorMainSettingsItem = getItem(config.getString("editorGUI.mainSettingsItem.name"), config.getString("editorGUI.mainSettingsItem.material"), null);
         editorMainSettingsSlot = config.getInt("editorGUI.mainSettingsItem.slot");
 
-        filterNoneItem = getItem(config.getString("mainGUI.filterItem.noFilter.name"), config.getString("mainGUI.filterItem.noFilter.material"), config.getStringList("mainGUI.filterItem.noFilter.lore"));
-        filterOwnedItem = getItem(config.getString("mainGUI.filterItem.ownedWings.name"), config.getString("mainGUI.filterItem.ownedWings.material"), config.getStringList("mainGUI.filterItem.ownedWings.lore"));
-        filterUnownedItem = getItem(config.getString("mainGUI.filterItem.unownedWings.name"), config.getString("mainGUI.filterItem.unownedWings.material"), config.getStringList("mainGUI.filterItem.unownedWings.lore"));
+        filterNoneItem = getItem(config.getString("mainGUI.filterItem.noFilter.name", "&fNo filter"), config.getString("mainGUI.filterItem.noFilter.material", "BARRIER"), config.getStringList("mainGUI.filterItem.noFilter.lore"));
+        filterOwnedItem = getItem(config.getString("mainGUI.filterItem.ownedWings.name", "&aOwned wings"), config.getString("mainGUI.filterItem.ownedWings.material", "LIME_WOOL"), config.getStringList("mainGUI.filterItem.ownedWings.lore"));
+        filterUnownedItem = getItem(config.getString("mainGUI.filterItem.unownedWings.name", "&cUnowned wings"), config.getString("mainGUI.filterItem.unownedWings.material", "RED_WOOL"), config.getStringList("mainGUI.filterItem.unownedWings.lore"));
 
-        filterSlot = config.getInt("mainGUI.filterItem.slot");
+        filterSlot = config.getInt("mainGUI.filterItem.slot", 45);
     }
 
     public int getWingViewDistance() {
