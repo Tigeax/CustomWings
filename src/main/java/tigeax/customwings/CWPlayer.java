@@ -26,6 +26,7 @@ public class CWPlayer {
 
 	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
+	private String wingFilter;
 
 	private SettingType waitingSetting;
 	private Object waitingSettingInfo;
@@ -42,6 +43,7 @@ public class CWPlayer {
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
+		this.wingFilter = "none";
 
 		this.waitingSetting = null;
 		this.waitingSettingInfo = null;
@@ -156,6 +158,14 @@ public class CWPlayer {
 		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
 		this.getPlayer().openInventory(emptyInv);
 		this.getPlayer().closeInventory();
+	}
+
+	public String getWingFilter() {
+		return wingFilter;
+	}
+
+	public void setWingFilter(String filter) {
+		wingFilter = filter;
 	}
 
 }

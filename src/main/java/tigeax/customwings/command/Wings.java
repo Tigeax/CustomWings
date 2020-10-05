@@ -13,6 +13,8 @@ import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.wings.Wing;
 
+import java.util.HashMap;
+
 /*
  * Main command for CustomWings
  */
@@ -75,7 +77,7 @@ public class Wings implements CommandExecutor {
 		}
 
 		Player player = (Player) sender;
-		CustomWings.getCWPlayer(player).openCWGUI(CWGUIType.WINGSELECT);
+		CustomWings.getCWPlayer(player).openCWGUI(CWGUIType.WINGSELECT, 0);
 	}
 
 	// Set a wing for another player

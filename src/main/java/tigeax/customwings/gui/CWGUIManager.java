@@ -2,6 +2,7 @@ package tigeax.customwings.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -86,7 +87,7 @@ public class CWGUIManager {
 	public void openGUI(CWPlayer cwPlayer, CWGUIType cwGUIType, Object info) {
 		switch (cwGUIType) {
 			case WINGSELECT:
-				wingSelectGUI.open(cwPlayer);
+				wingSelectGUI.open(cwPlayer, 0);
 				return;
 			case EDITOR:
 				editorGUI.open(cwPlayer);
@@ -165,13 +166,6 @@ public class CWGUIManager {
 			
 			if (clickedSlot == 4) return;
 		}
-		
-		Player player = cwPlayer.getPlayer();
-		
-		//Open an empty invertory and then close it to make sure they cannot shift click items out of their inventory
-		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
-		player.openInventory(emptyInv);
-		player.closeInventory();
 		
 		switch (guiType) {
 			
