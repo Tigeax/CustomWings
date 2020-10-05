@@ -30,7 +30,7 @@ mainGUI:
       slot: 49
 
   filterItem:
-    slot: 45
+    slot: 46
     noFilter:
       name: "&fNo filter"
       lore: []
@@ -39,12 +39,12 @@ mainGUI:
       name: "&aOwned wings"
       lore:
         - "&7Show only the wings you can use."
-      material: LIME_CONCRETE
+      material: LIME_WOOL
     unownedWings:
       name: "&cUnowned wings"
       lore:
         - "&7Show only the wings you cannot use."
-      material: RED_CONCRETE
+      material: RED_WOOL
     
 #Data for the Editor gui
 editorGUI:

@@ -62,6 +62,22 @@ public class WingSelect {
             toggleWings(cwPlayer);
             return;
         }
+        if (clickedSlot == CustomWings.getSettings().getFilterSlot()) {
+            switch (cwPlayer.getWingFilter()) {
+                default:
+                    cwPlayer.setWingFilter("owned");
+                    displayWings(cwPlayer, 0);
+                    break;
+                case "owned":
+                    cwPlayer.setWingFilter("unowned");
+                    displayWings(cwPlayer, 0);
+                    break;
+                case "unowned":
+                    cwPlayer.setWingFilter("none");
+                    displayWings(cwPlayer, 0);
+                    break;
+            }
+        }
 
         Wing wing;
 
@@ -158,6 +174,7 @@ public class WingSelect {
 
                 gui.clear(settings.getNavigationNextSlot());
                 gui.clear(settings.getNavigationBackSlot());
+                gui.clear(settings.getFilterSlot());
 
                 if (page > 0) {
                     int lastPage = page - 1;
@@ -171,6 +188,7 @@ public class WingSelect {
 
                 switch (cwPlayer.getWingFilter()) {
                     default:
+                        gui.setItem(settings.getFilterSlot(), settings.getFilterNoneItem());
                         for (Wing wing : CustomWings.getWings()) {
                             loops++;
                             if (loops < startLoop) continue;
@@ -184,6 +202,7 @@ public class WingSelect {
                         }
                         break;
                     case "owned":
+                        gui.setItem(settings.getFilterSlot(), settings.getFilterOwnedItem());
                         for (Wing wing : CustomWings.getWings()) {
                             loops++;
                             if (loops < startLoop) continue;
@@ -198,6 +217,7 @@ public class WingSelect {
                         }
                         break;
                     case "unowned":
+                        gui.setItem(settings.getFilterSlot(), settings.getFilterUnownedItem());
                         for (Wing wing : CustomWings.getWings()) {
                             loops++;
                             if (loops < startLoop) continue;
@@ -214,9 +234,6 @@ public class WingSelect {
                 }
             }
         }.runTaskAsynchronously(CustomWings.getPlugin(CustomWings.class));
-
-
-
 	}
 
 	private void toggleWings(CWPlayer cwPlayer) {
