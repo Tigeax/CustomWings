@@ -19,8 +19,6 @@ import tigeax.customwings.gui.guis.EditorWingParticleSettings;
 import tigeax.customwings.gui.guis.EditorWingParticlesSelect;
 import tigeax.customwings.gui.guis.EditorWingSettings;
 import tigeax.customwings.gui.guis.WingSelect;
-import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_13;
-import tigeax.customwings.gui.skullAPI.skullVersions.Skull_1_14_and_up;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.Settings;
@@ -45,7 +43,7 @@ public class CWGUIManager {
 	private EditorSelectSlot editorSelectSlotGUI;
 	private EditorSelectInteger editorSelectIntegerGUI;
 	private EditorSelectDouble editorSelectDoubleGUI;
-	private static Skull skull;
+
 
 	public CWGUIManager() {
 		this.settings = CustomWings.getSettings();
@@ -61,17 +59,6 @@ public class CWGUIManager {
 		this.editorSelectSlotGUI = new EditorSelectSlot();
 		this.editorSelectIntegerGUI = new EditorSelectInteger();
 		this.editorSelectDoubleGUI = new EditorSelectDouble();
-
-		switch (CustomWings.getServerVersion()) {
-			case "v1_13_R1":
-			case "v1_13_R2":
-				skull = new Skull_1_13();
-				break;
-			default:
-				skull = new Skull_1_14_and_up();
-				break;
-				
-		}
 	}
 
 	public void openGUI(CWPlayer cwPlayer, CWGUIType cwGUIType, Object info) {
@@ -277,33 +264,6 @@ public class CWGUIManager {
 		}
 
 		return lore;
-	}
-
-	//----- Skill API -----
-	public interface Skull {
-
-		public ItemStack getCustomSkull(String url);
-	}
-
-	public static ItemStack getPlayerHeadItem(String playerName, String itemName) {
-		return getPlayerHeadItem(playerName, itemName, null);
-	}
-
-	public static ItemStack getPlayerHeadItem(String url, String itemName, Object loreInfo) {
-
-		ItemStack item = skull.getCustomSkull("http://textures.minecraft.net/texture/" + url);
-
-		ItemMeta itemMeta = item.getItemMeta();
-		itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', itemName));
-
-		if (loreInfo != null) {
-			itemMeta.setLore(parseLore("" + loreInfo));
-		}
-
-		item.setItemMeta(itemMeta);
-
-		return item;
-
 	}
 
 }
