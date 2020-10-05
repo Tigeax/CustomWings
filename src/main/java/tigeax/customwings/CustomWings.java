@@ -233,7 +233,6 @@ public class CustomWings extends JavaPlugin {
 		} else {
 			plugin.getLogger().info("CustomWings config.yml found, loading!");
 		}
-
 		try {
 			configFile.load(cFile);
 		} catch (Exception e) {
@@ -246,7 +245,6 @@ public class CustomWings extends JavaPlugin {
 		wings = new ArrayList<>();
 
 		for (String wingID : configFile.getConfigurationSection("wings").getKeys(false)) {
-
 			Wing wing = new Wing(wingID, plugin);
 			wings.add(wing);
 		}
