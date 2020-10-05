@@ -4,9 +4,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.editor.SettingType;
 
 /*
  * This EventListener Listends for when a command is executed by a player
@@ -20,10 +20,13 @@ public class PlayerCommandPreprocessEventListener implements Listener {
 
 		Player player = event.getPlayer();
 		CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+		SettingType waitingSetting = cwPlayer.getWaitingSetting();
 
-		if (cwPlayer.getWaitingSetting() != null) {
+		if (waitingSetting != null) {
 			cwPlayer.setWaitingSetting(null);
-			player.sendMessage(CustomWings.getMessages().getSettingCanceled());
+			if (waitingSetting.isChatInputSetting()) {
+				player.sendMessage(CustomWings.getMessages().getSettingCanceled());
+			}
 		}
 	}
 }

@@ -2,20 +2,12 @@ package tigeax.customwings.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
-import org.bukkit.persistence.PersistentDataType;
 import tigeax.customwings.gui.guis.Editor;
 import tigeax.customwings.gui.guis.EditorMainSettings;
 import tigeax.customwings.gui.guis.EditorSelectDouble;
@@ -42,7 +34,6 @@ import tigeax.customwings.wings.WingParticle;
 public class CWGUIManager {
 	
 	private Settings settings;
-
 	private WingSelect wingSelectGUI;
 	private Editor editorGUI;
 	private EditorMainSettings editorMainSettingsGUI;
@@ -54,7 +45,6 @@ public class CWGUIManager {
 	private EditorSelectSlot editorSelectSlotGUI;
 	private EditorSelectInteger editorSelectIntegerGUI;
 	private EditorSelectDouble editorSelectDoubleGUI;
-
 	private static Skull skull;
 
 	public CWGUIManager() {

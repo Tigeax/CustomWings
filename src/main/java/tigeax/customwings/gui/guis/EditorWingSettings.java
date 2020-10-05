@@ -27,6 +27,7 @@ public class EditorWingSettings {
 	}
 
 	public void open(CWPlayer cwPlayer, Wing wing) {
+
 		String guiName = settings.getEditorGUIName() + " - Wing Settings";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
@@ -34,7 +35,7 @@ public class EditorWingSettings {
 		gui.setItem(4, CWGUIManager.getItem(wing.getGuiItem().getType(), "&f" + wing.getID()));
 
 		gui.setItem(12, CWGUIManager.getItem(Material.DIAMOND_LEGGINGS, "&3Show when moving", wing.getShowWhenMoving()));
-		gui.setItem(14, CWGUIManager.getPlayerHeadItem("cf40942f364f6cbceffcf1151796410286a48b1aeba77243e218026c09cd1", "&3Whitelisted Worlds", wing.getWhitelistedWorldsString()));
+		gui.setItem(14, CWGUIManager.getItem(Material.GRASS_BLOCK, "&3Whitelisted Worlds", wing.getWhitelistedWorldsString()));
 
 		gui.setItem(19, CWGUIManager.getItem(Material.CHEST, "&3Hide in GUI", wing.getHideInGUI()));
 		gui.setItem(20, CWGUIManager.getItem(Material.CHEST, "&3GUI Itemname", wing.getGUIItemName()));
@@ -44,17 +45,19 @@ public class EditorWingSettings {
 		gui.setItem(24, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When Unequipped", wing.getLoreWhenUnequippedString()));
 		gui.setItem(25, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When No Permission", wing.getLoreWhenNoPermissionString()));
 
-		gui.setItem(27, CWGUIManager.getPlayerHeadItem("f4628ace7c3afc61a476dc144893aaa642ba976d952b51ece26abafb896b8", "&3Start Vertical", wing.getStartVertical()));
-		gui.setItem(28, CWGUIManager.getPlayerHeadItem("2671c4c04337c38a5c7f31a5c751f991e96c03df730cdbee99320655c19d", "&3Start Horizontal", wing.getStartHorizontal()));
-		gui.setItem(29, CWGUIManager.getPlayerHeadItem("7472d245b2a8ab25bd4b9d32601d4aba2c53181ad2bde62c8ed71f8cae99543", "&3Distance Between Particles", wing.getDistanceBetweenParticles()));
-		gui.setItem(30, CWGUIManager.getPlayerHeadItem("2579f867a71399957be37a7c2fb941d468523fce9903e9df88d37e1835665", "&3Wing Timer", wing.getWingTimer()));
-		gui.setItem(32, CWGUIManager.getPlayerHeadItem("8073ae547e6daa9d2dc8cb90e78dd1c71cdfadb7401dc167d16819b173283c51", "&3Wing Animation", wing.getWingAnimation()));
-		gui.setItem(33, CWGUIManager.getPlayerHeadItem("70dc9420c14fcab98dcd6f5ad51e8ebe2bb97895976caa70578f73c66dfbd", "&3Wing Flap Speed", wing.getWingFlapSpeed()));
-		gui.setItem(34, CWGUIManager.getPlayerHeadItem("f45c9acea8da71b4f252cd4deb5943f49e7dbc0764274b25a6a6f5875baea3", "&3Start Offset", wing.getStartOffset()));
-		gui.setItem(35, CWGUIManager.getPlayerHeadItem("ad5fcd31287d63e7826ea760a7ed154f685dfdc7f3465732a96e619b2e1347", "&3Stop Offset", wing.getStopOffset()));
+		gui.setItem(27, CWGUIManager.getItem(Material.END_ROD, "&3Start Vertical", wing.getStartVertical()));
+		gui.setItem(28, CWGUIManager.getItem(Material.END_ROD, "&3Start Horizontal", wing.getStartHorizontal()));
+		gui.setItem(29, CWGUIManager.getItem(Material.END_ROD, "&3Distance Between Particles", wing.getDistanceBetweenParticles()));
+		gui.setItem(30, CWGUIManager.getItem(Material.CLOCK, "&3Wing Timer", wing.getWingTimer()));
+
+		gui.setItem(32, CWGUIManager.getItem(Material.DIAMOND, "&3Wing Animation", wing.getWingAnimation()));
+		gui.setItem(33, CWGUIManager.getItem(Material.DIAMOND, "&3Wing Flap Speed", wing.getWingFlapSpeed()));
+		gui.setItem(34, CWGUIManager.getItem(Material.GREEN_TERRACOTTA, "&3Start Offset", wing.getStartOffset()));
+		gui.setItem(35, CWGUIManager.getItem(Material.RED_TERRACOTTA, "&3Stop Offset", wing.getStopOffset()));
 
 		gui.setItem(40, CWGUIManager.getItem(Material.ELYTRA, "&3Particles"));
-		gui.setItem(53, CWGUIManager.getPlayerHeadItem("edf5c2f893bd3f89ca40703ded3e42dd0fbdba6f6768c8789afdff1fa78bf6", "&4Previous page"));
+
+		gui.setItem(53, CWGUIManager.getItem(Material.WHITE_BED, "&4Previous page"));
 
 		cwPlayer.getPlayer().openInventory(gui);
 	}
@@ -164,7 +167,7 @@ public class EditorWingSettings {
 			return;
 		}
 
-		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
+		if (cwPlayer.getWaitingSetting().isInventoryInputSetting()) {
 			cwPlayer.getPlayer().sendMessage(messages.getSelectSettingMaterial());
 			return;
 		}
