@@ -5,18 +5,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+
+import org.bukkit.*;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
@@ -380,11 +377,23 @@ public class Wing {
 			// Skip if the player is more then the wingViewDistance away from the wing
 			if (onlinePlayerLoc.distance(wingLocation) > CustomWings.getSettings().getWingViewDistance()) continue;
 
+			// Hide wings if owner is in spectator or in vanish
+			if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
+
 			playersWhoCanSeeWing.add(onlinePlayer);
 		}
 
 		return playersWhoCanSeeWing;
 
+	}
+
+	//vanish check
+	private boolean isVanished(Player player) {
+		for (MetadataValue meta : player.getMetadata("vanished")) {
+			if (meta.asBoolean())
+				return true;
+		}
+		return false;
 	}
 
 	// Turn the data gotten from the config.yml into a HashMap containing the relative coordinates and the assinged wingParticle
