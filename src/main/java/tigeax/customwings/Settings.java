@@ -188,6 +188,15 @@ public class Settings {
 
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setDisplayName(parseColors(name));
+
+        if (lore != null) {
+            List<String> coloredLore = new ArrayList<>();
+            for (String line : lore) {
+                coloredLore.add(parseColors(line));
+            }
+            itemMeta.setLore(coloredLore);
+        }
+
         item.setItemMeta(itemMeta);
         return item;
     }
