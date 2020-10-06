@@ -11,6 +11,7 @@ import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Pose;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
@@ -362,9 +363,18 @@ public class Wing {
 			// Skip if the player is not in the same world as the wing
 			if (!(onlinePlayer.getWorld() == wingLocation.getWorld())) continue;
 
+			// Hide wings if owner is in spectator or in vanish
+			if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
+
 			// Stop rendering wings for player when they have invisibility potion effect
 			if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
 				continue;
+
+			// Stop rendering wings if player is sleeping
+			if (onlinePlayer.isSleeping()) continue;
+
+			// Stop rendering wings for player that is swimming or crawling
+			if (onlinePlayer.getPose().equals(Pose.SWIMMING)) continue;
 
 			// Add the player himself to the list
 			if (onlinePlayer == wingOwner) {
@@ -374,16 +384,13 @@ public class Wing {
 
 			CWPlayer cwPlayer = CustomWings.getCWPlayer(onlinePlayer);
 
-			// Skip if onlinePlayer doens't want to see other players wings
+			// Skip if onlinePlayer doesn't want to see other players wings
 			if (cwPlayer.getHideOtherPlayerWings()) continue;
 
 			Location onlinePlayerLoc = onlinePlayer.getLocation();
 
 			// Skip if the player is more then the wingViewDistance away from the wing
 			if (onlinePlayerLoc.distance(wingLocation) > CustomWings.getSettings().getWingViewDistance()) continue;
-
-			// Hide wings if owner is in spectator or in vanish
-			if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
 
 			playersWhoCanSeeWing.add(onlinePlayer);
 		}

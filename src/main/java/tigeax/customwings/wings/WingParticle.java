@@ -2,6 +2,7 @@ package tigeax.customwings.wings;
 
 import java.util.ArrayList;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Pose;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.potion.PotionEffectType;
 import tigeax.customwings.CustomWings;
@@ -97,17 +98,18 @@ public class WingParticle {
 		double z = Math.sin(yaw) * distance;
 		for (Player player : players) {
 
-			// Stop rendering wings for player when they have invisibility potion effect
-			if (player.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
-				continue;
-
 			// Stop rendering wings for player if they look down
 			if (player == owner && owner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch() && !owner.isGliding())
 				continue;
 
-			// Stop rendering wings for player is they are invisible
-			if (player.getGameMode().equals(GameMode.SPECTATOR) || isVanished(player))
-				continue;
+			// Stop rendering wings for player that is swimming or crawling
+			if (owner.getPose().equals(Pose.SWIMMING)) continue;
+
+			// Shift wings down when player is sneaking
+			if (owner.isSneaking() || owner.isInsideVehicle() || owner.isGliding()) {
+				loc = loc.add(0, -0.2, 0);
+			}
+
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}
