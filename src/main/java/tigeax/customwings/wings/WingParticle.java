@@ -96,7 +96,7 @@ public class WingParticle {
 		for (Player player : players) {
 
 			// Shift wings down when player is sneaking
-			if (owner.isSneaking() || owner.isInsideVehicle() || owner.isGliding()) {
+			if (owner.isSneaking() || owner.isGliding()) {
 				loc = loc.add(0, -0.25, 0);
 			}
 
@@ -105,7 +105,7 @@ public class WingParticle {
 				continue;
 
 			// Stop rendering wings for player that is swimming or crawling
-			if (owner.getPose().equals(Pose.SWIMMING)) continue;
+			if (owner.getPose().equals(Pose.SWIMMING) || owner.isInsideVehicle()) continue;
 
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}

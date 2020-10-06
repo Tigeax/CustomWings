@@ -9,9 +9,11 @@ import java.util.UUID;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import tigeax.customwings.command.Wings;
 import tigeax.customwings.editor.EditorConfigManager;
+import tigeax.customwings.eventlisteners.*;
 import tigeax.customwings.gui.CWGUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,12 +23,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
-import tigeax.customwings.eventlisteners.InventoryClickEventListener;
-import tigeax.customwings.eventlisteners.InventoryCloseEventListener;
-import tigeax.customwings.eventlisteners.PlayerCommandPreprocessEventListener;
-import tigeax.customwings.eventlisteners.PlayerJoinEventListener;
-import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
 import tigeax.customwings.wings.*;
 
 /*
@@ -91,6 +87,7 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerQuitEventListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new PlayerMoveListener(), plugin);
 
 		if (getServer().getPluginManager().getPlugin("Vault") != null) {
 			try {

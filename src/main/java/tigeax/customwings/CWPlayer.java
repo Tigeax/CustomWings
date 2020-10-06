@@ -1,5 +1,6 @@
 package tigeax.customwings;
 
+import java.time.Instant;
 import java.util.UUID;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
@@ -33,6 +34,7 @@ public class CWPlayer {
 	private InventoryView lastEditorInvView;
 
 	private boolean isMoving;
+	private long lastMove;
 	private BukkitTask movementChecker;
 
 	public CWPlayer(UUID uuid, CustomWings plugin) {
@@ -50,6 +52,7 @@ public class CWPlayer {
 		this.lastEditorInvView = null;
 
 		this.isMoving = false;
+		this.lastMove = Instant.now().getEpochSecond()-1;
 		this.movementChecker = null;
 	}
 
@@ -129,28 +132,27 @@ public class CWPlayer {
 		// Start the runnable
 		movementChecker = new BukkitRunnable() {
 
-			Location lastLocation;
-			Location currentLocation;
-
 			public void run() {
-				
-				currentLocation = getPlayer().getLocation();
 
-				if (lastLocation == null || currentLocation.getWorld() != lastLocation.getWorld()) {
-					lastLocation = currentLocation;
-					return;
+				long now = Instant.now().getEpochSecond();
+				if (now < lastMove+1) {
+					isMoving = true;
+				} else {
+					isMoving = false;
 				}
-				
-				// If the player is moving more then 1 blocks per 0.5 second, the player is moving
-				isMoving = lastLocation.distance(currentLocation) > 1;
 
-				lastLocation = currentLocation;
 			}
-		}.runTaskTimer(plugin, 0, 10); // Check this every .5 seconds
+		}.runTaskTimerAsynchronously(plugin, 0, 2); // Check this every .25 seconds
 	}
 
 	public void stopMovementChecker() {
 		movementChecker.cancel();
+	}
+
+	public void setMoving(long moveTimestamp) {
+		this.lastMove = moveTimestamp;
+
+
 	}
 	
 	public void closeInventory() {

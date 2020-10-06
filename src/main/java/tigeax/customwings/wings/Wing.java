@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import net.minecraft.server.v1_16_R2.EntityLiving;
 import org.bukkit.*;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
 import org.bukkit.inventory.ItemStack;
@@ -327,8 +330,16 @@ public class Wing {
 			double distance = coordinate[0];
 			double height = coordinate[1];
 
-			float yawLeft = loc.getYaw() - degreeOffset;
-			float yawRight = loc.getYaw() + 180 + degreeOffset;
+				float yaw;
+			if (CustomWings.getCWPlayer(owner).isMoving()) {
+				yaw = loc.getYaw();
+				((CraftLivingEntity)owner).getHandle().aA = loc.getYaw();
+			} else {
+				yaw = ((CraftLivingEntity)owner).getHandle().aA;
+			}
+
+			float yawLeft = yaw - degreeOffset;
+			float yawRight = yaw + 180 + degreeOffset;
 
 			Location particleLocLeft = getParticleSpawnLoc(loc, yawLeft, distance, height);
 			Location particleLocRight = getParticleSpawnLoc(loc, yawRight, distance, height);
