@@ -1,10 +1,7 @@
 package tigeax.customwings.wings;
 
 import java.util.ArrayList;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Pose;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.potion.PotionEffectType;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.gui.ParticleItem;
 import org.bukkit.Location;
@@ -98,6 +95,11 @@ public class WingParticle {
 		double z = Math.sin(yaw) * distance;
 		for (Player player : players) {
 
+			// Shift wings down when player is sneaking
+			if (owner.isSneaking() || owner.isInsideVehicle() || owner.isGliding()) {
+				loc = loc.add(0, -0.25, 0);
+			}
+
 			// Stop rendering wings for player if they look down
 			if (player == owner && owner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch() && !owner.isGliding())
 				continue;
@@ -105,22 +107,8 @@ public class WingParticle {
 			// Stop rendering wings for player that is swimming or crawling
 			if (owner.getPose().equals(Pose.SWIMMING)) continue;
 
-			// Shift wings down when player is sneaking
-			if (owner.isSneaking() || owner.isInsideVehicle() || owner.isGliding()) {
-				loc = loc.add(0, -0.2, 0);
-			}
-
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
-	}
-
-	//vanish check
-	private boolean isVanished(Player player) {
-		for (MetadataValue meta : player.getMetadata("vanished")) {
-			if (meta.asBoolean())
-				return true;
-		}
-		return false;
 	}
 
 }
