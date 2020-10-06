@@ -75,12 +75,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.azbh111</groupId>
-            <artifactId>craftbukkit-1.14.3</artifactId>
-            <version>R</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>com.github.Realizedd</groupId>
             <artifactId>TokenManager</artifactId>
             <version>3.2.4</version>

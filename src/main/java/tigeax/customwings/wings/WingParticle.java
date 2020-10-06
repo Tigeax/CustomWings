@@ -3,6 +3,7 @@ package tigeax.customwings.wings;
 import java.util.ArrayList;
 import org.bukkit.GameMode;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.potion.PotionEffectType;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.gui.ParticleItem;
 import org.bukkit.Location;
@@ -85,7 +86,7 @@ public class WingParticle {
 
 	// Spawn the particle at a location for all players specified
 	// wingSide is used to caculate the data for particles that can have direction
-	public void spawnParticle(ArrayList<Player> players, Location loc, String wingSide) {
+	public void spawnParticle(ArrayList<Player> players, Player owner, Location loc, String wingSide) {
 
 		float yaw = loc.getYaw() - 90;
 
@@ -95,8 +96,18 @@ public class WingParticle {
 		double x = Math.cos(yaw) * distance;
 		double z = Math.sin(yaw) * distance;
 		for (Player player : players) {
+
+			// Stop rendering wings for player when they have invisibility potion effect
+			if (player.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
+				continue;
+
+			// Stop rendering wings for player if they look down
+			if (player == owner && owner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch() && !owner.isGliding())
+				continue;
+
+			// Stop rendering wings for player is they are invisible
 			if (player.getGameMode().equals(GameMode.SPECTATOR) || isVanished(player))
-				return;
+				continue;
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}

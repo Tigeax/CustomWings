@@ -2,6 +2,7 @@ package tigeax.customwings;
 
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.Nullable;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +13,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +33,8 @@ public class Settings {
     private String mainGUIName, editorGUIName;
     private ItemStack removeWingItem, hideWingsToggleONItem, hideWingsToggleOFFItem, editorMainSettingsItem,
             navigationNextItem, navigationBackItem, filterNoneItem, filterOwnedItem, filterUnownedItem;
+    private double wingMaxPitch;
+    private boolean invisibilityPotionHidesWing;
 
     public Settings(CustomWings plugin) {
         this.plugin = plugin;
@@ -105,6 +107,10 @@ public class Settings {
         filterUnownedItem = getItem(config.getString("mainGUI.filterItem.unownedWings.name", "&cUnowned wings"), config.getString("mainGUI.filterItem.unownedWings.material", "RED_WOOL"), config.getStringList("mainGUI.filterItem.unownedWings.lore"));
 
         filterSlot = config.getInt("mainGUI.filterItem.slot", 45);
+
+        wingMaxPitch = config.getDouble("wingMaxPitch", 40D);
+
+        invisibilityPotionHidesWing = config.getBoolean("invisibilityPotionHidesWing", true);
     }
 
     public int getWingViewDistance() {
@@ -181,6 +187,14 @@ public class Settings {
 
     public int getFilterSlot() {
         return filterSlot;
+    }
+
+    public double getWingMaxPitch() {
+        return wingMaxPitch;
+    }
+
+    public boolean getInvisPotionHidesWing() {
+        return invisibilityPotionHidesWing;
     }
 
     private ItemStack getItem(String name, String material, @Nullable List<String> lore) {

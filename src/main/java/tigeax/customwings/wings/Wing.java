@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
@@ -281,7 +282,7 @@ public class Wing {
 					Location loc = wingPreview.get(player);
 					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, loc);
 
-					spawnWing(loc, playersToShowWing, offsetDegrees);
+					spawnWing(loc, player, playersToShowWing, offsetDegrees);
 				}
 
 				// Loop through all the players that have the wing active
@@ -308,7 +309,7 @@ public class Wing {
 					Location playerLoc = player.getLocation();
 					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, player.getLocation());
 
-					spawnWing(playerLoc, playersToShowWing, offsetDegrees);
+					spawnWing(playerLoc, player, playersToShowWing, offsetDegrees);
 
 				}
 			}
@@ -316,7 +317,7 @@ public class Wing {
 	}
 
 	// Spawn all the particles of the wing at a certain location for certain players
-	private void spawnWing(Location loc, ArrayList<Player> showTo, float degreeOffset) {
+	private void spawnWing(Location loc, Player owner, ArrayList<Player> showTo, float degreeOffset) {
 
 		// Loop through all the coordinates of the wing and spawn a particle for both the left and right part at that location
 		for (double[] coordinate : particleCoordinates.keySet()) {
@@ -331,8 +332,8 @@ public class Wing {
 			Location particleLocLeft = getParticleSpawnLoc(loc, yawLeft, distance, height);
 			Location particleLocRight = getParticleSpawnLoc(loc, yawRight, distance, height);
 
-			wingParticle.spawnParticle(showTo, particleLocLeft, "left");
-			wingParticle.spawnParticle(showTo, particleLocRight, "right");
+			wingParticle.spawnParticle(showTo, owner, particleLocLeft, "left");
+			wingParticle.spawnParticle(showTo, owner, particleLocRight, "right");
 		}
 	}
 
@@ -360,6 +361,10 @@ public class Wing {
 
 			// Skip if the player is not in the same world as the wing
 			if (!(onlinePlayer.getWorld() == wingLocation.getWorld())) continue;
+
+			// Stop rendering wings for player when they have invisibility potion effect
+			if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
+				continue;
 
 			// Add the player himself to the list
 			if (onlinePlayer == wingOwner) {

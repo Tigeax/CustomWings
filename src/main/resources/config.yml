@@ -1,6 +1,12 @@
 #The distance players have to be within to see each others wings
 wingViewDistance: 30
 
+#Maximum pitch at which wings will render for the player to allow them to look down without obstructing vision
+wingMaxPitch: 40
+
+#Should wings be hidden when player has invisibility effect
+invisibilityPotionHidesWing: true
+
 #All data of the Main gui
 #Changing size and/or slot numbers is your call. It might break if you do it wrong.
 mainGUI:
