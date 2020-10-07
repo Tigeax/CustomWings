@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import tigeax.customwings.command.Wings;
 import tigeax.customwings.editor.EditorConfigManager;
@@ -60,7 +59,8 @@ public class CustomWings extends JavaPlugin {
 		plugin.getLogger().info("Server running on: " + VERSION);
 
 		if (!isServerVersionSupported()) {
-			sendError("CustomWings is not tested on this server version! And therefore might not work.");
+			sendError("CustomWings does not support this server version! Plugin will now disable.");
+			getServer().getPluginManager().disablePlugin(this);
 		}
 		
 		// bStats setup
