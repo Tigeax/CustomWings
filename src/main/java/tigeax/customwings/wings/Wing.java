@@ -5,14 +5,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import net.minecraft.server.v1_16_R2.EntityLiving;
 import org.bukkit.*;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_16_R2.entity.CraftLivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
 import org.bukkit.inventory.ItemStack;
@@ -24,6 +20,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.nms.NMSSupport;
 
 /*
  * Class containing all information about a wing
@@ -329,13 +326,13 @@ public class Wing {
 			WingParticle wingParticle = particleCoordinates.get(coordinate);
 			double distance = coordinate[0];
 			double height = coordinate[1];
+			float yaw;
 
-				float yaw;
 			if (CustomWings.getCWPlayer(owner).isMoving()) {
 				yaw = loc.getYaw();
-				((CraftLivingEntity)owner).getHandle().aA = loc.getYaw();
+				NMSSupport.setBodyRotation(owner, loc.getYaw());
 			} else {
-				yaw = ((CraftLivingEntity)owner).getHandle().aA;
+				yaw = NMSSupport.getBodyRotation(owner);
 			}
 
 			float yawLeft = yaw - degreeOffset;
