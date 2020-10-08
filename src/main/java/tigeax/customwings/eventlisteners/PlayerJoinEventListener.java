@@ -26,7 +26,6 @@ public class PlayerJoinEventListener implements Listener {
 		if (wing == null) return;
 
 		wing.addPlayersWithWingActive(player);
-		cwPlayer.startMovementChecker();
 	}
 
 }

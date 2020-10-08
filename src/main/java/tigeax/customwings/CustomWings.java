@@ -204,7 +204,7 @@ public class CustomWings extends JavaPlugin {
 		CWPlayer cwPlayer = cwPlayerList.get(uuid);
 
 		if (cwPlayer == null) {
-			cwPlayer = new CWPlayer(uuid, plugin);
+			cwPlayer = new CWPlayer(uuid);
 			cwPlayerList.put(uuid, cwPlayer);
 		}
 

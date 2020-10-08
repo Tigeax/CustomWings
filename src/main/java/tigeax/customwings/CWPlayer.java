@@ -6,12 +6,9 @@ import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import tigeax.customwings.wings.Wing;
 
 /*
@@ -20,10 +17,9 @@ import tigeax.customwings.wings.Wing;
 
 public class CWPlayer {
 
-	private final CustomWings plugin;
 	private final CWGUIManager cwGUIManager;
 
-	private final UUID uuid;
+	private final Player player;
 
 	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
@@ -33,15 +29,13 @@ public class CWPlayer {
 	private Object waitingSettingInfo;
 	private InventoryView lastEditorInvView;
 
-	private boolean isMoving;
 	private long lastMove;
-	private BukkitTask movementChecker;
 
-	public CWPlayer(UUID uuid, CustomWings plugin) {
-		this.plugin = plugin;
+	public CWPlayer(UUID uuid) {
+
 		this.cwGUIManager = CustomWings.getCWGUIManager();
 
-		this.uuid = uuid;
+		this.player = Bukkit.getPlayer(uuid);
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
@@ -51,12 +45,10 @@ public class CWPlayer {
 		this.waitingSettingInfo = null;
 		this.lastEditorInvView = null;
 
-		this.isMoving = false;
-		this.lastMove = Instant.now().getEpochSecond()-1;
-		this.movementChecker = null;
+		this.lastMove = 0;
 	}
 
-	public Player getPlayer() { return Bukkit.getPlayer(uuid); }
+	public Player getPlayer() { return player; }
 	
 	public Wing getEquippedWing() { return equippedWing; }
 
@@ -73,8 +65,17 @@ public class CWPlayer {
 	
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
-	
-	public boolean isMoving() { return isMoving; }
+
+	// Checks if player is moving by comparing current timestamp to the timestamp
+	// of last player movement.
+	public boolean isMoving() {
+		Instant instant = Instant.now();
+		long now = instant.getEpochSecond();
+		long milli = instant.getNano();
+		now *= 1000000000L;
+		now += milli;
+		return now < lastMove+49000000;
+	}
 	
 	public SettingType getWaitingSetting() { return waitingSetting; }
 	
@@ -112,47 +113,14 @@ public class CWPlayer {
 
 		this.equippedWing = wing;
 
-		if (this.equippedWing == null) {
-			stopMovementChecker();
-		} else {
+		if (this.equippedWing != null) {
 			this.equippedWing.addPlayersWithWingActive(getPlayer());
-			startMovementChecker();
 		}
 
-	}
-
-	// Start checking if the player is moving
-	public void startMovementChecker() {
-
-		// If a movementChecker is already active, return
-		if (movementChecker != null) {
-			if (!movementChecker.isCancelled()) { return; }
-		}
-
-		// Start the runnable
-		movementChecker = new BukkitRunnable() {
-
-			public void run() {
-
-				long now = Instant.now().getEpochSecond();
-				if (now < lastMove+1) {
-					isMoving = true;
-				} else {
-					isMoving = false;
-				}
-
-			}
-		}.runTaskTimerAsynchronously(plugin, 0, 2); // Check this every .25 seconds
-	}
-
-	public void stopMovementChecker() {
-		movementChecker.cancel();
 	}
 
 	public void setMoving(long moveTimestamp) {
 		this.lastMove = moveTimestamp;
-
-
 	}
 	
 	public void closeInventory() {
