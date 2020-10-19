@@ -1,7 +1,6 @@
 package tigeax.customwings.wings;
 
 import java.util.ArrayList;
-import org.bukkit.entity.Pose;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.gui.ParticleItem;
