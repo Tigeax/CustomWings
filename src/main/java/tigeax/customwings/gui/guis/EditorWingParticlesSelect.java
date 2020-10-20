@@ -6,11 +6,11 @@ import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Settings;
-import tigeax.customwings.main.Wing;
-import tigeax.customwings.main.WingParticle;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
+import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wings.WingParticle;
 
 public class EditorWingParticlesSelect {
 	

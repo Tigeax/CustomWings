@@ -3,7 +3,7 @@ package tigeax.customwings.gui;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 
-import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.CustomWings;
 
 /*
  * List of all the minecraft particles

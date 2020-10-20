@@ -3,16 +3,11 @@ package tigeax.customwings.gui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-
 import tigeax.customwings.gui.guis.Editor;
 import tigeax.customwings.gui.guis.EditorMainSettings;
 import tigeax.customwings.gui.guis.EditorSelectDouble;
@@ -24,11 +19,11 @@ import tigeax.customwings.gui.guis.EditorWingParticleSettings;
 import tigeax.customwings.gui.guis.EditorWingParticlesSelect;
 import tigeax.customwings.gui.guis.EditorWingSettings;
 import tigeax.customwings.gui.guis.WingSelect;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Settings;
-import tigeax.customwings.main.Wing;
-import tigeax.customwings.main.WingParticle;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
+import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wings.WingParticle;
 
 /*
  * Manager class for all the CustomWings GUI'ss
@@ -36,19 +31,19 @@ import tigeax.customwings.main.WingParticle;
 
 public class CWGUIManager {
 	
-	private final Settings settings;
+	private Settings settings;
+	private WingSelect wingSelectGUI;
+	private Editor editorGUI;
+	private EditorMainSettings editorMainSettingsGUI;
+	private EditorWingSettings editorWingSettingsGUI;
+	private EditorWingParticlesSelect editorWingParticlesSelectGUI;
+	private EditorWingParticleSettings editorWingParticleSettingsGUI;
+	private EditorSelectMainGUISize editorSelectGuiSizeGUI;
+	private EditorSelectParticle editorSelectParticleGUI;
+	private EditorSelectSlot editorSelectSlotGUI;
+	private EditorSelectInteger editorSelectIntegerGUI;
+	private EditorSelectDouble editorSelectDoubleGUI;
 
-	private final WingSelect wingSelectGUI;
-	private final Editor editorGUI;
-	private final EditorMainSettings editorMainSettingsGUI;
-	private final EditorWingSettings editorWingSettingsGUI;
-	private final EditorWingParticlesSelect editorWingParticlesSelectGUI;
-	private final EditorWingParticleSettings editorWingParticleSettingsGUI;
-	private final EditorSelectMainGUISize editorSelectGuiSizeGUI;
-	private final EditorSelectParticle editorSelectParticleGUI;
-	private final EditorSelectSlot editorSelectSlotGUI;
-	private final EditorSelectInteger editorSelectIntegerGUI;
-	private final EditorSelectDouble editorSelectDoubleGUI;
 
 	public CWGUIManager() {
 		this.settings = CustomWings.getSettings();
@@ -67,50 +62,43 @@ public class CWGUIManager {
 	}
 
 	public void openGUI(CWPlayer cwPlayer, CWGUIType cwGUIType, Object info) {
-		try {
-			switch (cwGUIType) {
-				case WINGSELECT:
-					wingSelectGUI.open(cwPlayer);
-					return;
-				case EDITOR:
-					editorGUI.open(cwPlayer);
-					return;
-				case EDITORMAINSETTINGS:
-					editorMainSettingsGUI.open(cwPlayer);
-					return;
-				case EDITORWINGSETTINGS:
-					editorWingSettingsGUI.open(cwPlayer, (Wing) info);
-					return;
-				case EDITORWINGPARITCLESSELECT:
-					editorWingParticlesSelectGUI.open(cwPlayer, (Wing) info);
-					return;
-				case EDITORWINGPARTICLESETTINGS:
-					editorWingParticleSettingsGUI.open(cwPlayer, (WingParticle) info);
-					return;
-				case EDITORSELECTGUISIZE:
-					editorSelectGuiSizeGUI.open(cwPlayer);
-					return;
-				case EDITORSELECTPARTICLE:
-					editorSelectParticleGUI.openPage1(cwPlayer);
-					return;
-				case EDITORSELECTSLOT:
-					editorSelectSlotGUI.open(cwPlayer);
-					return;
-				case EDITORSELECTINTEGER:
-					editorSelectIntegerGUI.open(cwPlayer, (Integer) info);
-					return;
-				case EDITORSELECTDOUBLE:
-					editorSelectDoubleGUI.open(cwPlayer, (double) info);
-					return;
-				case LASTEDITORGUI:
-					openLastEditorGUI(cwPlayer);
-					return;
-			}
-		} catch (Exception e) {
-			CustomWings.sendError(e);
-			if (cwPlayer.getPlayer().hasPermission("customwings.editor")) {
+		switch (cwGUIType) {
+			case WINGSELECT:
+				wingSelectGUI.open(cwPlayer, 0);
+				return;
+			case EDITOR:
 				editorGUI.open(cwPlayer);
-			}
+				return;
+			case EDITORMAINSETTINGS:
+				editorMainSettingsGUI.open(cwPlayer);
+				return;
+			case EDITORWINGSETTINGS:
+				editorWingSettingsGUI.open(cwPlayer, (Wing) info);
+				return;
+			case EDITORWINGPARITCLESSELECT:
+				editorWingParticlesSelectGUI.open(cwPlayer, (Wing) info);
+				return;
+			case EDITORWINGPARTICLESETTINGS:
+				editorWingParticleSettingsGUI.open(cwPlayer, (WingParticle) info);
+				return;
+			case EDITORSELECTGUISIZE:
+				editorSelectGuiSizeGUI.open(cwPlayer);
+				return;
+			case EDITORSELECTPARTICLE:
+				editorSelectParticleGUI.openPage1(cwPlayer);
+				return;
+			case EDITORSELECTSLOT:
+				editorSelectSlotGUI.open(cwPlayer);
+				return;
+			case EDITORSELECTINTEGER:
+				editorSelectIntegerGUI.open(cwPlayer, (Integer) info);
+				return;
+			case EDITORSELECTDOUBLE:
+				editorSelectDoubleGUI.open(cwPlayer, (double) info);
+				return;
+			case LASTEDITORGUI:
+				openLastEditorGUI(cwPlayer);
+				return;
 		}
 	}
 
@@ -120,6 +108,9 @@ public class CWGUIManager {
 			return CWGUIType.WINGSELECT;
 
 		switch (parseEditorMenuName(invTitle)) {
+
+			case "":
+				return CWGUIType.EDITOR;
 			case "Main Settings":
 				return CWGUIType.EDITORMAINSETTINGS;
 			case "Wing Settings":
@@ -138,9 +129,8 @@ public class CWGUIManager {
 				return CWGUIType.EDITORSELECTDOUBLE;
 			case "Select Particle":
 				return CWGUIType.EDITORSELECTPARTICLE;
-			default:
-				return CWGUIType.EDITOR;
 		}
+		return null;
 	}
 
 	public void CWGUIClick(CWPlayer cwPlayer, CWGUIType guiType, InventoryView invView, ItemStack clickedItem, Integer clickedSlot) {
@@ -154,17 +144,10 @@ public class CWGUIManager {
 			if (clickedSlot == 4) return;
 		}
 		
-		Player player = cwPlayer.getPlayer();
-		
-		//Open an empty inventory and then close it to make sure they cannot shift click items out of their inventory
-		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
-		player.openInventory(emptyInv);
-		player.closeInventory();
-		
 		switch (guiType) {
 			
 			case WINGSELECT:
-				wingSelectGUI.click(cwPlayer, clickedSlot);
+				wingSelectGUI.click(cwPlayer, clickedSlot, clickedItem);
 				return;
 			case EDITOR:
 				editorGUI.click(cwPlayer, itemName, clickedSlot);
@@ -239,7 +222,8 @@ public class CWGUIManager {
 
 	private Wing getWingFromGUI(InventoryView invView) {
 		String wingID = ChatColor.stripColor(invView.getTopInventory().getItem(4).getItemMeta().getDisplayName());
-		return CustomWings.getWingByID(wingID);
+		Wing wing = CustomWings.getWingByID(wingID);
+		return wing;
 	}
 
 	private WingParticle getWingParticleFromGUI(InventoryView invView) {

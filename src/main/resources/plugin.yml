@@ -1,5 +1,5 @@
 name: ${pom.name}
-main: tigeax.customwings.main.CustomWings
+main: tigeax.customwings.CustomWings
 author: Tigeax
 version: ${pom.version}
 api-version: 1.13

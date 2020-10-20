@@ -1,9 +1,8 @@
-package tigeax.customwings.main;
+package tigeax.customwings.wings;
 
 import java.util.ArrayList;
-
-import org.bukkit.GameMode;
-import org.bukkit.metadata.MetadataValue;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 import tigeax.customwings.gui.ParticleItem;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -11,6 +10,7 @@ import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import tigeax.customwings.nms.NMSSupport;
 
 /*
  * Class containing all information about a wingParticle
@@ -48,7 +48,9 @@ public class WingParticle {
 			particleData = dustOptions;
 		}
 
-		if (particle == Particle.BLOCK_CRACK || particle == Particle.BLOCK_DUST || particle == Particle.FALLING_DUST) {
+		if (particle == Particle.BLOCK_CRACK
+				|| particle == Particle.BLOCK_DUST
+				|| particle == Particle.FALLING_DUST) {
 			try {
 				particleData = material.createBlockData();
 			} catch (Exception e) {
@@ -83,33 +85,34 @@ public class WingParticle {
 
 	// Spawn the particle at a location for all players specified
 	// wingSide is used to caculate the data for particles that can have direction
-	public void spawnParticle(ArrayList<Player> players, Location loc, String wingSide) {
+	public void spawnParticle(ArrayList<Player> players, Player owner, Location loc, String wingSide) {
 
-		float yaw = loc.getYaw() - 90;
+		CWPlayer cwPlayer = CustomWings.getCWPlayer(owner);
+		float yaw;
+		if (cwPlayer.isMoving()) {
+			yaw = owner.getLocation().getYaw() - 90;
+		} else {
+			yaw = NMSSupport.getBodyRotation(owner) - 90;
+		}
 
-		if (wingSide.equals("left")) yaw = (float) (yaw + angle);
-		if (wingSide.equals("right")) yaw = (float) (yaw - angle);
-
+		if (wingSide.equals("left")) yaw = (yaw + angle);
+		if (wingSide.equals("right")) yaw = (yaw - angle);
 		yaw = (float) (yaw * Math.PI) / 180;
-
 		double x = Math.cos(yaw) * distance;
 		double z = Math.sin(yaw) * distance;
-
 		for (Player player : players) {
 
-			if (player.getGameMode().equals(GameMode.SPECTATOR) || isVanished(player))
-				return;
+			// Shift wings down when player is sneaking
+			if (owner.isSneaking() && !owner.isFlying() || owner.isGliding()) {
+				loc = loc.add(0, -0.25, 0);
+			}
+
+			// Stop rendering wings for player if they look down
+			if (player == owner && owner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch() && !owner.isGliding())
+				continue;
 
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
-	}
-
-	//vanish check
-	private boolean isVanished(Player player) {
-		for (MetadataValue meta : player.getMetadata("vanished")) {
-			if (meta.asBoolean()) return true;
-		}
-		return false;
 	}
 
 }

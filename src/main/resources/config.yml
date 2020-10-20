@@ -1,7 +1,14 @@
 #The distance players have to be within to see each others wings
 wingViewDistance: 30
 
+#Maximum pitch at which wings will render for the player to allow them to look down without obstructing vision
+wingMaxPitch: 40
+
+#Should wings be hidden when player has invisibility effect
+invisibilityPotionHidesWing: true
+
 #All data of the Main gui
+#Changing size and/or slot numbers is your call. It might break if you do it wrong.
 mainGUI:
   name: "&c&lWing selector"
   size: 54
@@ -17,6 +24,33 @@ mainGUI:
     materialON: GREEN_STAINED_GLASS
     materialOFF: RED_STAINED_GLASS
     slot: 52
+
+  navigationItem:
+    next:
+      name: "&9Next Page"
+      material: FEATHER
+      slot: 50
+    back:
+      name: "&9Previous Page"
+      material: FEATHER
+      slot: 49
+
+  filterItem:
+    slot: 45
+    noFilter:
+      name: "&fNo filter"
+      lore: []
+      material: BARRIER
+    ownedWings:
+      name: "&aOwned wings"
+      lore:
+        - "&7Show only the wings you can use."
+      material: LIME_WOOL
+    unownedWings:
+      name: "&cUnowned wings"
+      lore:
+        - "&7Show only the wings you cannot use."
+      material: RED_WOOL
     
 #Data for the Editor gui
 editorGUI:

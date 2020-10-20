@@ -4,8 +4,8 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.Wing;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.wings.Wing;
 
 /*
  * This Event is fired whenever a player equips a wing trough the selectWing GUI

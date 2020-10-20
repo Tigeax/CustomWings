@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 
 /*
  * This EventListener Listends for when a player leaves the game
@@ -26,7 +26,6 @@ public class PlayerQuitEventListener implements Listener {
 
 		if (cwPlayer.getEquippedWing() != null) {
 			cwPlayer.getEquippedWing().removePlayersWithWingActive(player);
-			cwPlayer.stopMovementChecker();
 			cwPlayer.getEquippedWing().removeFromPreview(player);
 			cwPlayer.setWaitingSetting(null);
 		}

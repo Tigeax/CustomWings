@@ -5,9 +5,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Wing;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.wings.Wing;
 
 /*
  * This EventListener Listends for when a player joins
@@ -26,7 +26,6 @@ public class PlayerJoinEventListener implements Listener {
 		if (wing == null) return;
 
 		wing.addPlayersWithWingActive(player);
-		cwPlayer.startMovementChecker();
 	}
 
 }

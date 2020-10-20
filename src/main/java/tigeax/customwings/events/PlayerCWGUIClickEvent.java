@@ -7,7 +7,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
-import tigeax.customwings.main.CWPlayer;
+import tigeax.customwings.CWPlayer;
 
 /*
  * This Event will fire whenever a Player clicks an item in a CustomWings GUI

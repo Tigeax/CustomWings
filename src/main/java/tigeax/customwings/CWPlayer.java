@@ -1,17 +1,15 @@
-package tigeax.customwings.main;
+package tigeax.customwings;
 
+import java.time.Instant;
 import java.util.UUID;
-
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
+import tigeax.customwings.wings.Wing;
 
 /*
  * Class made for every player interacting with the plugin
@@ -19,39 +17,38 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class CWPlayer {
 
-	private final CustomWings plugin;
 	private final CWGUIManager cwGUIManager;
 
-	private final UUID uuid;
+	private final Player player;
 
 	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
+	private String wingFilter;
 
 	private SettingType waitingSetting;
 	private Object waitingSettingInfo;
 	private InventoryView lastEditorInvView;
 
-	private boolean isMoving;
-	private BukkitTask movementChecker;
+	private long lastMove;
 
-	public CWPlayer(UUID uuid, CustomWings plugin) {
-		this.plugin = plugin;
+	public CWPlayer(UUID uuid) {
+
 		this.cwGUIManager = CustomWings.getCWGUIManager();
 
-		this.uuid = uuid;
+		this.player = Bukkit.getPlayer(uuid);
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
+		this.wingFilter = "none";
 
 		this.waitingSetting = null;
 		this.waitingSettingInfo = null;
 		this.lastEditorInvView = null;
 
-		this.isMoving = false;
-		this.movementChecker = null;
+		this.lastMove = 0;
 	}
 
-	public Player getPlayer() { return Bukkit.getPlayer(uuid); }
+	public Player getPlayer() { return player; }
 	
 	public Wing getEquippedWing() { return equippedWing; }
 
@@ -68,8 +65,17 @@ public class CWPlayer {
 	
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
-	
-	public boolean isMoving() { return isMoving; }
+
+	// Checks if player is moving by comparing current timestamp to the timestamp
+	// of last player movement.
+	public boolean isMoving() {
+		Instant instant = Instant.now();
+		long now = instant.getEpochSecond();
+		long milli = instant.getNano();
+		now *= 1000000000L;
+		now += milli;
+		return now < lastMove+49000000;
+	}
 	
 	public SettingType getWaitingSetting() { return waitingSetting; }
 	
@@ -107,48 +113,14 @@ public class CWPlayer {
 
 		this.equippedWing = wing;
 
-		if (this.equippedWing == null) {
-			stopMovementChecker();
-		} else {
+		if (this.equippedWing != null) {
 			this.equippedWing.addPlayersWithWingActive(getPlayer());
-			startMovementChecker();
 		}
 
 	}
 
-	// Start checking if the player is moving
-	public void startMovementChecker() {
-
-		// If a movementChecker is already active, return
-		if (movementChecker != null) {
-			if (!movementChecker.isCancelled()) { return; }
-		}
-
-		// Start the runnable
-		movementChecker = new BukkitRunnable() {
-
-			Location lastLocation;
-			Location currentLocation;
-
-			public void run() {
-				
-				currentLocation = getPlayer().getLocation();
-
-				if (lastLocation == null || currentLocation.getWorld() != lastLocation.getWorld()) {
-					lastLocation = currentLocation;
-					return;
-				}
-				
-				// If the player is moving more then 1 blocks per 0.5 second, the player is moving
-				isMoving = lastLocation.distance(currentLocation) > 1;
-
-				lastLocation = currentLocation;
-			}
-		}.runTaskTimer(plugin, 0, 10); // Check this every .5 seconds
-	}
-
-	public void stopMovementChecker() {
-		movementChecker.cancel();
+	public void setMoving(long moveTimestamp) {
+		this.lastMove = moveTimestamp;
 	}
 	
 	public void closeInventory() {
@@ -156,6 +128,14 @@ public class CWPlayer {
 		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
 		this.getPlayer().openInventory(emptyInv);
 		this.getPlayer().closeInventory();
+	}
+
+	public String getWingFilter() {
+		return wingFilter;
+	}
+
+	public void setWingFilter(String filter) {
+		wingFilter = filter;
 	}
 
 }

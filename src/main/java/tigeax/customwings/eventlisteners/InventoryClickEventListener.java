@@ -12,8 +12,8 @@ import org.bukkit.inventory.ItemStack;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.events.PlayerCWGUIClickEvent;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
 
 /*
  * This EventListener gets the value from a players inventory when we are waiting from a chat input from a player

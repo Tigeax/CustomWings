@@ -2,9 +2,9 @@ package tigeax.customwings.gui.guis;
 
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.main.CWPlayer;
-import tigeax.customwings.main.CustomWings;
-import tigeax.customwings.main.Settings;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;

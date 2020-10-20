@@ -1,26 +1,26 @@
-package tigeax.customwings.main;
+package tigeax.customwings.wings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import org.bukkit.*;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Pose;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.nms.NMSSupport;
 
 /*
  * Class containing all information about a wing
@@ -70,26 +70,24 @@ public class Wing {
 	public Wing(String wingID, CustomWings plugin) {
 		this.plugin = plugin;
 		this.ID = wingID;
-
 		this.config = plugin.getCWConfig();
 		this.playersWithWingActive = new ArrayList<>();
 		this.wingPreview = new HashMap<>();
-
 		this.load();
 	}
 
 	public void reload() {
 		if (wingRunnable != null) wingRunnable.cancel(); //Temperatry stop the runnable
-		
+
 		CustomWings.setupConfig();
 		load();
-		
+
 		if (wingRunnable != null) startWingRunnable(); //Restart the runnable again with the (possibly new) settings
 	}
 
 	// Get all the wing data from the config and parse them if needed
 	private void load() {
-		
+
 		this.config = plugin.getCWConfig();
 
 		hideInGUI = Boolean.parseBoolean(getConfigFileWing().getString("guiItem.hideInGUI"));
@@ -124,6 +122,9 @@ public class Wing {
 
 		try {
 			buyMessage = getConfigFileWing().getString("buyMessage");
+			if (buyMessage == null) {
+				buyMessage = "&3You just bought "+guiItemName;
+			}
 		} catch (NullPointerException e) {
 			// If buy message was not supplied set it to this
 			buyMessage = "&3You just bought "+guiItemName;
@@ -282,7 +283,7 @@ public class Wing {
 					Location loc = wingPreview.get(player);
 					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, loc);
 
-					spawnWing(loc, playersToShowWing, offsetDegrees);
+					spawnWing(loc, player, playersToShowWing, offsetDegrees);
 				}
 
 				// Loop through all the players that have the wing active
@@ -309,7 +310,7 @@ public class Wing {
 					Location playerLoc = player.getLocation();
 					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, player.getLocation());
 
-					spawnWing(playerLoc, playersToShowWing, offsetDegrees);
+					spawnWing(playerLoc, player, playersToShowWing, offsetDegrees);
 
 				}
 			}
@@ -317,7 +318,7 @@ public class Wing {
 	}
 
 	// Spawn all the particles of the wing at a certain location for certain players
-	private void spawnWing(Location loc, ArrayList<Player> showTo, float degreeOffset) {
+	private void spawnWing(Location loc, Player owner, ArrayList<Player> showTo, float degreeOffset) {
 
 		// Loop through all the coordinates of the wing and spawn a particle for both the left and right part at that location
 		for (double[] coordinate : particleCoordinates.keySet()) {
@@ -325,15 +326,23 @@ public class Wing {
 			WingParticle wingParticle = particleCoordinates.get(coordinate);
 			double distance = coordinate[0];
 			double height = coordinate[1];
+			float yaw;
 
-			float yawLeft = loc.getYaw() - degreeOffset;
-			float yawRight = loc.getYaw() + 180 + degreeOffset;
+			if (CustomWings.getCWPlayer(owner).isMoving()) {
+				yaw = loc.getYaw();
+				NMSSupport.setBodyRotation(owner, loc.getYaw());
+			} else {
+				yaw = NMSSupport.getBodyRotation(owner);
+			}
+
+			float yawLeft = yaw - degreeOffset;
+			float yawRight = yaw + 180 + degreeOffset;
 
 			Location particleLocLeft = getParticleSpawnLoc(loc, yawLeft, distance, height);
 			Location particleLocRight = getParticleSpawnLoc(loc, yawRight, distance, height);
 
-			wingParticle.spawnParticle(showTo, particleLocLeft, "left");
-			wingParticle.spawnParticle(showTo, particleLocRight, "right");
+			wingParticle.spawnParticle(showTo, owner, particleLocLeft, "left");
+			wingParticle.spawnParticle(showTo, owner, particleLocRight, "right");
 		}
 	}
 
@@ -362,6 +371,22 @@ public class Wing {
 			// Skip if the player is not in the same world as the wing
 			if (!(onlinePlayer.getWorld() == wingLocation.getWorld())) continue;
 
+			// Hide wings if owner is in spectator or in vanish
+			if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
+
+			// Stop rendering wings for player when they have invisibility potion effect
+			if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
+				continue;
+
+			// Stop rendering wings if player is sleeping
+			if (onlinePlayer.isSleeping()) continue;
+
+			// Stop rendering wings if player is in vehicle
+			if (onlinePlayer.isInsideVehicle()) continue;
+
+			// Stop rendering wings for player that is swimming or crawling
+			if (onlinePlayer.getPose().equals(Pose.SWIMMING)) continue;
+
 			// Add the player himself to the list
 			if (onlinePlayer == wingOwner) {
 				playersWhoCanSeeWing.add(onlinePlayer);
@@ -370,7 +395,7 @@ public class Wing {
 
 			CWPlayer cwPlayer = CustomWings.getCWPlayer(onlinePlayer);
 
-			// Skip if onlinePlayer doens't want to see other players wings
+			// Skip if onlinePlayer doesn't want to see other players wings
 			if (cwPlayer.getHideOtherPlayerWings()) continue;
 
 			Location onlinePlayerLoc = onlinePlayer.getLocation();
@@ -383,6 +408,15 @@ public class Wing {
 
 		return playersWhoCanSeeWing;
 
+	}
+
+	//vanish check
+	private boolean isVanished(Player player) {
+		for (MetadataValue meta : player.getMetadata("vanished")) {
+			if (meta.asBoolean())
+				return true;
+		}
+		return false;
 	}
 
 	// Turn the data gotten from the config.yml into a HashMap containing the relative coordinates and the assinged wingParticle

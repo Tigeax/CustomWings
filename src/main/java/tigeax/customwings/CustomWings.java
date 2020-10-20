@@ -1,4 +1,4 @@
-package tigeax.customwings.main;
+package tigeax.customwings;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +12,7 @@ import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import tigeax.customwings.command.Wings;
 import tigeax.customwings.editor.EditorConfigManager;
+import tigeax.customwings.eventlisteners.*;
 import tigeax.customwings.gui.CWGUIManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,12 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
-import tigeax.customwings.eventlisteners.InventoryClickEventListener;
-import tigeax.customwings.eventlisteners.InventoryCloseEventListener;
-import tigeax.customwings.eventlisteners.PlayerCommandPreprocessEventListener;
-import tigeax.customwings.eventlisteners.PlayerJoinEventListener;
-import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
+import tigeax.customwings.wings.*;
 
 /*
  * Main class of the CustomWings plugin
@@ -63,7 +59,8 @@ public class CustomWings extends JavaPlugin {
 		plugin.getLogger().info("Server running on: " + VERSION);
 
 		if (!isServerVersionSupported()) {
-			sendError("CustomWings is not tested on this server version! And therefore might not work.");
+			sendError("CustomWings does not support this server version! Plugin will now disable.");
+			getServer().getPluginManager().disablePlugin(this);
 		}
 		
 		// bStats setup
@@ -90,6 +87,7 @@ public class CustomWings extends JavaPlugin {
 		Bukkit.getPluginManager().registerEvents(new PlayerCommandPreprocessEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerJoinEventListener(), plugin);
 		Bukkit.getPluginManager().registerEvents(new PlayerQuitEventListener(), plugin);
+		Bukkit.getPluginManager().registerEvents(new PlayerMoveListener(), plugin);
 
 		if (getServer().getPluginManager().getPlugin("Vault") != null) {
 			try {
@@ -206,7 +204,7 @@ public class CustomWings extends JavaPlugin {
 		CWPlayer cwPlayer = cwPlayerList.get(uuid);
 
 		if (cwPlayer == null) {
-			cwPlayer = new CWPlayer(uuid, plugin);
+			cwPlayer = new CWPlayer(uuid);
 			cwPlayerList.put(uuid, cwPlayer);
 		}
 
@@ -215,7 +213,7 @@ public class CustomWings extends JavaPlugin {
 
 	private boolean isServerVersionSupported() {
 
-		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1");
+		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1", "v1_16_R2");
 
 		return supportedVersions.contains(VERSION);
 	}
@@ -232,7 +230,6 @@ public class CustomWings extends JavaPlugin {
 		} else {
 			plugin.getLogger().info("CustomWings config.yml found, loading!");
 		}
-
 		try {
 			configFile.load(cFile);
 		} catch (Exception e) {
@@ -245,7 +242,6 @@ public class CustomWings extends JavaPlugin {
 		wings = new ArrayList<>();
 
 		for (String wingID : configFile.getConfigurationSection("wings").getKeys(false)) {
-
 			Wing wing = new Wing(wingID, plugin);
 			wings.add(wing);
 		}
