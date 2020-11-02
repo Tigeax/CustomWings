@@ -213,7 +213,7 @@ public class CustomWings extends JavaPlugin {
 
 	private boolean isServerVersionSupported() {
 
-		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1", "v1_16_R2");
+		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1", "v1_16_R2", "v1_16_R3");
 
 		return supportedVersions.contains(VERSION);
 	}

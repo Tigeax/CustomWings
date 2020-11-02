@@ -37,6 +37,7 @@ public class NMSSupport {
 
     private static String getBodyRotationField(String version) {
         switch (version) {
+            case "v1_16_R3":
             case "v1_16_R2":
                 return "aA";
             case "v1_16_R1":
