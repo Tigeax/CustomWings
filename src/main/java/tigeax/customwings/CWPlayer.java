@@ -51,9 +51,7 @@ public class CWPlayer {
 		this.waitingSettingInfo = null;
 		this.lastEditorInvView = null;
 
-		this.isMoving = false;
 		this.lastMove = Instant.now().getEpochSecond()-1;
-		this.movementChecker = null;
 	}
 
 	public Player getPlayer() { return Bukkit.getPlayer(uuid); }
@@ -73,8 +71,15 @@ public class CWPlayer {
 	
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
-	
-	public boolean isMoving() { return isMoving; }
+
+	public boolean isMoving() {
+		Instant instant = Instant.now();
+		long now = instant.getEpochSecond();
+		long milli = instant.getNano();
+		now *= 1000000000L;
+		now += milli;
+		return now < lastMove+20000000;
+	}
 	
 	public SettingType getWaitingSetting() { return waitingSetting; }
 	
@@ -112,47 +117,14 @@ public class CWPlayer {
 
 		this.equippedWing = wing;
 
-		if (this.equippedWing == null) {
-			stopMovementChecker();
-		} else {
+		if (this.equippedWing != null) {
 			this.equippedWing.addPlayersWithWingActive(getPlayer());
-			startMovementChecker();
 		}
 
-	}
-
-	// Start checking if the player is moving
-	public void startMovementChecker() {
-
-		// If a movementChecker is already active, return
-		if (movementChecker != null) {
-			if (!movementChecker.isCancelled()) { return; }
-		}
-
-		// Start the runnable
-		movementChecker = new BukkitRunnable() {
-
-			public void run() {
-
-				long now = Instant.now().getEpochSecond();
-				if (now < lastMove+1) {
-					isMoving = true;
-				} else {
-					isMoving = false;
-				}
-
-			}
-		}.runTaskTimerAsynchronously(plugin, 0, 2); // Check this every .25 seconds
-	}
-
-	public void stopMovementChecker() {
-		movementChecker.cancel();
 	}
 
 	public void setMoving(long moveTimestamp) {
 		this.lastMove = moveTimestamp;
-
-
 	}
 	
 	public void closeInventory() {

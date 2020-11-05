@@ -104,9 +104,6 @@ public class WingParticle {
 			if (player == owner && owner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch() && !owner.isGliding())
 				continue;
 
-			// Stop rendering wings for player that is swimming or crawling
-			if (owner.getPose().equals(Pose.SWIMMING) || owner.isInsideVehicle()) continue;
-
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}
