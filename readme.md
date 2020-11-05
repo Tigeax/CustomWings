@@ -4,7 +4,8 @@
 
 [Tigeax's CustomWings Plugin]: https://www.spigotmc.org/resources/customwings-1-13-1-16-1.59912/
 
-[![](https://jitpack.io/v/YouHaveTrouble/CustomWings.svg)](https://jitpack.io/#YouHaveTrouble/CustomWings)
+[![](https://jitpack.io/v/tigeax/customwings.svg)](https://jitpack.io/#tigeax/customwings)
+
 
 ## Maven Dependency:
 

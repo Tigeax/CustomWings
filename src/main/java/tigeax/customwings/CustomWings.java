@@ -59,7 +59,8 @@ public class CustomWings extends JavaPlugin {
 		plugin.getLogger().info("Server running on: " + VERSION);
 
 		if (!isServerVersionSupported()) {
-			sendError("CustomWings is not tested on this server version! And therefore might not work.");
+			sendError("CustomWings does not support this server version! Plugin will now disable.");
+			getServer().getPluginManager().disablePlugin(this);
 		}
 		
 		// bStats setup
@@ -203,7 +204,7 @@ public class CustomWings extends JavaPlugin {
 		CWPlayer cwPlayer = cwPlayerList.get(uuid);
 
 		if (cwPlayer == null) {
-			cwPlayer = new CWPlayer(uuid, plugin);
+			cwPlayer = new CWPlayer(uuid);
 			cwPlayerList.put(uuid, cwPlayer);
 		}
 

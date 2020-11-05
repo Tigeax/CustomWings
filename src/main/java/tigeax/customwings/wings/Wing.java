@@ -78,16 +78,16 @@ public class Wing {
 
 	public void reload() {
 		if (wingRunnable != null) wingRunnable.cancel(); //Temperatry stop the runnable
-		
+
 		CustomWings.setupConfig();
 		load();
-		
+
 		if (wingRunnable != null) startWingRunnable(); //Restart the runnable again with the (possibly new) settings
 	}
 
 	// Get all the wing data from the config and parse them if needed
 	private void load() {
-		
+
 		this.config = plugin.getCWConfig();
 
 		hideInGUI = Boolean.parseBoolean(getConfigFileWing().getString("guiItem.hideInGUI"));
@@ -383,6 +383,9 @@ public class Wing {
 
 			// Stop rendering wings if player is sleeping
 			if (onlinePlayer.isSleeping()) continue;
+
+			// Stop rendering wings if player is in vehicle
+			if (onlinePlayer.isInsideVehicle()) continue;
 
 			// Stop rendering wings for player that is swimming or crawling
 			if (onlinePlayer.getPose().equals(Pose.SWIMMING)) continue;
