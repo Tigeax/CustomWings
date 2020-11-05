@@ -6,12 +6,9 @@ import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import tigeax.customwings.wings.Wing;
 
 /*
@@ -20,7 +17,6 @@ import tigeax.customwings.wings.Wing;
 
 public class CWPlayer {
 
-	private final CustomWings plugin;
 	private final CWGUIManager cwGUIManager;
 
 	private final UUID uuid;
@@ -33,12 +29,9 @@ public class CWPlayer {
 	private Object waitingSettingInfo;
 	private InventoryView lastEditorInvView;
 
-	private boolean isMoving;
 	private long lastMove;
-	private BukkitTask movementChecker;
 
-	public CWPlayer(UUID uuid, CustomWings plugin) {
-		this.plugin = plugin;
+	public CWPlayer(UUID uuid) {
 		this.cwGUIManager = CustomWings.getCWGUIManager();
 
 		this.uuid = uuid;
