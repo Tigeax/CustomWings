@@ -13,8 +13,6 @@ import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.wings.Wing;
 
-import java.util.HashMap;
-
 /*
  * Main command for CustomWings
  */
