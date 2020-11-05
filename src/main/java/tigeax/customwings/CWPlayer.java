@@ -19,7 +19,7 @@ public class CWPlayer {
 
 	private final CWGUIManager cwGUIManager;
 
-	private final Player player;
+	private final UUID uuid;
 
 	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
@@ -32,10 +32,9 @@ public class CWPlayer {
 	private long lastMove;
 
 	public CWPlayer(UUID uuid) {
-
 		this.cwGUIManager = CustomWings.getCWGUIManager();
 
-		this.player = Bukkit.getPlayer(uuid);
+		this.uuid = uuid;
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
@@ -45,10 +44,10 @@ public class CWPlayer {
 		this.waitingSettingInfo = null;
 		this.lastEditorInvView = null;
 
-		this.lastMove = 0;
+		this.lastMove = Instant.now().getEpochSecond()-1;
 	}
 
-	public Player getPlayer() { return player; }
+	public Player getPlayer() { return Bukkit.getPlayer(uuid); }
 	
 	public Wing getEquippedWing() { return equippedWing; }
 
@@ -66,15 +65,13 @@ public class CWPlayer {
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
 
-	// Checks if player is moving by comparing current timestamp to the timestamp
-	// of last player movement.
 	public boolean isMoving() {
 		Instant instant = Instant.now();
 		long now = instant.getEpochSecond();
 		long milli = instant.getNano();
 		now *= 1000000000L;
 		now += milli;
-		return now < lastMove+49000000;
+		return now < lastMove+20000000;
 	}
 	
 	public SettingType getWaitingSetting() { return waitingSetting; }

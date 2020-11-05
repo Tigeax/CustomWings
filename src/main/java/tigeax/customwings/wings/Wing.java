@@ -371,6 +371,9 @@ public class Wing {
 			// Skip if the player is not in the same world as the wing
 			if (!(onlinePlayer.getWorld() == wingLocation.getWorld())) continue;
 
+			// Skip if the owner is dead
+			if (wingOwner.isDead()) continue;
+
 			// Hide wings if owner is in spectator or in vanish
 			if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
 
@@ -386,6 +389,9 @@ public class Wing {
 
 			// Stop rendering wings for player that is swimming or crawling
 			if (onlinePlayer.getPose().equals(Pose.SWIMMING)) continue;
+
+			// Stop rendering wings if player is in vehicle
+			if (onlinePlayer.isInsideVehicle()) continue;
 
 			// Add the player himself to the list
 			if (onlinePlayer == wingOwner) {
