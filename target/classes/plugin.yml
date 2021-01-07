@@ -1,0 +1,23 @@
+name: CustomWings
+main: tigeax.customwings.CustomWings
+author: Tigeax
+version: 3.6.2
+api-version: 1.13
+softdepend:
+  - Vault
+  - TokenManager
+commands:
+  wings:
+    aliases: [w]
+
+permissions:
+    customwings.command:
+        default: op
+    customwings.setwing:
+        default: op
+    customwings.reload:
+        default: op
+    customwings.editor:
+        default: op
+    customwings.wing.*:
+      default: op
