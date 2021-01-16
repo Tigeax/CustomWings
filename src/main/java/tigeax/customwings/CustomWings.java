@@ -1,7 +1,6 @@
 package tigeax.customwings;
 
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.*;
 
@@ -50,7 +49,7 @@ public class CustomWings extends JavaPlugin {
 
 	private static boolean vault = false;
 
-	private static int spigotResourceId = 59912;
+	private static final int spigotResourceId = 59912;
 
 	@Override
 	public void onEnable() {
