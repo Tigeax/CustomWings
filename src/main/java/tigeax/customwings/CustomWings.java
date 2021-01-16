@@ -1,15 +1,14 @@
 package tigeax.customwings;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.*;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.plugin.RegisteredServiceProvider;
+import org.bukkit.util.Consumer;
 import tigeax.customwings.command.Wings;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.eventlisteners.*;
@@ -51,6 +50,8 @@ public class CustomWings extends JavaPlugin {
 
 	private static boolean vault = false;
 
+	private static int spigotResourceId = 59912;
+
 	@Override
 	public void onEnable() {
 
@@ -62,12 +63,19 @@ public class CustomWings extends JavaPlugin {
 			sendError("CustomWings does not support this server version! Plugin will now disable.");
 			getServer().getPluginManager().disablePlugin(this);
 		}
-		
+
+		// Check if there is a newer version available on Spigot
+		new UpdateChecker(this, spigotResourceId).getVersion(version -> {
+			if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} You are running the latest CustomWings version");
+			} else {
+				Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} A new CustomWings version is available on Spigot: https://www.spigotmc.org/resources/59912/");
+			}
+		});
+
 		// bStats setup
 		int pluginId = 8227;
-		
-        @SuppressWarnings("unused")
-		Metrics metrics = new Metrics(this, pluginId);
+        new Metrics(this, pluginId);
 
 		setupConfig();
 
@@ -246,4 +254,28 @@ public class CustomWings extends JavaPlugin {
 			wings.add(wing);
 		}
 	}
+
+	private class UpdateChecker {
+
+		private JavaPlugin plugin;
+		private int resourceId;
+
+		public UpdateChecker(JavaPlugin plugin, int resourceId) {
+			this.plugin = plugin;
+			this.resourceId = resourceId;
+		}
+
+		public void getVersion(final Consumer<String> consumer) {
+			Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+				try (InputStream inputStream = new URL("https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream(); Scanner scanner = new Scanner(inputStream)) {
+					if (scanner.hasNext()) {
+						consumer.accept(scanner.next());
+					}
+				} catch (IOException exception) {
+					this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
+				}
+			});
+		}
+	}
+
 }

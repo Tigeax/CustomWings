@@ -2,6 +2,7 @@
 wingViewDistance: 30
 
 #Maximum pitch at which wings will render for the player to allow them to look down without obstructing vision
+#Value can range from 90 to -90 where 90 is looking down and -90 is looking up
 wingMaxPitch: 40
 
 #Should wings be hidden when player has invisibility effect
