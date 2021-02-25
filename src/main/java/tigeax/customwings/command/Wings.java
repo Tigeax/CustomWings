@@ -146,14 +146,10 @@ public class Wings implements CommandExecutor {
 			player.sendMessage(CustomWings.getMessages().getNoWingToPreview());
 			return;
 		}
-		
-		// If the player is already previewing a wing stop previewing
-		if (cwPlayer.getEquippedWing().isPreviewing(player)) {
-			wing.removeFromPreview(player);
-			return;
-		}
 
-		wing.addToPreview(player);
+		// Toggle the wing previewing
+		cwPlayer.setPreviewingWing(cwPlayer.isPreviewingWing());
+
 	}
 
 	// Open the editor GUI

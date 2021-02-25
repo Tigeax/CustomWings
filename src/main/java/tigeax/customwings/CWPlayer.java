@@ -2,6 +2,8 @@ package tigeax.customwings;
 
 import java.time.Instant;
 import java.util.UUID;
+
+import org.bukkit.Location;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
@@ -9,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.wings.Wing;
 
 /*
@@ -28,6 +31,9 @@ public class CWPlayer {
 	private SettingType waitingSetting;
 	private Object waitingSettingInfo;
 	private InventoryView lastEditorInvView;
+
+	private boolean previewingWing = false;
+	private Location wingPreviewLocation = null;
 
 	private long lastMove;
 
@@ -50,6 +56,25 @@ public class CWPlayer {
 	public Player getPlayer() { return Bukkit.getPlayer(uuid); }
 	
 	public Wing getEquippedWing() { return equippedWing; }
+
+	public boolean isPreviewingWing() {
+		return (wingPreviewLocation != null);
+	}
+
+	public void setPreviewingWing(boolean previewing) {
+
+		if (previewing) {
+			Location loc = getPlayer().getLocation();
+			loc.setYaw(NMSSupport.getBodyRotation(getPlayer()));
+			wingPreviewLocation = loc;
+		} else {
+			wingPreviewLocation = null;
+		}
+	}
+
+	public Location getPreviewWingLocation() {
+		return wingPreviewLocation;
+	}
 
 	public boolean getHideOtherPlayerWings() { return hideOtherPlayerWings; }
 	
@@ -104,7 +129,7 @@ public class CWPlayer {
 
 		// Remove the player from the old wing
 		if (this.equippedWing != null) {
-			this.equippedWing.removeFromPreview(getPlayer());
+			setPreviewingWing(false); // Disable preview
 			this.equippedWing.removePlayersWithWingActive(getPlayer());
 		}
 

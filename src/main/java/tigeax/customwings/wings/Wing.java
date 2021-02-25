@@ -36,7 +36,6 @@ public class Wing {
 	private final String ID;
 
 	private ArrayList<Player> playersWithWingActive;
-	private HashMap<Player, Location> wingPreview;
 
 	private boolean hideInGUI;
 	private ItemStack guiItem;
@@ -72,7 +71,6 @@ public class Wing {
 		this.ID = wingID;
 		this.config = plugin.getCWConfig();
 		this.playersWithWingActive = new ArrayList<>();
-		this.wingPreview = new HashMap<>();
 		this.load();
 	}
 
@@ -115,7 +113,6 @@ public class Wing {
 
 		wingParticles = parseWingParticles(getConfigFileWing().getConfigurationSection("particles"));
 		particleCoordinates = parseParticleCoordinates(getConfigFileWing().getConfigurationSection("particleLayout"));
-
 
 		wingPrice = getConfigFileWing().getInt("price");
 		priceType = getConfigFileWing().getString("price-type");
@@ -220,20 +217,6 @@ public class Wing {
 		playersWithWingActive.remove(player);
 	}
 
-	public void addToPreview(Player player) {
-		Location loc = player.getLocation();
-		loc.setYaw(NMSSupport.getBodyRotation(player));
-		wingPreview.put(player, loc);
-	}
-
-	public void removeFromPreview(Player player) {
-		wingPreview.remove(player);
-	}
-
-	public boolean isPreviewing(Player player) {
-		return wingPreview.containsKey(player);
-	}
-
 	public WingParticle getWingParticleByID(String ID) {
 		for (WingParticle wingParticle : wingParticles) {
 			if (wingParticle.getID().equals(ID)) { return wingParticle; }
@@ -279,23 +262,20 @@ public class Wing {
 					if (animationState <= startOffset) flapDirectionSwitch = false;
 				}
 
-				// Loop through all the players that are previewing a wing
-				for (Player player : wingPreview.keySet()) {
-
-					Location wingLoc = wingPreview.get(player);
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, wingLoc, true);
-
-					spawnWing(wingLoc, playersToShowWing, animationState);
-				}
-
 				// Loop through all the players that have the wing active
 				for (Player wingOwner : getPlayersWithWingActive()) {
 
-					if (wingPreview.containsKey(wingOwner)) {
+					CWPlayer cwPlayer = CustomWings.getCWPlayer(wingOwner);
+
+					// Spawn the wings for players that are previewing their wing
+					if (cwPlayer.isPreviewingWing()) {
+
+						Location wingLoc = cwPlayer.getPreviewWingLocation();
+						ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
+
+						spawnWing(wingLoc, playersToShowWing, animationState);
 						continue;
 					}
-
-					CWPlayer cwPlayer = CustomWings.getCWPlayer(wingOwner);
 
 					// Continue if the wing should hidden when moving and the player is moving
 					if (!getShowWhenMoving() && cwPlayer.isMoving()) {
@@ -409,7 +389,7 @@ public class Wing {
 			if (onlinePlayer == wingOwner) {
 
 				if (!wingPreview) {
-					// Stop rendering wings for player if they look down
+					// Stop rendering wings for the player if they look down
 					if (wingOwner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch())
 						continue;
 				}
