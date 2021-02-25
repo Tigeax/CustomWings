@@ -26,7 +26,6 @@ public class PlayerQuitEventListener implements Listener {
 
 		if (cwPlayer.getEquippedWing() != null) {
 			cwPlayer.getEquippedWing().removePlayersWithWingActive(player);
-			cwPlayer.getEquippedWing().removeFromPreview(player);
 			cwPlayer.setWaitingSetting(null);
 		}
 	}

@@ -148,8 +148,7 @@ public class Wings implements CommandExecutor {
 		}
 
 		// Toggle the wing previewing
-		cwPlayer.setPreviewingWing(cwPlayer.isPreviewingWing());
-
+		cwPlayer.setPreviewingWing(!cwPlayer.isPreviewingWing());
 	}
 
 	// Open the editor GUI
