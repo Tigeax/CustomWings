@@ -281,19 +281,19 @@ public class Wing {
 				for (Player player : wingPreview.keySet()) {
 
 					Location loc = wingPreview.get(player);
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, loc);
+					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, loc, true);
 
-					spawnWing(loc, player, playersToShowWing, offsetDegrees);
+					spawnWing(loc, player, playersToShowWing, offsetDegrees, true);
 				}
 
 				// Loop through all the players that have the wing active
-				for (Player player : getPlayersWithWingActive()) {
+				for (Player wingOwner : getPlayersWithWingActive()) {
 
-					if (wingPreview.containsKey(player)) {
+					if (wingPreview.containsKey(wingOwner)) {
 						continue;
 					}
 
-					CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+					CWPlayer cwPlayer = CustomWings.getCWPlayer(wingOwner);
 
 					// Continue if the wing should hidden when moving and the player is moving
 					if (!getShowWhenMoving() && cwPlayer.isMoving()) {
@@ -302,15 +302,37 @@ public class Wing {
 
 					// Check if the wing should be shown in this world
 					if (!getWhitelistedWorlds().contains("all")) {
-						if (!getWhitelistedWorlds().contains(player.getWorld().toString())) {
+						if (!getWhitelistedWorlds().contains(wingOwner.getWorld().toString())) {
 							continue;
 						}
 					}
 
-					Location playerLoc = player.getLocation();
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, player.getLocation());
+					// Skip if the owner is dead
+					if (wingOwner.isDead()) continue;
 
-					spawnWing(playerLoc, player, playersToShowWing, offsetDegrees);
+					// Hide wings if owner is in spectator or in vanish
+					if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
+
+					// Stop rendering wings for player when they have invisibility potion effect
+					if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
+						continue;
+
+					// Stop rendering wings if player is sleeping
+					if (wingOwner.isSleeping()) continue;
+
+					// Stop rendering wings if player is in vehicle
+					if (wingOwner.isInsideVehicle()) continue;
+
+					// Stop rendering wings for player that is swimming or crawling
+					if (wingOwner.getPose().equals(Pose.SWIMMING)) continue;
+
+					// Stop rendering wings for player that is gliding
+					if (wingOwner.isGliding()) continue;
+
+					Location playerLoc = wingOwner.getLocation();
+					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingOwner.getLocation(), false);
+
+					spawnWing(playerLoc, wingOwner, playersToShowWing, offsetDegrees, false);
 
 				}
 			}
@@ -318,7 +340,7 @@ public class Wing {
 	}
 
 	// Spawn all the particles of the wing at a certain location for certain players
-	private void spawnWing(Location loc, Player owner, ArrayList<Player> showTo, float degreeOffset) {
+	private void spawnWing(Location loc, Player owner, ArrayList<Player> showTo, float degreeOffset, Boolean previewWing) {
 
 		// Loop through all the coordinates of the wing and spawn a particle for both the left and right part at that location
 		for (double[] coordinate : particleCoordinates.keySet()) {
@@ -327,16 +349,23 @@ public class Wing {
 			double distance = coordinate[0];
 			double height = coordinate[1];
 			float yaw;
+			float yawLeft;
+			float yawRight;
 
-			if (CustomWings.getCWPlayer(owner).isMoving()) {
-				yaw = loc.getYaw();
-				NMSSupport.setBodyRotation(owner, loc.getYaw());
-			} else {
-				yaw = NMSSupport.getBodyRotation(owner);
+			if (previewWing) {
+				yawLeft = - degreeOffset;
+				yawRight = 180 + degreeOffset;
 			}
-
-			float yawLeft = yaw - degreeOffset;
-			float yawRight = yaw + 180 + degreeOffset;
+			else {
+				if (CustomWings.getCWPlayer(owner).isMoving()) {
+					yaw = loc.getYaw();
+					NMSSupport.setBodyRotation(owner, loc.getYaw());
+				} else {
+					yaw = NMSSupport.getBodyRotation(owner);
+				}
+				yawLeft = yaw - degreeOffset;
+				yawRight = yaw + 180 + degreeOffset;
+			}
 
 			Location particleLocLeft = getParticleSpawnLoc(loc, yawLeft, distance, height);
 			Location particleLocRight = getParticleSpawnLoc(loc, yawRight, distance, height);
@@ -361,7 +390,7 @@ public class Wing {
 	}
 
 	// Return all the player that can see the wing of player
-	private ArrayList<Player> getPlayersWhoSeeWing(Player wingOwner, Location wingLocation) {
+	private ArrayList<Player> getPlayersWhoSeeWing(Player wingOwner, Location wingLocation, Boolean wingPreview) {
 
 		ArrayList<Player> playersWhoCanSeeWing = new ArrayList<>();
 
@@ -371,30 +400,15 @@ public class Wing {
 			// Skip if the player is not in the same world as the wing
 			if (!(onlinePlayer.getWorld() == wingLocation.getWorld())) continue;
 
-			// Skip if the owner is dead
-			if (wingOwner.isDead()) continue;
-
-			// Hide wings if owner is in spectator or in vanish
-			if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
-
-			// Stop rendering wings for player when they have invisibility potion effect
-			if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
-				continue;
-
-			// Stop rendering wings if player is sleeping
-			if (onlinePlayer.isSleeping()) continue;
-
-			// Stop rendering wings if player is in vehicle
-			if (onlinePlayer.isInsideVehicle()) continue;
-
-			// Stop rendering wings for player that is swimming or crawling
-			if (onlinePlayer.getPose().equals(Pose.SWIMMING)) continue;
-
-			// Stop rendering wings if player is in vehicle
-			if (onlinePlayer.isInsideVehicle()) continue;
-
 			// Add the player himself to the list
 			if (onlinePlayer == wingOwner) {
+
+				if (!wingPreview) {
+					// Stop rendering wings for player if they look down
+					if (wingOwner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch())
+						continue;
+				}
+
 				playersWhoCanSeeWing.add(onlinePlayer);
 				continue;
 			}

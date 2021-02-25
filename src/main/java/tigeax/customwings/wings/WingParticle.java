@@ -103,13 +103,10 @@ public class WingParticle {
 		for (Player player : players) {
 
 			// Shift wings down when player is sneaking
+			//TODO move this to the Wing class for better efficiency
 			if (owner.isSneaking() && !owner.isFlying() || owner.isGliding()) {
 				loc = loc.add(0, -0.25, 0);
 			}
-
-			// Stop rendering wings for player if they look down
-			if (player == owner && owner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch() && !owner.isGliding())
-				continue;
 
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
