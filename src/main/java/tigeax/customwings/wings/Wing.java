@@ -221,7 +221,9 @@ public class Wing {
 	}
 
 	public void addToPreview(Player player) {
-		wingPreview.put(player, player.getLocation());
+		Location loc = player.getLocation();
+		loc.setYaw(NMSSupport.getBodyRotation(player));
+		wingPreview.put(player, loc);
 	}
 
 	public void removeFromPreview(Player player) {
@@ -256,7 +258,7 @@ public class Wing {
 		wingRunnable = new BukkitRunnable() {
 
 			boolean flapDirectionSwitch = false;
-			int offsetDegrees = startOffset;
+			int animationState = startOffset;
 
 			@Override
 			public void run() {
@@ -270,20 +272,20 @@ public class Wing {
 				// To go back and forth between the start and stop offset
 				if (wingAnimation) {
 
-					offsetDegrees = flapDirectionSwitch ? offsetDegrees - wingFlapSpeed : offsetDegrees + wingFlapSpeed;
+					animationState = flapDirectionSwitch ? animationState - wingFlapSpeed : animationState + wingFlapSpeed;
 
-					if (offsetDegrees >= stopOffset) flapDirectionSwitch = true;
+					if (animationState >= stopOffset) flapDirectionSwitch = true;
 
-					if (offsetDegrees <= startOffset) flapDirectionSwitch = false;
+					if (animationState <= startOffset) flapDirectionSwitch = false;
 				}
 
 				// Loop through all the players that are previewing a wing
 				for (Player player : wingPreview.keySet()) {
 
-					Location loc = wingPreview.get(player);
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, loc, true);
+					Location wingLoc = wingPreview.get(player);
+					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(player, wingLoc, true);
 
-					spawnWing(loc, player, playersToShowWing, offsetDegrees, true);
+					spawnWing(wingLoc, playersToShowWing, animationState);
 				}
 
 				// Loop through all the players that have the wing active
@@ -329,10 +331,20 @@ public class Wing {
 					// Stop rendering wings for player that is gliding
 					if (wingOwner.isGliding()) continue;
 
-					Location playerLoc = wingOwner.getLocation();
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, playerLoc, false);
+					Location wingLoc = wingOwner.getLocation();
 
-					spawnWing(playerLoc, wingOwner, playersToShowWing, offsetDegrees, false);
+					// Instead of using the Yaw of the head of the player we will try to use the Yaw of the player's body
+					float bodyYaw = NMSSupport.getBodyRotation(wingOwner);
+					wingLoc.setYaw(bodyYaw);
+
+					// Shift the wing down if the player is sneaking
+					if (wingOwner.isSneaking() && !wingOwner.isFlying()) {
+						wingLoc = wingLoc.add(0, -0.25, 0);
+					}
+
+					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
+
+					spawnWing(wingLoc, playersToShowWing, animationState);
 
 				}
 			}
@@ -340,58 +352,46 @@ public class Wing {
 	}
 
 	// Spawn all the particles of the wing at a certain location for certain players
-	private void spawnWing(Location loc, Player owner, ArrayList<Player> showTo, float degreeOffset, Boolean previewWing) {
-
-		float yaw;
-		float yawLeft;
-		float yawRight;
-
-		if (previewWing) {
-			yawLeft = - degreeOffset;
-			yawRight = 180 + degreeOffset;
-		} else {
-			if (CustomWings.getCWPlayer(owner).isMoving()) {
-				yaw = loc.getYaw();
-				NMSSupport.setBodyRotation(owner, loc.getYaw());
-			} else {
-				yaw = NMSSupport.getBodyRotation(owner);
-			}
-			yawLeft = yaw - degreeOffset;
-			yawRight = yaw + 180 + degreeOffset;
-
-			// Shift wings down when player is sneaking
-			if (owner.isSneaking() && !owner.isFlying()) {
-				loc = loc.add(0, -0.25, 0);
-			}
-		}
+	private void spawnWing(Location wingLoc, ArrayList<Player> showToPlayers, int animationState) {
 
 		// Loop through all the coordinates of the wing and spawn a particle for both the left and right part at that location
 		for (double[] coordinate : particleCoordinates.keySet()) {
 
 			WingParticle wingParticle = particleCoordinates.get(coordinate);
-			double distance = coordinate[0];
-			double height = coordinate[1];
+			double x = coordinate[0];
+			double y = coordinate[1];
 
-			Location particleLocLeft = getParticleSpawnLoc(loc, yawLeft, distance, height);
-			Location particleLocRight = getParticleSpawnLoc(loc, yawRight, distance, height);
+			Location particleLocLeft = getParticleSpawnLoc(wingLoc, x, y, WingSide.LEFT, animationState);
+			Location particleLocRight = getParticleSpawnLoc(wingLoc, x, y, WingSide.RIGHT, animationState);
 
-			wingParticle.spawnParticle(showTo, owner, particleLocLeft, "left");
-			wingParticle.spawnParticle(showTo, owner, particleLocRight, "right");
+			wingParticle.spawnParticle(particleLocLeft, showToPlayers, WingSide.LEFT);
+			wingParticle.spawnParticle(particleLocRight, showToPlayers, WingSide.RIGHT);
 		}
 	}
 
+
 	// Return the location the particle should be spawned at
 	// Relative to the location the wing is spawned at
-	// Based on the direction, distance and heigt
-	private Location getParticleSpawnLoc(Location loc, float direction, double distance, double height) {
+	// Based on the x and y offset from the center of the wing and which side of the Wing the particle is on
+	private Location getParticleSpawnLoc(Location loc, double x, double y, WingSide wingSide, int animationState) {
 
 		Location wingParticleLoc = loc.clone();
+		float yaw = wingParticleLoc.getYaw();
 
-		float directionRAD = (float) ((direction * Math.PI) / 180);
-		Vector vector = new Vector(Math.cos(directionRAD) * distance, height, Math.sin(directionRAD) * distance);
+		if (wingSide == WingSide.LEFT) yaw = yaw - animationState;
+		if (wingSide == WingSide.RIGHT) yaw = yaw + 180 + animationState;
+
+		double yawRad = Math.toRadians(yaw);
+		Vector vector = new Vector(Math.cos(yawRad) * x, y, Math.sin(yawRad) * x);
 		wingParticleLoc.add(vector);
+		wingParticleLoc.setYaw((float) Math.toDegrees(yawRad));
 
 		return wingParticleLoc;
+	}
+
+	public enum WingSide {
+		LEFT,
+		RIGHT
 	}
 
 	// Return all the player that can see the wing of player

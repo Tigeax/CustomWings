@@ -84,24 +84,21 @@ public class WingParticle {
 	public Material getMaterialData() { return material; }
 
 	// Spawn the particle at a location for all players specified
-	// wingSide is used to caculate the data for particles that can have direction
-	public void spawnParticle(ArrayList<Player> players, Player owner, Location loc, String wingSide) {
+	// If the particle has velocity (defined by speed) we need to calculate the x and z values so the flies in the correct direction
+	// This direction is based on the yaw of the wing and the if the particle is part of the left or right side of the wing
+	// WingSide is a String of either 'left' or 'right'
+	public void spawnParticle(Location loc, ArrayList<Player> spawnForPlayers, Wing.WingSide wingSide) {
 
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(owner);
-		float yaw;
-		if (cwPlayer.isMoving()) {
-			yaw = owner.getLocation().getYaw() - 90;
-		} else {
-			yaw = NMSSupport.getBodyRotation(owner) - 90;
-		}
+		double direction = loc.getYaw();
 
-		if (wingSide.equals("left")) yaw = (yaw + angle);
-		if (wingSide.equals("right")) yaw = (yaw - angle);
-		yaw = (float) (yaw * Math.PI) / 180;
-		double x = Math.cos(yaw) * distance;
-		double z = Math.sin(yaw) * distance;
-		for (Player player : players) {
+		if (wingSide == Wing.WingSide.LEFT) direction = (direction + angle);
+		if (wingSide == Wing.WingSide.RIGHT) direction = (direction - angle);
 
+		direction = Math.toRadians(direction);
+		double x = Math.cos(direction);
+		double z = Math.sin(direction);
+
+		for (Player player : spawnForPlayers) {
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}
