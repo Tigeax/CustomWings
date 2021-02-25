@@ -102,12 +102,6 @@ public class WingParticle {
 		double z = Math.sin(yaw) * distance;
 		for (Player player : players) {
 
-			// Shift wings down when player is sneaking
-			//TODO move this to the Wing class for better efficiency
-			if (owner.isSneaking() && !owner.isFlying() || owner.isGliding()) {
-				loc = loc.add(0, -0.25, 0);
-			}
-
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}

@@ -330,7 +330,7 @@ public class Wing {
 					if (wingOwner.isGliding()) continue;
 
 					Location playerLoc = wingOwner.getLocation();
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingOwner.getLocation(), false);
+					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, playerLoc, false);
 
 					spawnWing(playerLoc, wingOwner, playersToShowWing, offsetDegrees, false);
 
@@ -342,30 +342,35 @@ public class Wing {
 	// Spawn all the particles of the wing at a certain location for certain players
 	private void spawnWing(Location loc, Player owner, ArrayList<Player> showTo, float degreeOffset, Boolean previewWing) {
 
+		float yaw;
+		float yawLeft;
+		float yawRight;
+
+		if (previewWing) {
+			yawLeft = - degreeOffset;
+			yawRight = 180 + degreeOffset;
+		} else {
+			if (CustomWings.getCWPlayer(owner).isMoving()) {
+				yaw = loc.getYaw();
+				NMSSupport.setBodyRotation(owner, loc.getYaw());
+			} else {
+				yaw = NMSSupport.getBodyRotation(owner);
+			}
+			yawLeft = yaw - degreeOffset;
+			yawRight = yaw + 180 + degreeOffset;
+
+			// Shift wings down when player is sneaking
+			if (owner.isSneaking() && !owner.isFlying()) {
+				loc = loc.add(0, -0.25, 0);
+			}
+		}
+
 		// Loop through all the coordinates of the wing and spawn a particle for both the left and right part at that location
 		for (double[] coordinate : particleCoordinates.keySet()) {
 
 			WingParticle wingParticle = particleCoordinates.get(coordinate);
 			double distance = coordinate[0];
 			double height = coordinate[1];
-			float yaw;
-			float yawLeft;
-			float yawRight;
-
-			if (previewWing) {
-				yawLeft = - degreeOffset;
-				yawRight = 180 + degreeOffset;
-			}
-			else {
-				if (CustomWings.getCWPlayer(owner).isMoving()) {
-					yaw = loc.getYaw();
-					NMSSupport.setBodyRotation(owner, loc.getYaw());
-				} else {
-					yaw = NMSSupport.getBodyRotation(owner);
-				}
-				yawLeft = yaw - degreeOffset;
-				yawRight = yaw + 180 + degreeOffset;
-			}
 
 			Location particleLocLeft = getParticleSpawnLoc(loc, yawLeft, distance, height);
 			Location particleLocRight = getParticleSpawnLoc(loc, yawRight, distance, height);
