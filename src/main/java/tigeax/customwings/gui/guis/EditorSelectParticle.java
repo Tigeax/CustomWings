@@ -96,7 +96,7 @@ public class EditorSelectParticle {
 			case "Next Page":
 				openPage2(cwPlayer);
 				return;
-			case "Previous page":
+			case "Previous Page":
 				openPage1(cwPlayer);
 				return;
 		}

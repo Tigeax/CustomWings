@@ -41,7 +41,7 @@ public class EditorWingParticlesSelect {
 
 	public void click(CWPlayer cwPlayer, String itemName, Wing wing) {
 
-		if (itemName.equals("Previous Page")) {
+		if (itemName.equals("Previous page")) {
 			cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, wing);
 			return;
 		}

@@ -2,6 +2,8 @@ package tigeax.customwings;
 
 import java.time.Instant;
 import java.util.UUID;
+
+import org.bukkit.Location;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
@@ -9,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.wings.Wing;
 
 /*
@@ -28,6 +31,9 @@ public class CWPlayer {
 	private SettingType waitingSetting;
 	private Object waitingSettingInfo;
 	private InventoryView lastEditorInvView;
+
+	private boolean previewingWing = false;
+	private Location wingPreviewLocation = null;
 
 	private long lastMove;
 
@@ -51,6 +57,25 @@ public class CWPlayer {
 	
 	public Wing getEquippedWing() { return equippedWing; }
 
+	public boolean isPreviewingWing() {
+		return (wingPreviewLocation != null);
+	}
+
+	public void setPreviewingWing(boolean previewing) {
+
+		if (previewing) {
+			Location loc = getPlayer().getLocation();
+			loc.setYaw(NMSSupport.getBodyRotation(getPlayer()));
+			wingPreviewLocation = loc;
+		} else {
+			wingPreviewLocation = null;
+		}
+	}
+
+	public Location getPreviewWingLocation() {
+		return wingPreviewLocation;
+	}
+
 	public boolean getHideOtherPlayerWings() { return hideOtherPlayerWings; }
 	
 	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) {
@@ -65,13 +90,11 @@ public class CWPlayer {
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
 
+	// Calculate if the player is currently moving, based on when the player was last detected as moving
 	public boolean isMoving() {
 		Instant instant = Instant.now();
 		long now = instant.getEpochSecond();
-		long milli = instant.getNano();
-		now *= 1000000000L;
-		now += milli;
-		return now < lastMove+20000000;
+		return this.lastMove >= (now - 1);
 	}
 	
 	public SettingType getWaitingSetting() { return waitingSetting; }
@@ -104,7 +127,7 @@ public class CWPlayer {
 
 		// Remove the player from the old wing
 		if (this.equippedWing != null) {
-			this.equippedWing.removeFromPreview(getPlayer());
+			setPreviewingWing(false); // Disable preview
 			this.equippedWing.removePlayersWithWingActive(getPlayer());
 		}
 
@@ -116,7 +139,8 @@ public class CWPlayer {
 
 	}
 
-	public void setMoving(long moveTimestamp) {
+	//Set the time when the player was last counted at moving
+	public void setLastTimeMoving(long moveTimestamp) {
 		this.lastMove = moveTimestamp;
 	}
 	
