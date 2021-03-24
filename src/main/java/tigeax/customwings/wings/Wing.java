@@ -284,7 +284,7 @@ public class Wing {
 
 					// Check if the wing should be shown in this world
 					if (!getWhitelistedWorlds().contains("all")) {
-						if (!getWhitelistedWorlds().contains(wingOwner.getWorld().toString())) {
+						if (!getWhitelistedWorlds().contains(wingOwner.getWorld().getName())) {
 							continue;
 						}
 					}
