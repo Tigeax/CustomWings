@@ -90,13 +90,11 @@ public class CWPlayer {
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
 
+	// Calculate if the player is currently moving, based on when the player was last detected as moving
 	public boolean isMoving() {
 		Instant instant = Instant.now();
 		long now = instant.getEpochSecond();
-		long milli = instant.getNano();
-		now *= 1000000000L;
-		now += milli;
-		return now < lastMove+20000000;
+		return this.lastMove >= (now - 1);
 	}
 	
 	public SettingType getWaitingSetting() { return waitingSetting; }
@@ -141,7 +139,8 @@ public class CWPlayer {
 
 	}
 
-	public void setMoving(long moveTimestamp) {
+	//Set the time when the player was last counted at moving
+	public void setLastTimeMoving(long moveTimestamp) {
 		this.lastMove = moveTimestamp;
 	}
 	
