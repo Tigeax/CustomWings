@@ -62,43 +62,50 @@ public class CWGUIManager {
 	}
 
 	public void openGUI(CWPlayer cwPlayer, CWGUIType cwGUIType, Object info) {
-		switch (cwGUIType) {
-			case WINGSELECT:
-				wingSelectGUI.open(cwPlayer, 0);
-				return;
-			case EDITOR:
-				editorGUI.open(cwPlayer);
-				return;
-			case EDITORMAINSETTINGS:
-				editorMainSettingsGUI.open(cwPlayer);
-				return;
-			case EDITORWINGSETTINGS:
-				editorWingSettingsGUI.open(cwPlayer, (Wing) info);
-				return;
-			case EDITORWINGPARITCLESSELECT:
-				editorWingParticlesSelectGUI.open(cwPlayer, (Wing) info);
-				return;
-			case EDITORWINGPARTICLESETTINGS:
-				editorWingParticleSettingsGUI.open(cwPlayer, (WingParticle) info);
-				return;
-			case EDITORSELECTGUISIZE:
-				editorSelectGuiSizeGUI.open(cwPlayer);
-				return;
-			case EDITORSELECTPARTICLE:
-				editorSelectParticleGUI.openPage1(cwPlayer);
-				return;
-			case EDITORSELECTSLOT:
-				editorSelectSlotGUI.open(cwPlayer);
-				return;
-			case EDITORSELECTINTEGER:
-				editorSelectIntegerGUI.open(cwPlayer, (Integer) info);
-				return;
-			case EDITORSELECTDOUBLE:
-				editorSelectDoubleGUI.open(cwPlayer, (double) info);
-				return;
-			case LASTEDITORGUI:
-				openLastEditorGUI(cwPlayer);
-				return;
+		try {
+
+			switch (cwGUIType) {
+				case WINGSELECT:
+					wingSelectGUI.open(cwPlayer, 0);
+					return;
+				case EDITOR:
+					editorGUI.open(cwPlayer);
+					return;
+				case EDITORMAINSETTINGS:
+					editorMainSettingsGUI.open(cwPlayer);
+					return;
+				case EDITORWINGSETTINGS:
+					editorWingSettingsGUI.open(cwPlayer, (Wing) info);
+					return;
+				case EDITORWINGPARITCLESSELECT:
+					editorWingParticlesSelectGUI.open(cwPlayer, (Wing) info);
+					return;
+				case EDITORWINGPARTICLESETTINGS:
+					editorWingParticleSettingsGUI.open(cwPlayer, (WingParticle) info);
+					return;
+				case EDITORSELECTGUISIZE:
+					editorSelectGuiSizeGUI.open(cwPlayer);
+					return;
+				case EDITORSELECTPARTICLE:
+					editorSelectParticleGUI.openPage1(cwPlayer);
+					return;
+				case EDITORSELECTSLOT:
+					editorSelectSlotGUI.open(cwPlayer);
+					return;
+				case EDITORSELECTINTEGER:
+					editorSelectIntegerGUI.open(cwPlayer, (Integer) info);
+					return;
+				case EDITORSELECTDOUBLE:
+					editorSelectDoubleGUI.open(cwPlayer, (double) info);
+					return;
+				case LASTEDITORGUI:
+					openLastEditorGUI(cwPlayer);
+					return;
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+			cwPlayer.openCWGUI(CWGUIType.EDITOR);
 		}
 	}
 
@@ -121,15 +128,16 @@ public class CWGUIManager {
 				return CWGUIType.EDITORWINGPARTICLESETTINGS;
 			case "Main GUI Size":
 				return CWGUIType.EDITORSELECTGUISIZE;
+			case "Select Particle":
+				return CWGUIType.EDITORSELECTPARTICLE;
 			case "Select Slot":
 				return CWGUIType.EDITORSELECTSLOT;
 			case "Set Integer":
 				return CWGUIType.EDITORSELECTINTEGER;
 			case "Set Double":
 				return CWGUIType.EDITORSELECTDOUBLE;
-			case "Select Particle":
-				return CWGUIType.EDITORSELECTPARTICLE;
 		}
+		System.out.println("Could not find CW GUI - If you see this please let the CustomWings developer know");
 		return null;
 	}
 
@@ -192,22 +200,29 @@ public class CWGUIManager {
 			return;
 		}
 
-		switch (getCWGUITypeByInvTitle(lastInvView.getTitle())) {
+		try {
 
-			case EDITORMAINSETTINGS:
-				cwPlayer.openCWGUI(CWGUIType.EDITORMAINSETTINGS);
-				return;
-			case EDITORWINGSETTINGS:
-				cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, getWingFromGUI(lastInvView));
-				return;
-			case EDITORWINGPARITCLESSELECT:
-				cwPlayer.openCWGUI(CWGUIType.EDITORWINGPARITCLESSELECT, getWingFromGUI(lastInvView));
-				return;
-			case EDITORWINGPARTICLESETTINGS:
-				cwPlayer.openCWGUI(CWGUIType.EDITORWINGPARTICLESETTINGS, getWingParticleFromGUI(lastInvView));
-				return;
-			default:
-				cwPlayer.openCWGUI(CWGUIType.EDITOR);
+			switch (getCWGUITypeByInvTitle(lastInvView.getTitle())) {
+
+				case EDITORMAINSETTINGS:
+					cwPlayer.openCWGUI(CWGUIType.EDITORMAINSETTINGS);
+					return;
+				case EDITORWINGSETTINGS:
+					cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, getWingFromGUI(lastInvView));
+					return;
+				case EDITORWINGPARITCLESSELECT:
+					cwPlayer.openCWGUI(CWGUIType.EDITORWINGPARITCLESSELECT, getWingFromGUI(lastInvView));
+					return;
+				case EDITORWINGPARTICLESETTINGS:
+					cwPlayer.openCWGUI(CWGUIType.EDITORWINGPARTICLESETTINGS, getWingParticleFromGUI(lastInvView));
+					return;
+				default:
+					cwPlayer.openCWGUI(CWGUIType.EDITOR);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+			cwPlayer.openCWGUI(CWGUIType.EDITOR);
 		}
 	}
 

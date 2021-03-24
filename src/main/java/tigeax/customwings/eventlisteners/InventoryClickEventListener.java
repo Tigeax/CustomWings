@@ -65,7 +65,7 @@ public class InventoryClickEventListener implements Listener {
 		
 		int clickedItemSlot = event.getSlot();
 
-		// Check if the clicked inventory is the CustomWings GUI
+		// Check if the clicked inventory is a CustomWings GUI
 		if (inventoryTitle.equals(CustomWings.getSettings().getMainGUIName())
 				|| inventoryTitle.contains(CustomWings.getSettings().getEditorGUIName())) {
 			
@@ -75,13 +75,17 @@ public class InventoryClickEventListener implements Listener {
 
 			if (clickedItem.getItemMeta() == null) { return; }
 
-			CWGUIType CWGUIType = CustomWings.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
+			CWGUIType cwGUIType = CustomWings.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
 
-			PlayerCWGUIClickEvent playerCWGUIClickEvent = new PlayerCWGUIClickEvent(cwPlayer, CWGUIType, event.getView(), clickedItem, clickedItemSlot);
+			if (cwGUIType == null) {
+				return;
+			}
+
+			PlayerCWGUIClickEvent playerCWGUIClickEvent = new PlayerCWGUIClickEvent(cwPlayer, cwGUIType, event.getView(), clickedItem, clickedItemSlot);
 			Bukkit.getServer().getPluginManager().callEvent(playerCWGUIClickEvent);
 
 			if (!playerCWGUIClickEvent.isCancelled()) {
-				CustomWings.getCWGUIManager().CWGUIClick(cwPlayer, CWGUIType, event.getView(), clickedItem, clickedItemSlot);
+				CustomWings.getCWGUIManager().CWGUIClick(cwPlayer, cwGUIType, event.getView(), clickedItem, clickedItemSlot);
 			}
 
 		}

@@ -25,7 +25,8 @@ public class InventoryCloseEventListener implements Listener {
 
 			CWGUIType cwGUIType = CustomWings.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
 
-			if (cwGUIType == CWGUIType.EDITORSELECTDOUBLE 
+			if (cwGUIType == null
+					|| cwGUIType == CWGUIType.EDITORSELECTDOUBLE
 					|| cwGUIType == CWGUIType.EDITORSELECTGUISIZE
 					|| cwGUIType == CWGUIType.EDITORSELECTINTEGER
 					|| cwGUIType == CWGUIType.EDITORSELECTPARTICLE
