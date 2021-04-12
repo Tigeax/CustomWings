@@ -263,72 +263,74 @@ public class Wing {
 				}
 
 				// Loop through all the players that have the wing active
-				for (Player wingOwner : getPlayersWithWingActive()) {
+				getPlayersWithWingActive().forEach((wingOwner) -> runWingOwner(wingOwner, animationState));
 
-					CWPlayer cwPlayer = CustomWings.getCWPlayer(wingOwner);
-
-					// Spawn the wings for players that are previewing their wing
-					if (cwPlayer.isPreviewingWing()) {
-
-						Location wingLoc = cwPlayer.getPreviewWingLocation();
-						ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
-
-						spawnWing(wingLoc, playersToShowWing, animationState);
-						continue;
-					}
-
-					// Continue if the wing should hidden when moving and the player is moving
-					if (!getShowWhenMoving() && cwPlayer.isMoving()) {
-						continue;
-					}
-
-					// Check if the wing should be shown in this world
-					if (!getWhitelistedWorlds().contains("all")) {
-						if (!getWhitelistedWorlds().contains(wingOwner.getWorld().getName())) {
-							continue;
-						}
-					}
-
-					// Skip if the owner is dead
-					if (wingOwner.isDead()) continue;
-
-					// Hide wings if owner is in spectator or in vanish
-					if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) continue;
-
-					// Stop rendering wings for player when they have invisibility potion effect
-					if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
-						continue;
-
-					// Stop rendering wings if player is sleeping
-					if (wingOwner.isSleeping()) continue;
-
-					// Stop rendering wings if player is in vehicle
-					if (wingOwner.isInsideVehicle()) continue;
-
-					// Stop rendering wings for player that is swimming or crawling
-					if (wingOwner.getPose().equals(Pose.SWIMMING)) continue;
-
-					// Stop rendering wings for player that is gliding
-					if (wingOwner.isGliding()) continue;
-
-					Location wingLoc = wingOwner.getLocation();
-
-					// Instead of using the Yaw of the head of the player we will try to use the Yaw of the player's body
-					float bodyYaw = NMSSupport.getBodyRotation(wingOwner);
-					wingLoc.setYaw(bodyYaw);
-
-					// Shift the wing down if the player is sneaking
-					if (wingOwner.isSneaking() && !wingOwner.isFlying()) {
-						wingLoc = wingLoc.add(0, -0.25, 0);
-					}
-
-					ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
-
-					spawnWing(wingLoc, playersToShowWing, animationState);
-
-				}
 			}
 		}.runTaskTimerAsynchronously(plugin, 0, wingTimer);
+	}
+
+	private void runWingOwner(Player wingOwner, int animationState) {
+
+		CWPlayer cwPlayer = CustomWings.getCWPlayer(wingOwner);
+
+		// Spawn the wings for players that are previewing their wing
+		if (cwPlayer.isPreviewingWing()) {
+
+			Location wingLoc = cwPlayer.getPreviewWingLocation();
+			ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
+
+			spawnWing(wingLoc, playersToShowWing, animationState);
+			return;
+		}
+
+		// Continue if the wing should hidden when moving and the player is moving
+		if (!getShowWhenMoving() && cwPlayer.isMoving()) {
+			return;
+		}
+
+		// Check if the wing should be shown in this world
+		if (!getWhitelistedWorlds().contains("all")) {
+			if (!getWhitelistedWorlds().contains(wingOwner.getWorld().getName())) {
+				return;
+			}
+		}
+
+		// Skip if the owner is dead
+		if (wingOwner.isDead()) return;
+
+		// Hide wings if owner is in spectator or in vanish
+		if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) return;
+
+		// Stop rendering wings for player when they have invisibility potion effect
+		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
+			return;
+
+		// Stop rendering wings if player is sleeping
+		if (wingOwner.isSleeping()) return;
+
+		// Stop rendering wings if player is in vehicle
+		if (wingOwner.isInsideVehicle()) return;
+
+		// Stop rendering wings for player that is swimming or crawling
+		if (wingOwner.getPose().equals(Pose.SWIMMING)) return;
+
+		// Stop rendering wings for player that is gliding
+		if (wingOwner.isGliding()) return;
+
+		Location wingLoc = wingOwner.getLocation();
+
+		// Instead of using the Yaw of the head of the player we will try to use the Yaw of the player's body
+		float bodyYaw = NMSSupport.getBodyRotation(wingOwner);
+		wingLoc.setYaw(bodyYaw);
+
+		// Shift the wing down if the player is sneaking
+		if (wingOwner.isSneaking() && !wingOwner.isFlying()) {
+			wingLoc = wingLoc.add(0, -0.25, 0);
+		}
+
+		ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
+
+		spawnWing(wingLoc, playersToShowWing, animationState);
 	}
 
 	// Spawn all the particles of the wing at a certain location for certain players
