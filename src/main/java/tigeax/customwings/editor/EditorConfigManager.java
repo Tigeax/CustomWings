@@ -22,6 +22,15 @@ public class EditorConfigManager {
 
 	public EditorConfigManager(CustomWings plugin) {
 		this.plugin = plugin;
+		this.load();
+	}
+
+	public void reload() {
+		load();
+	}
+
+	public void load() {
+		this.plugin.reloadConfig();
 		this.config = plugin.getConfig();
 		this.mainGUIConfig = config.getConfigurationSection("mainGUI");
 	}
