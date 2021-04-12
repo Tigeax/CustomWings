@@ -114,7 +114,9 @@ public class CWGUIManager {
 		if (invTitle.equals(settings.getMainGUIName())) 
 			return CWGUIType.WINGSELECT;
 
-		switch (parseEditorMenuName(invTitle)) {
+		String parsedInvName = parseEditorMenuName(invTitle);
+
+		switch (parsedInvName) {
 
 			case "":
 				return CWGUIType.EDITOR;
@@ -137,7 +139,6 @@ public class CWGUIManager {
 			case "Set Double":
 				return CWGUIType.EDITORSELECTDOUBLE;
 		}
-		System.out.println("Could not find CW GUI - If you see this please let the CustomWings developer know");
 		return null;
 	}
 

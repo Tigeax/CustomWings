@@ -156,6 +156,7 @@ public class CustomWings extends JavaPlugin {
 		setupConfig();
 		settings.reload();
 		messages.reload();
+		editorConfigManager.reload();
 		setupWings();
 		
 		//If the player had a wing equiped, update it with the newest created winglist
