@@ -165,6 +165,9 @@ public class WingSelect {
             public void run() {
                 Inventory gui = cwPlayer.getPlayer().getOpenInventory().getTopInventory();
 
+                if (cwPlayer.getPlayer().getOpenInventory().getTitle().equals(settings.getMainGUIName()))
+                    return;
+
                 int limit = gui.getSize()-9;
                 int i = 0;
                 while (i <= limit) {
@@ -245,5 +248,4 @@ public class WingSelect {
             gui.setItem(settings.getHideWingsToggleSlot(), settings.getHideWingsToggleOFFItem());
         }
     }
-
 }
