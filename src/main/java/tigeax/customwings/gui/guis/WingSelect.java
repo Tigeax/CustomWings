@@ -7,7 +7,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.scheduler.BukkitRunnable;
 import tigeax.customwings.events.PlayerEquipWingEvent;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
@@ -159,86 +158,80 @@ public class WingSelect {
         return wingItem;
     }
 
-	private void displayWings(CWPlayer cwPlayer, int page) {
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                Inventory gui = cwPlayer.getPlayer().getOpenInventory().getTopInventory();
+    private void displayWings(CWPlayer cwPlayer, int page) {
 
-                if (cwPlayer.getPlayer().getOpenInventory().getTitle().equals(settings.getMainGUIName()))
-                    return;
+        Inventory gui = cwPlayer.getPlayer().getOpenInventory().getTopInventory();
 
-                int limit = gui.getSize()-9;
-                int i = 0;
-                while (i <= limit) {
-                    gui.clear(i++);
-                }
+        int limit = gui.getSize() - 9;
+        int i = 0;
+        while (i <= limit) {
+            gui.clear(i++);
+        }
 
-                gui.clear(settings.getNavigationNextSlot());
-                gui.clear(settings.getNavigationBackSlot());
-                gui.clear(settings.getFilterSlot());
+        gui.clear(settings.getNavigationNextSlot());
+        gui.clear(settings.getNavigationBackSlot());
+        gui.clear(settings.getFilterSlot());
 
-                if (page > 0) {
-                    int lastPage = page - 1;
-                    gui.setItem(settings.getNavigationBackSlot(), settings.getNavigationBackItem(lastPage));
-                }
+        if (page > 0) {
+            int lastPage = page - 1;
+            gui.setItem(settings.getNavigationBackSlot(), settings.getNavigationBackItem(lastPage));
+        }
 
-                int slot = 0;
-                int slotLimit = settings.getMainGUISize() - 9;
-                int startLoop = page * slotLimit;
-                int loops = -1;
+        int slot = 0;
+        int slotLimit = settings.getMainGUISize() - 9;
+        int startLoop = page * slotLimit;
+        int loops = -1;
 
-                switch (cwPlayer.getWingFilter()) {
-                    default:
-                        gui.setItem(settings.getFilterSlot(), settings.getFilterNoneItem());
-                        for (Wing wing : CustomWings.getWings()) {
-                            loops++;
-                            if (loops < startLoop) continue;
-                            if (wing.getHideInGUI()) continue;
-                            if (slotLimit <= slot) {
-                                int nextPage = page + 1;
-                                gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
-                                break;
-                            }
-                            gui.setItem(slot++, createWingItem(cwPlayer, wing));
-                        }
+        switch (cwPlayer.getWingFilter()) {
+            default:
+                gui.setItem(settings.getFilterSlot(), settings.getFilterNoneItem());
+                for (Wing wing : CustomWings.getWings()) {
+                    loops++;
+                    if (loops < startLoop) continue;
+                    if (wing.getHideInGUI()) continue;
+                    if (slotLimit <= slot) {
+                        int nextPage = page + 1;
+                        gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
                         break;
-                    case "owned":
-                        gui.setItem(settings.getFilterSlot(), settings.getFilterOwnedItem());
-                        for (Wing wing : CustomWings.getWings()) {
-                            loops++;
-                            if (loops < startLoop) continue;
-                            if (wing.getHideInGUI()) continue;
-                            if (!cwPlayer.hasPermissionForWing(wing)) continue;
-                            if (slotLimit <= slot) {
-                                int nextPage = page + 1;
-                                gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
-                                break;
-                            }
-                            gui.setItem(slot++, createWingItem(cwPlayer, wing));
-                        }
-                        break;
-                    case "unowned":
-                        gui.setItem(settings.getFilterSlot(), settings.getFilterUnownedItem());
-                        for (Wing wing : CustomWings.getWings()) {
-                            loops++;
-                            if (loops < startLoop) continue;
-                            if (wing.getHideInGUI()) continue;
-                            if (cwPlayer.hasPermissionForWing(wing)) continue;
-                            if (slotLimit <= slot) {
-                                int nextPage = page + 1;
-                                gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
-                                break;
-                            }
-                            gui.setItem(slot++, createWingItem(cwPlayer, wing));
-                        }
-                        break;
+                    }
+                    gui.setItem(slot++, createWingItem(cwPlayer, wing));
                 }
-            }
-        }.runTaskAsynchronously(CustomWings.getPlugin(CustomWings.class));
-	}
+                break;
+            case "owned":
+                gui.setItem(settings.getFilterSlot(), settings.getFilterOwnedItem());
+                for (Wing wing : CustomWings.getWings()) {
+                    loops++;
+                    if (loops < startLoop) continue;
+                    if (wing.getHideInGUI()) continue;
+                    if (!cwPlayer.hasPermissionForWing(wing)) continue;
+                    if (slotLimit <= slot) {
+                        int nextPage = page + 1;
+                        gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
+                        break;
+                    }
+                    gui.setItem(slot++, createWingItem(cwPlayer, wing));
+                }
+                break;
+            case "unowned":
+                gui.setItem(settings.getFilterSlot(), settings.getFilterUnownedItem());
+                for (Wing wing : CustomWings.getWings()) {
+                    loops++;
+                    if (loops < startLoop) continue;
+                    if (wing.getHideInGUI()) continue;
+                    if (cwPlayer.hasPermissionForWing(wing)) continue;
+                    if (slotLimit <= slot) {
+                        int nextPage = page + 1;
+                        gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
+                        break;
+                    }
+                    gui.setItem(slot++, createWingItem(cwPlayer, wing));
+                }
+                break;
+        }
 
-	private void toggleWings(CWPlayer cwPlayer) {
+    }
+
+    private void toggleWings(CWPlayer cwPlayer) {
         Inventory gui = cwPlayer.getPlayer().getOpenInventory().getTopInventory();
         cwPlayer.setHideOtherPlayerWings(!cwPlayer.getHideOtherPlayerWings());
         gui.clear(settings.getHideWingsToggleSlot());

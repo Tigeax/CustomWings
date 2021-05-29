@@ -6,7 +6,7 @@
 
     <groupId>tigeax.customwings</groupId>
     <artifactId>CustomWings</artifactId>
-    <version>3.7.2</version>
+    <version>3.7.3</version>
     <packaging>jar</packaging>
 
     <name>CustomWings</name>
@@ -71,7 +71,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.4-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -96,7 +96,7 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>RELEASE</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
