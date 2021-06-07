@@ -29,7 +29,7 @@ public class InventoryClickEventListener implements Listener {
 
 		String inventoryTitle = event.getView().getTitle();
 		Player player = (Player) event.getWhoClicked();
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
 		ItemStack clickedItem = event.getCurrentItem();
 
 		// Return if no item is clicked
@@ -49,13 +49,13 @@ public class InventoryClickEventListener implements Listener {
 
 					event.setCancelled(true);
 
-					EditorConfigManager editorConfigManager = CustomWings.getEditorConfigManager();
+					EditorConfigManager editorConfigManager = CustomWings.getInstance().getEditorConfigManager();
 
 					Material value = clickedItem.getType();
 					editorConfigManager.setSetting(setting, value, settingInfo);
 
 					cwPlayer.setWaitingSetting(null);
-					player.sendMessage(CustomWings.getMessages().getSettingChanged());
+					player.sendMessage(CustomWings.getInstance().getMessages().getSettingChanged());
 					return;
 				}
 			}
@@ -66,8 +66,8 @@ public class InventoryClickEventListener implements Listener {
 		int clickedItemSlot = event.getSlot();
 
 		// Check if the clicked inventory is a CustomWings GUI
-		if (inventoryTitle.equals(CustomWings.getSettings().getMainGUIName())
-				|| inventoryTitle.contains(CustomWings.getSettings().getEditorGUIName())) {
+		if (inventoryTitle.equals(CustomWings.getInstance().getSettings().getMainGUIName())
+				|| inventoryTitle.contains(CustomWings.getInstance().getSettings().getEditorGUIName())) {
 			
 			event.setCancelled(true);
 
@@ -75,7 +75,7 @@ public class InventoryClickEventListener implements Listener {
 
 			if (clickedItem.getItemMeta() == null) { return; }
 
-			CWGUIType cwGUIType = CustomWings.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
+			CWGUIType cwGUIType = CustomWings.getInstance().getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
 
 			if (cwGUIType == null) {
 				return;
@@ -85,7 +85,7 @@ public class InventoryClickEventListener implements Listener {
 			Bukkit.getServer().getPluginManager().callEvent(playerCWGUIClickEvent);
 
 			if (!playerCWGUIClickEvent.isCancelled()) {
-				CustomWings.getCWGUIManager().CWGUIClick(cwPlayer, cwGUIType, event.getView(), clickedItem, clickedItemSlot);
+				CustomWings.getInstance().getCWGUIManager().CWGUIClick(cwPlayer, cwGUIType, event.getView(), clickedItem, clickedItemSlot);
 			}
 
 		}

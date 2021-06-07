@@ -6,18 +6,3 @@ api-version: 1.13
 softdepend:
   - Vault
   - TokenManager
-commands:
-  wings:
-    aliases: [w]
-
-permissions:
-    customwings.command:
-        default: op
-    customwings.setwing:
-        default: op
-    customwings.reload:
-        default: op
-    customwings.editor:
-        default: op
-    customwings.wing.*:
-      default: op

@@ -21,7 +21,7 @@ public class AsyncPlayerChatEventListener implements Listener {
 	public void event(AsyncPlayerChatEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
 		SettingType setting = cwPlayer.getWaitingSetting();
 		Object settingInfo = cwPlayer.getWaitingSettingInfo();
 		
@@ -31,12 +31,12 @@ public class AsyncPlayerChatEventListener implements Listener {
 
 		event.setCancelled(true);
 
-		EditorConfigManager editorConfigManager = CustomWings.getEditorConfigManager();
+		EditorConfigManager editorConfigManager = CustomWings.getInstance().getEditorConfigManager();
 		String value = event.getMessage();
 
 		editorConfigManager.setSetting(setting, value, settingInfo);
 		cwPlayer.setWaitingSetting(null);
-		player.sendMessage(CustomWings.getMessages().getSettingChanged());
+		player.sendMessage(CustomWings.getInstance().getMessages().getSettingChanged());
 
 	}
 }

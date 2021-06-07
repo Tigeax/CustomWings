@@ -20,7 +20,7 @@ public class PlayerQuitEventListener implements Listener {
 	public void event(PlayerQuitEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
 		
 		cwPlayer.setLastEditorInvView(null);
 

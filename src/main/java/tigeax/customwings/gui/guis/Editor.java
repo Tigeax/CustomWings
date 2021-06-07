@@ -12,10 +12,12 @@ import tigeax.customwings.wings.Wing;
 
 public class Editor {
 
+	CustomWings plugin;
 	Settings settings;
 
 	public Editor() {
-		settings = CustomWings.getSettings();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
 	}
 
 	public void open(CWPlayer cwPlayer) {
@@ -25,7 +27,7 @@ public class Editor {
 
 		Inventory gui = Bukkit.createInventory(null, guiSize, guiName);
 
-		for (Wing wing : CustomWings.getWings()) {
+		for (Wing wing : plugin.getWings()) {
 
 			ItemStack wingItem = wing.getGuiItem();
 			int slot = wing.getGuiSlot();
@@ -55,7 +57,7 @@ public class Editor {
 		}
 
 		// Else open the Wing Settings GUI
-		Wing wing = CustomWings.getWingByGUISlot(clickedSlot);
+		Wing wing = plugin.getWingByGUISlot(clickedSlot);
 		cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, wing);
 	}
 }

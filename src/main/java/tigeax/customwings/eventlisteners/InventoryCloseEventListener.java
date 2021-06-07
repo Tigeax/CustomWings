@@ -21,9 +21,9 @@ public class InventoryCloseEventListener implements Listener {
 
 		String inventoryTitle = event.getView().getTitle();
 
-		if (inventoryTitle.contains(CustomWings.getSettings().getEditorGUIName())) {
+		if (inventoryTitle.contains(CustomWings.getInstance().getSettings().getEditorGUIName())) {
 
-			CWGUIType cwGUIType = CustomWings.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
+			CWGUIType cwGUIType = CustomWings.getInstance().getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
 
 			if (cwGUIType == null
 					|| cwGUIType == CWGUIType.EDITORSELECTDOUBLE
@@ -34,7 +34,7 @@ public class InventoryCloseEventListener implements Listener {
 				return;
 			}
 
-			CWPlayer cwPlayer = CustomWings.getCWPlayer((Player) event.getPlayer());
+			CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer((Player) event.getPlayer());
 			cwPlayer.setLastEditorInvView(event.getView());
 
 		}

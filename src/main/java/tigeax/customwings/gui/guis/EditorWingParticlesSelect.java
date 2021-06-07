@@ -14,10 +14,12 @@ import tigeax.customwings.wings.WingParticle;
 
 public class EditorWingParticlesSelect {
 	
+	CustomWings plugin;
 	Settings settings;
 
 	public EditorWingParticlesSelect() {
-		settings = CustomWings.getSettings();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
 	}
 
 	public void open(CWPlayer cwPlayer, Wing wing) {

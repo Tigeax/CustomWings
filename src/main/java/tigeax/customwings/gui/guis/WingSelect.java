@@ -16,11 +16,13 @@ import tigeax.customwings.wingpurchase.BuyWings;
 
 public class WingSelect {
 
+    CustomWings plugin;
     Settings settings;
     NamespacedKey CWNamespace = new NamespacedKey(CustomWings.getPlugin(CustomWings.class), "CustomWings");
 
     public WingSelect() {
-        settings = CustomWings.getSettings();
+        plugin = CustomWings.getInstance();
+        settings = plugin.getSettings();
     }
 
     public void open(CWPlayer cwPlayer, int page) {
@@ -56,11 +58,11 @@ public class WingSelect {
 
         Player player = cwPlayer.getPlayer();
 
-        if (clickedSlot == CustomWings.getSettings().getHideWingsToggleSlot()) {
+        if (clickedSlot == plugin.getSettings().getHideWingsToggleSlot()) {
             toggleWings(cwPlayer);
             return;
         }
-        if (clickedSlot == CustomWings.getSettings().getFilterSlot()) {
+        if (clickedSlot == plugin.getSettings().getFilterSlot()) {
             switch (cwPlayer.getWingFilter()) {
                 default:
                     cwPlayer.setWingFilter("owned");
@@ -79,9 +81,9 @@ public class WingSelect {
 
         Wing wing;
 
-        if (clickedSlot == CustomWings.getSettings().getRemoveWingSlot()) {
+        if (clickedSlot == plugin.getSettings().getRemoveWingSlot()) {
             wing = null;
-        } else if (clickedSlot == CustomWings.getSettings().getNavigationBackSlot() || clickedSlot == CustomWings.getSettings().getNavigationNextSlot()) {
+        } else if (clickedSlot == plugin.getSettings().getNavigationBackSlot() || clickedSlot == plugin.getSettings().getNavigationNextSlot()) {
             try {
                 String s = clickedItem.getItemMeta().getPersistentDataContainer().get(CWNamespace, PersistentDataType.STRING);
                 if (s.startsWith("CW:PAGE:")) {
@@ -97,22 +99,22 @@ public class WingSelect {
             String wingId;
 
             wingId = clickedItem.getItemMeta().getPersistentDataContainer().get(CWNamespace, PersistentDataType.STRING);
-            wing = CustomWings.getWingByID(wingId);
+            wing = CustomWings.getInstance().getWingByID(wingId);
 
             if (wing == null)
                 return;
 
             if (!cwPlayer.hasPermissionForWing(wing)) {
-                if (CustomWings.isVaultEnabled()) {
+                if (CustomWings.getInstance().isVaultEnabled()) {
                     try {
                         if (!BuyWings.buyWing(wing, player)) {
-                            player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+                            player.sendMessage(plugin.getMessages().getNoPermissionEquipWing(wing));
                         }
                     } catch (NullPointerException e) {
-                        player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+                        player.sendMessage(plugin.getMessages().getNoPermissionEquipWing(wing));
                     }
                 } else {
-                    player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+                    player.sendMessage(plugin.getMessages().getNoPermissionEquipWing(wing));
                 }
                 return;
             }
@@ -130,7 +132,7 @@ public class WingSelect {
             cwPlayer.closeInventory();
 
             if (wing != null) {
-                player.sendMessage(CustomWings.getMessages().getWingSelected(wing));
+                player.sendMessage(plugin.getMessages().getWingSelected(wing));
             }
         }
     }
@@ -185,7 +187,7 @@ public class WingSelect {
         switch (cwPlayer.getWingFilter()) {
             default:
                 gui.setItem(settings.getFilterSlot(), settings.getFilterNoneItem());
-                for (Wing wing : CustomWings.getWings()) {
+                for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
                     if (wing.getHideInGUI()) continue;
@@ -199,7 +201,7 @@ public class WingSelect {
                 break;
             case "owned":
                 gui.setItem(settings.getFilterSlot(), settings.getFilterOwnedItem());
-                for (Wing wing : CustomWings.getWings()) {
+                for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
                     if (wing.getHideInGUI()) continue;
@@ -214,7 +216,7 @@ public class WingSelect {
                 break;
             case "unowned":
                 gui.setItem(settings.getFilterSlot(), settings.getFilterUnownedItem());
-                for (Wing wing : CustomWings.getWings()) {
+                for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
                     if (wing.getHideInGUI()) continue;
