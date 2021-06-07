@@ -19,13 +19,13 @@ public class PlayerCommandPreprocessEventListener implements Listener {
 	public void event(PlayerCommandPreprocessEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
 		SettingType waitingSetting = cwPlayer.getWaitingSetting();
 
 		if (waitingSetting != null) {
 			cwPlayer.setWaitingSetting(null);
 			if (waitingSetting.isChatInputSetting()) {
-				player.sendMessage(CustomWings.getMessages().getSettingCanceled());
+				player.sendMessage(CustomWings.getInstance().getMessages().getSettingCanceled());
 			}
 		}
 	}

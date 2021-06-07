@@ -43,7 +43,7 @@ public class Settings {
 
     public void reload() {
 
-        CustomWings.setupConfig();
+        plugin.setupConfig();
         load();
 
         // Reload players CustomWings GUI's
@@ -53,14 +53,14 @@ public class Settings {
 
             if (inv == null) continue;
 
-            CWGUIType cwGUIType = CustomWings.getCWGUIManager().getCWGUITypeByInvTitle(inv.getTitle());
+            CWGUIType cwGUIType = plugin.getCWGUIManager().getCWGUITypeByInvTitle(inv.getTitle());
 
             if (cwGUIType == null) continue;
 
             if (cwGUIType == CWGUIType.WINGSELECT)
-                CustomWings.getCWPlayer(player).openCWGUI(CWGUIType.WINGSELECT);
+                plugin.getCWPlayer(player).openCWGUI(CWGUIType.WINGSELECT);
             else
-                CustomWings.getCWPlayer(player).openCWGUI(CWGUIType.LASTEDITORGUI);
+                plugin.getCWPlayer(player).openCWGUI(CWGUIType.LASTEDITORGUI);
         }
     }
 

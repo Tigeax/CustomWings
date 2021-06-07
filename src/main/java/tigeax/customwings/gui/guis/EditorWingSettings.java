@@ -16,14 +16,16 @@ import tigeax.customwings.wings.Wing;
 
 public class EditorWingSettings {
 
+	CustomWings plugin;
 	Settings settings;
 	EditorConfigManager editorConfigManager;
 	Messages messages;
 
 	public EditorWingSettings() {
-		settings = CustomWings.getSettings();
-		editorConfigManager = CustomWings.getEditorConfigManager();
-		messages = CustomWings.getMessages();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+		editorConfigManager = plugin.getEditorConfigManager();
+		messages = plugin.getMessages();
 	}
 
 	public void open(CWPlayer cwPlayer, Wing wing) {

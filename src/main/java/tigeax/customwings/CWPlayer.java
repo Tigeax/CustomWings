@@ -32,13 +32,12 @@ public class CWPlayer {
 	private Object waitingSettingInfo;
 	private InventoryView lastEditorInvView;
 
-	private boolean previewingWing = false;
 	private Location wingPreviewLocation = null;
 
 	private long lastMove;
 
 	public CWPlayer(UUID uuid) {
-		this.cwGUIManager = CustomWings.getCWGUIManager();
+		this.cwGUIManager = CustomWings.getInstance().getCWGUIManager();
 
 		this.uuid = uuid;
 
@@ -81,9 +80,9 @@ public class CWPlayer {
 	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) {
 		this.hideOtherPlayerWings = hideOtherPlayerWings;
 		if (hideOtherPlayerWings) {
-			this.getPlayer().sendMessage(CustomWings.getMessages().getSeeOtherPlayersWingsON());
+			this.getPlayer().sendMessage(CustomWings.getInstance().getMessages().getSeeOtherPlayersWingsON());
 		} else {
-			this.getPlayer().sendMessage(CustomWings.getMessages().getSeeOtherPlayersWingsOFF());
+			this.getPlayer().sendMessage(CustomWings.getInstance().getMessages().getSeeOtherPlayersWingsOFF());
 		}
 	}
 	

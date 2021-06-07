@@ -14,12 +14,14 @@ import tigeax.customwings.Settings;
 
 public class EditorSelectMainGUISize {
 
+	CustomWings plugin;
 	Settings settings;
 	EditorConfigManager editorConfigManager;
 
 	public EditorSelectMainGUISize() {
-		settings = CustomWings.getSettings();
-		editorConfigManager = CustomWings.getEditorConfigManager();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+		editorConfigManager = plugin.getEditorConfigManager();
 	}
 
 	public void open(CWPlayer cwPlayer) {

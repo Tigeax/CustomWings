@@ -11,12 +11,14 @@ import org.bukkit.inventory.Inventory;
 
 public class EditorSelectSlot {
 	
+	CustomWings plugin;
 	Settings settings;
 	EditorConfigManager editorConfigManager;
 
 	public EditorSelectSlot() {
-		settings = CustomWings.getSettings();
-		editorConfigManager = CustomWings.getEditorConfigManager();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+		editorConfigManager = plugin.getEditorConfigManager();
 	}
 
 	public void open(CWPlayer cwPlayer) {

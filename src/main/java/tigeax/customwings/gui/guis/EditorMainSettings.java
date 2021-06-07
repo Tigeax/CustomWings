@@ -12,13 +12,15 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 public class EditorMainSettings {
-
+	
+	CustomWings plugin;
 	Settings settings;
 	Messages messages;
 
 	public EditorMainSettings() {
-		settings = CustomWings.getSettings();
-		messages = CustomWings.getMessages();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+		messages = plugin.getMessages();
 	}
 
 	public void open(CWPlayer cwPlayer) {

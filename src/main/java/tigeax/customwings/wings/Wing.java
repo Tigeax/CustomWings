@@ -77,7 +77,7 @@ public class Wing {
 	public void reload() {
 		if (wingRunnable != null) wingRunnable.cancel(); //Temperatry stop the runnable
 
-		CustomWings.setupConfig();
+		plugin.setupConfig();
 		load();
 
 		if (wingRunnable != null) startWingRunnable(); //Restart the runnable again with the (possibly new) settings
@@ -271,7 +271,7 @@ public class Wing {
 
 	private void runWingOwner(Player wingOwner, int animationState) {
 
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(wingOwner);
+		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(wingOwner);
 
 		// Spawn the wings for players that are previewing their wing
 		if (cwPlayer.isPreviewingWing()) {
@@ -302,7 +302,7 @@ public class Wing {
 		if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) return;
 
 		// Stop rendering wings for player when they have invisibility potion effect
-		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && CustomWings.getSettings().getInvisPotionHidesWing())
+		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && plugin.getSettings().getInvisPotionHidesWing())
 			return;
 
 		// Stop rendering wings if player is sleeping
@@ -392,7 +392,7 @@ public class Wing {
 
 				if (!wingPreview) {
 					// Stop rendering wings for the player if they look down
-					if (wingOwner.getLocation().getPitch() > CustomWings.getSettings().getWingMaxPitch())
+					if (wingOwner.getLocation().getPitch() > plugin.getSettings().getWingMaxPitch())
 						continue;
 				}
 
@@ -400,7 +400,7 @@ public class Wing {
 				continue;
 			}
 
-			CWPlayer cwPlayer = CustomWings.getCWPlayer(onlinePlayer);
+			CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(onlinePlayer);
 
 			// Skip if onlinePlayer doesn't want to see other players wings
 			if (cwPlayer.getHideOtherPlayerWings()) continue;
@@ -408,7 +408,7 @@ public class Wing {
 			Location onlinePlayerLoc = onlinePlayer.getLocation();
 
 			// Skip if the player is more then the wingViewDistance away from the wing
-			if (onlinePlayerLoc.distance(wingLocation) > CustomWings.getSettings().getWingViewDistance()) continue;
+			if (onlinePlayerLoc.distance(wingLocation) > plugin.getSettings().getWingViewDistance()) continue;
 
 			playersWhoCanSeeWing.add(onlinePlayer);
 		}
@@ -479,7 +479,7 @@ public class Wing {
 			try {
 				particle = Particle.valueOf(particleConfig.getString("particle"));
 			} catch (Exception e) {
-				CustomWings.sendError(e);
+				plugin.sendError(e);
 				particle = Particle.BARRIER;
 			}
 

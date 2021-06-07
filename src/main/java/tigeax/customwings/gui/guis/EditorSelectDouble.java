@@ -15,12 +15,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class EditorSelectDouble {
 
+	CustomWings plugin;
 	Settings settings;
 	EditorConfigManager editorConfigManager;
 
 	public EditorSelectDouble() {
-		settings = CustomWings.getSettings();
-		editorConfigManager = CustomWings.getEditorConfigManager();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+		editorConfigManager = plugin.getEditorConfigManager();
 	}
 
 	public void open(CWPlayer cwPlayer, Double currentValue) {

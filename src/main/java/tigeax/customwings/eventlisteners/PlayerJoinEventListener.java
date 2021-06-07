@@ -20,7 +20,7 @@ public class PlayerJoinEventListener implements Listener {
 	public void event(PlayerJoinEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
+		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
 		Wing wing = cwPlayer.getEquippedWing();
 
 		if (wing == null) return;

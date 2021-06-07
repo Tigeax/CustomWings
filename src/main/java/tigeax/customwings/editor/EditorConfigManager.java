@@ -106,12 +106,12 @@ public class EditorConfigManager {
 				config.set("editorGUI.mainSettingsItem.slot", parseInt(value));
 				break;
 			default:
-				CustomWings.sendError("Something went wrong while trying to change a setting!");
+				plugin.sendError("Something went wrong while trying to change a setting!");
 				return;
 		}
 
 		plugin.saveConfig();
-		CustomWings.getSettings().reload();
+		plugin.getSettings().reload();
 	}
 
 	// Used for all the wing settings
@@ -171,7 +171,7 @@ public class EditorConfigManager {
 				getWingLayoutConfig(wing).set("stopOffset", parseInt(value));
 				break;
 			default:
-				CustomWings.sendError("Something went wrong while trying to change a setting!");
+				plugin.sendError("Something went wrong while trying to change a setting!");
 				return;
 
 		}
@@ -207,7 +207,7 @@ public class EditorConfigManager {
 				getWingParticleConfig(wingParticle).set("color", parseInt(value));
 				break;
 			default:
-				CustomWings.sendError("Something went wrong while trying to change a setting!");
+				plugin.sendError("Something went wrong while trying to change a setting!");
 				return;
 		}
 

@@ -1,16 +1,16 @@
 package tigeax.customwings.wings;
 
 import java.util.ArrayList;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.gui.ParticleItem;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import tigeax.customwings.nms.NMSSupport;
+
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.gui.ParticleItem;
 
 /*
  * Class containing all information about a wingParticle
@@ -54,7 +54,7 @@ public class WingParticle {
 			try {
 				particleData = material.createBlockData();
 			} catch (Exception e) {
-				CustomWings.sendError(e);
+				CustomWings.getInstance().sendError(e);
 				particleData = Material.BARRIER.createBlockData();
 			}
 		} else

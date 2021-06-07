@@ -106,7 +106,7 @@ public class Messages {
 	}
 
 	private String parseColors(String string) {
-		if (string == null) CustomWings.sendError("Missing a message in the messages.yml file!");
+		if (string == null) plugin.sendError("Missing a message in the messages.yml file!");
 
 		return ChatColor.translateAlternateColorCodes('&', string + "");
 	}
@@ -124,7 +124,7 @@ public class Messages {
 		try {
 			messagesConfigFile.load(messagesFile);
 		} catch (Exception e) {
-			CustomWings.sendError(e);
+			plugin.sendError(e);
 		}
 
 	}

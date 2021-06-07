@@ -116,7 +116,7 @@ public enum ParticleItem {
 				try {
 					particle = Particle.valueOf(particleItem.toString());
 				} catch (Exception e) {
-					CustomWings.sendError(e);
+					CustomWings.getInstance().sendError(e);
 					particle = Particle.BARRIER;
 				}
 

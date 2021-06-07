@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 public class EditorSelectParticle {
 
+	CustomWings plugin;
 	Settings settings;
 	EditorConfigManager editorConfigManager;
 
@@ -24,8 +25,9 @@ public class EditorSelectParticle {
 	ArrayList<ItemStack> page2Items;
 
 	public EditorSelectParticle() {
-		settings = CustomWings.getSettings();
-		editorConfigManager = CustomWings.getEditorConfigManager();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+		editorConfigManager = plugin.getEditorConfigManager();
 
 		page1Items = new ArrayList<>();
 		page2Items = new ArrayList<>();

@@ -30,6 +30,8 @@ import tigeax.customwings.wings.WingParticle;
  */
 
 public class CWGUIManager {
+
+	private CustomWings plugin;
 	
 	private Settings settings;
 	private WingSelect wingSelectGUI;
@@ -46,19 +48,21 @@ public class CWGUIManager {
 
 
 	public CWGUIManager() {
-		this.settings = CustomWings.getSettings();
 
-		this.wingSelectGUI = new WingSelect();
-		this.editorGUI = new Editor();
-		this.editorMainSettingsGUI = new EditorMainSettings();
-		this.editorWingSettingsGUI = new EditorWingSettings();
-		this.editorWingParticlesSelectGUI = new EditorWingParticlesSelect();
-		this.editorWingParticleSettingsGUI = new EditorWingParticleSettings();
-		this.editorSelectGuiSizeGUI = new EditorSelectMainGUISize();
-		this.editorSelectParticleGUI = new EditorSelectParticle();
-		this.editorSelectSlotGUI = new EditorSelectSlot();
-		this.editorSelectIntegerGUI = new EditorSelectInteger();
-		this.editorSelectDoubleGUI = new EditorSelectDouble();
+		plugin = CustomWings.getInstance();
+		settings = plugin.getSettings();
+
+		wingSelectGUI = new WingSelect();
+		editorGUI = new Editor();
+		editorMainSettingsGUI = new EditorMainSettings();
+		editorWingSettingsGUI = new EditorWingSettings();
+		editorWingParticlesSelectGUI = new EditorWingParticlesSelect();
+		editorWingParticleSettingsGUI = new EditorWingParticleSettings();
+		editorSelectGuiSizeGUI = new EditorSelectMainGUISize();
+		editorSelectParticleGUI = new EditorSelectParticle();
+		editorSelectSlotGUI = new EditorSelectSlot();
+		editorSelectIntegerGUI = new EditorSelectInteger();
+		editorSelectDoubleGUI = new EditorSelectDouble();
 	}
 
 	public void openGUI(CWPlayer cwPlayer, CWGUIType cwGUIType, Object info) {
@@ -229,7 +233,7 @@ public class CWGUIManager {
 
 	private String parseEditorMenuName(String name) {
 		String menuName = ChatColor.stripColor(name);
-		menuName = menuName.replace(ChatColor.stripColor(CustomWings.getSettings().getEditorGUIName()), "");
+		menuName = menuName.replace(ChatColor.stripColor(plugin.getSettings().getEditorGUIName()), "");
 		menuName = menuName.replace(ChatColor.stripColor("Page 1"), "");
 		menuName = menuName.replace(ChatColor.stripColor("Page 2"), "");
 		menuName = menuName.replaceAll(" - ", "");
@@ -238,13 +242,13 @@ public class CWGUIManager {
 
 	private Wing getWingFromGUI(InventoryView invView) {
 		String wingID = ChatColor.stripColor(invView.getTopInventory().getItem(4).getItemMeta().getDisplayName());
-		Wing wing = CustomWings.getWingByID(wingID);
+		Wing wing = CustomWings.getInstance().getWingByID(wingID);
 		return wing;
 	}
 
 	private WingParticle getWingParticleFromGUI(InventoryView invView) {
 		String[] IDs = ChatColor.stripColor(invView.getTopInventory().getItem(4).getItemMeta().getDisplayName()).split(" - ");
-		return CustomWings.getWingByID(IDs[0]).getWingParticleByID(IDs[1]);
+		return CustomWings.getInstance().getWingByID(IDs[0]).getWingParticleByID(IDs[1]);
 	}
 
 	public static ItemStack getItem(Material material, String name) {
