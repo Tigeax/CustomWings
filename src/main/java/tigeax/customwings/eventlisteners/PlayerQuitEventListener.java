@@ -16,11 +16,17 @@ import tigeax.customwings.CustomWings;
 
 public class PlayerQuitEventListener implements Listener {
 
+	CustomWings plugin;
+
+	public PlayerQuitEventListener() {
+		plugin = CustomWings.getInstance();
+	}
+
 	@EventHandler
 	public void event(PlayerQuitEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
+		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 		
 		cwPlayer.setLastEditorInvView(null);
 

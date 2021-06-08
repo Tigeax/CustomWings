@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import tigeax.customwings.nms.NMSSupport;
+import tigeax.customwings.util.Util;
 import tigeax.customwings.wings.Wing;
 
 /*
@@ -20,9 +21,11 @@ import tigeax.customwings.wings.Wing;
 
 public class CWPlayer {
 
+	private CustomWings plugin;
+
 	private final CWGUIManager cwGUIManager;
 
-	private final UUID uuid;
+	private final Player player;
 
 	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
@@ -37,9 +40,11 @@ public class CWPlayer {
 	private long lastMove;
 
 	public CWPlayer(UUID uuid) {
-		this.cwGUIManager = CustomWings.getInstance().getCWGUIManager();
 
-		this.uuid = uuid;
+		plugin = CustomWings.getInstance();
+
+		cwGUIManager = plugin.getCWGUIManager();
+		player = Bukkit.getPlayer(uuid);
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
@@ -52,7 +57,16 @@ public class CWPlayer {
 		this.lastMove = Instant.now().getEpochSecond()-1;
 	}
 
-	public Player getPlayer() { return Bukkit.getPlayer(uuid); }
+	/**
+	 * Own implmentaton to send a message to a player using {@link Util#sendMessage(CommandSender, String)}.
+	 * 
+	 * @param message Message to send
+	 */
+	public void sendMessage(String message) {
+		Util.sendMessage(player, message);
+	}
+
+	public Player getPlayer() { return player; }
 	
 	public Wing getEquippedWing() { return equippedWing; }
 
@@ -71,6 +85,9 @@ public class CWPlayer {
 		}
 	}
 
+	/**
+	 * Return the location to spawn a wing. Returns null is the player is not previewing a wing.
+	 */
 	public Location getPreviewWingLocation() {
 		return wingPreviewLocation;
 	}
@@ -79,17 +96,14 @@ public class CWPlayer {
 	
 	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) {
 		this.hideOtherPlayerWings = hideOtherPlayerWings;
-		if (hideOtherPlayerWings) {
-			this.getPlayer().sendMessage(CustomWings.getInstance().getMessages().getSeeOtherPlayersWingsON());
-		} else {
-			this.getPlayer().sendMessage(CustomWings.getInstance().getMessages().getSeeOtherPlayersWingsOFF());
-		}
 	}
 	
 	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
 	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
 
-	// Calculate if the player is currently moving, based on when the player was last detected as moving
+	/**
+	 * Calculate if the player is currently moving, based on when the player was last detected as moving
+	 */
 	public boolean isMoving() {
 		Instant instant = Instant.now();
 		long now = instant.getEpochSecond();
@@ -110,7 +124,7 @@ public class CWPlayer {
 	}
 
 	public boolean hasPermissionForWing(Wing wing) {
-		return getPlayer().hasPermission("customwings.wing." + wing.getID()) || getPlayer().hasPermission(("customwings.wing.*"));
+		return getPlayer().hasPermission(wing.getPermission()) || getPlayer().hasPermission(("customwings.wing.*"));
 	}
 
 	public void openCWGUI(CWGUIType cwGUIType) {

@@ -13,7 +13,7 @@ public class BuyWings {
 
         try {
             if (priceType.equalsIgnoreCase("none") || wing.getWingPrice() == -1) {
-                player.sendMessage(CustomWings.getInstance().getMessages().getNoPermissionEquipWing(wing));
+                player.sendMessage(CustomWings.getInstance().getMessages().noPermissionToEquipWingError(wing));
                 return false;
             }
 
@@ -23,7 +23,7 @@ public class BuyWings {
                         CustomWings.getInstance().getPermissions().playerAdd(null, player, "customwings.wing."+wing.getID().toLowerCase());
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
                     } else {
-                        player.sendMessage(CustomWings.getInstance().getMessages().getCannotAffordWing(wing));
+                        player.sendMessage(CustomWings.getInstance().getMessages().cantAffordWingError(wing));
                     }
                     return true;
                 }
@@ -35,7 +35,7 @@ public class BuyWings {
                     CustomWings.getInstance().getPermissions().playerAdd(null, player, "customwings.wing." + wing.getID().toLowerCase());
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
                 } else {
-                    player.sendMessage(CustomWings.getInstance().getMessages().getCannotAffordWing(wing));
+                    player.sendMessage(CustomWings.getInstance().getMessages().cantAffordWingError(wing));
                 }
                 return true;
             }

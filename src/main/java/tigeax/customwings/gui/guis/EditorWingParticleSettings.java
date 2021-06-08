@@ -1,17 +1,16 @@
 package tigeax.customwings.gui.guis;
 
-import org.bukkit.Material;
-import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.Messages;
 import tigeax.customwings.Settings;
+import tigeax.customwings.configuration.Messages;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
 import tigeax.customwings.wings.WingParticle;
 
 public class EditorWingParticleSettings {
@@ -51,8 +50,6 @@ public class EditorWingParticleSettings {
 
 	public void click(CWPlayer cwPlayer, String itemName, WingParticle wingParticle) {
 
-		Player player = cwPlayer.getPlayer();
-
 		switch (itemName) {
 			case "Particle":
 				cwPlayer.setWaitingSetting(SettingType.WINGPARTICLEPARTICLE, wingParticle);
@@ -76,12 +73,12 @@ public class EditorWingParticleSettings {
 				return;
 			case "Block Type":
 				cwPlayer.setWaitingSetting(SettingType.WINGPARTICLEBLOCKTYPE, wingParticle);
-				player.sendMessage(messages.getSelectSettingMaterial());
+				cwPlayer.sendMessage(messages.selectSettingMaterial());
 				cwPlayer.closeInventory();
 				return;
 			case "Color":
 				cwPlayer.setWaitingSetting(SettingType.WINGPARTICLECOLOR, wingParticle);
-				player.sendMessage(messages.getTypeSettingInChat());
+				cwPlayer.sendMessage(messages.typeSettingInChat());
 				cwPlayer.closeInventory();
 				return;
 			case "Previous page":

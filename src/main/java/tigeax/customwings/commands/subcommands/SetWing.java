@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import tigeax.customwings.CWPlayer;
+import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.SubCommand;
 import tigeax.customwings.wings.Wing;
 
@@ -21,8 +22,8 @@ public class SetWing extends SubCommand {
     public void onCommandHasPerm(CommandSender sender, ArrayList<String> args) {
 
 		// If no player is specified send an error
-		if (args.size() == 1) {
-			sender.sendMessage(plugin.getMessages().getMissingArgumentsSetWing());
+		if (args.size() == 0) {
+			Util.sendMessage(sender, plugin.getMessages().missingArgumentsSetwingError());
 			return;
 		}
 
@@ -31,16 +32,16 @@ public class SetWing extends SubCommand {
 
 		// Send an error if the supplied playername doesn't exist
 		if (wingSetPlayer == null) {
-			sender.sendMessage(plugin.getMessages().getInvalidPlayerError(playerName));
+			Util.sendMessage(sender, plugin.getMessages().invalidPlayerError(playerName));
 			return;
 		}
 
 		CWPlayer cwPlayer = plugin.getCWPlayer(wingSetPlayer);
 
 		// If no wing was specified set the wing to null
-		if (args.size() == 2) {
+		if (args.size() == 1) {
 			cwPlayer.setEquippedWing(null);
-			sender.sendMessage(plugin.getMessages().getSetWingCommandWingSet(wingSetPlayer.getName(), "none"));
+			Util.sendMessage(sender, plugin.getMessages().setWingCommandSucces(wingSetPlayer, "none"));
 			return;
 		}
 
@@ -49,13 +50,13 @@ public class SetWing extends SubCommand {
 
 		if (wing == null) {
 			cwPlayer.setEquippedWing(null);
-			sender.sendMessage(plugin.getMessages().getSetWingCommandWingSet(wingSetPlayer.getName(), "none"));
+			Util.sendMessage(sender, plugin.getMessages().setWingCommandSucces(wingSetPlayer, "none"));
 			return;
 		}
 
 		// If the wing was valid let the player equip the wing
 		cwPlayer.setEquippedWing(wing);
-		sender.sendMessage(plugin.getMessages().getSetWingCommandWingSet(wingSetPlayer.getName(), wing.getID()));
+		Util.sendMessage(sender, plugin.getMessages().setWingCommandSucces(wingSetPlayer, wing.getID()));
 	}
     
 }

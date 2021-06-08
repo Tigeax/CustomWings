@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bukkit.command.CommandSender;
 
+import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.SubCommand;
 
 public class Reload extends SubCommand {
@@ -17,7 +18,7 @@ public class Reload extends SubCommand {
     public void onCommandHasPerm(CommandSender sender, ArrayList<String> args) {
       
       plugin.reload();
-      sender.sendMessage(plugin.getMessages().getReloadSuccess());
+      Util.sendMessage(sender, plugin.getMessages().reloadSucces());
 	}
     
 }

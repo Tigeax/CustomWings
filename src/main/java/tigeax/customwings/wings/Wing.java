@@ -521,4 +521,8 @@ public class Wing {
 	private String parseColors(String string) {
 		return ChatColor.translateAlternateColorCodes('&', string);
 	}
+
+    public String getPermission() {
+        return "customwings.wing." + getID();
+    }
 }

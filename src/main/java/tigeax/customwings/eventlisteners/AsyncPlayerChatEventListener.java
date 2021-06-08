@@ -17,11 +17,17 @@ import tigeax.customwings.CustomWings;
 
 public class AsyncPlayerChatEventListener implements Listener {
 
+	CustomWings plugin;
+
+	public AsyncPlayerChatEventListener() {
+		plugin = CustomWings.getInstance();
+	}
+
 	@EventHandler
 	public void event(AsyncPlayerChatEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
+		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 		SettingType setting = cwPlayer.getWaitingSetting();
 		Object settingInfo = cwPlayer.getWaitingSettingInfo();
 		
@@ -31,12 +37,11 @@ public class AsyncPlayerChatEventListener implements Listener {
 
 		event.setCancelled(true);
 
-		EditorConfigManager editorConfigManager = CustomWings.getInstance().getEditorConfigManager();
+		EditorConfigManager editorConfigManager = plugin.getEditorConfigManager();
 		String value = event.getMessage();
 
 		editorConfigManager.setSetting(setting, value, settingInfo);
 		cwPlayer.setWaitingSetting(null);
-		player.sendMessage(CustomWings.getInstance().getMessages().getSettingChanged());
-
+		cwPlayer.sendMessage(plugin.getMessages().settingChanged());
 	}
 }

@@ -1,15 +1,16 @@
 package tigeax.customwings.gui.guis;
 
-import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.gui.CWGUIType;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.Messages;
-import tigeax.customwings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
+
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.Settings;
+import tigeax.customwings.configuration.Messages;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
 
 public class EditorMainSettings {
 	
@@ -129,12 +130,12 @@ public class EditorMainSettings {
 
 
 		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
-			cwPlayer.getPlayer().sendMessage(messages.getTypeSettingInChat());
+			cwPlayer.sendMessage(messages.typeSettingInChat());
 			return;
 		}
 
 		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
-			cwPlayer.getPlayer().sendMessage(messages.getSelectSettingMaterial());
+			cwPlayer.sendMessage(messages.selectSettingMaterial());
 			return;
 		}
 

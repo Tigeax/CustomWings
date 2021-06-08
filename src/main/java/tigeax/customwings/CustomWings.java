@@ -25,6 +25,7 @@ import org.bukkit.util.Consumer;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import tigeax.customwings.commands.Wings;
+import tigeax.customwings.configuration.Messages;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
 import tigeax.customwings.eventlisteners.InventoryClickEventListener;
@@ -48,7 +49,7 @@ public class CustomWings extends JavaPlugin {
 
 	private static CustomWings instance;
 
-	private static Messages messages;
+	private Messages messages;
 	private static Settings settings;
 	private static EditorConfigManager editorConfigManager;
 	private static CWGUIManager cwGUIManager;
@@ -101,6 +102,7 @@ public class CustomWings extends JavaPlugin {
 
 		settings = new Settings(this);
 		messages = new Messages(this);
+
 		editorConfigManager = new EditorConfigManager(this);
 		cwGUIManager = new CWGUIManager();
 		cwPlayerList = new HashMap<>();
@@ -206,7 +208,7 @@ public class CustomWings extends JavaPlugin {
 	public void reload() {
 		setupConfig();
 		settings.reload();
-		messages.reload();
+		messages.update();
 		editorConfigManager.reload();
 		setupWings();
 
@@ -267,7 +269,7 @@ public class CustomWings extends JavaPlugin {
 	public Wing getWingByID(String ID) {
 		Wing getWing = null;
 		for (Wing wing : getWings())
-			if (wing.getID().equals(ID))
+			if (wing.getID().equalsIgnoreCase(ID))
 				getWing = wing;
 		return getWing;
 	}

@@ -12,7 +12,12 @@ import tigeax.customwings.util.commands.Command;
 
 public class OnTabComplete implements Listener {
 
-    
+    CustomWings plugin;
+
+    public OnTabComplete() {
+        plugin = CustomWings.getInstance();
+    }
+
     @EventHandler
     public void onTabComplete(TabCompleteEvent event) {
 
@@ -21,9 +26,7 @@ public class OnTabComplete implements Listener {
         String commandName = splitBuffer[0].replace("/", "");
         String[] args = Arrays.copyOfRange(splitBuffer, 1, splitBuffer.length);
 
-        Command command  = CustomWings.getInstance().getPluginCommand(commandName);
-
-
+        Command command = plugin.getPluginCommand(commandName);
 
         List<String> tabCompletions = command.getTabCompletions(args);
 

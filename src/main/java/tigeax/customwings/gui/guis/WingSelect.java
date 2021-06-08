@@ -108,13 +108,13 @@ public class WingSelect {
                 if (CustomWings.getInstance().isVaultEnabled()) {
                     try {
                         if (!BuyWings.buyWing(wing, player)) {
-                            player.sendMessage(plugin.getMessages().getNoPermissionEquipWing(wing));
+                            cwPlayer.sendMessage(plugin.getMessages().noPermissionToEquipWingError(wing));
                         }
                     } catch (NullPointerException e) {
-                        player.sendMessage(plugin.getMessages().getNoPermissionEquipWing(wing));
+                        cwPlayer.sendMessage(plugin.getMessages().noPermissionToEquipWingError(wing));
                     }
                 } else {
-                    player.sendMessage(plugin.getMessages().getNoPermissionEquipWing(wing));
+                    cwPlayer.sendMessage(plugin.getMessages().noPermissionToEquipWingError(wing));
                 }
                 return;
             }
@@ -132,7 +132,7 @@ public class WingSelect {
             cwPlayer.closeInventory();
 
             if (wing != null) {
-                player.sendMessage(plugin.getMessages().getWingSelected(wing));
+                cwPlayer.sendMessage(plugin.getMessages().wingEquipped(wing));
             }
         }
     }

@@ -24,7 +24,7 @@ public class Preview extends SubCommand {
 
 		// Send an error if the player does not have a wing equipped
 		if (wing == null) {
-			player.sendMessage(plugin.getMessages().getNoWingToPreview());
+			cwPlayer.sendMessage(plugin.getMessages().noWingToPreviewError());
 			return;
 		}
 
