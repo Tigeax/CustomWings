@@ -21,15 +21,11 @@ public class Messages extends YamlFile {
     public Messages(CustomWings plugin) {
         super(plugin, "messages.yml");
         this.plugin = plugin;
-        loadMessagesFromFile();
+        loadDataFromFile();
     }
 
-    public void update() {
-        super.updateFile();
-        loadMessagesFromFile();
-    }
 
-    private void loadMessagesFromFile() {
+    protected void loadDataFromFile() {
         // Wings
         wingEquipped = getMessage("wingEquipped");
         hideOtherPlayerWingsON = getMessage("hideOtherPlayerWingsON");

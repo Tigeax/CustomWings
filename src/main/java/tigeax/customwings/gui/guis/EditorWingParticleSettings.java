@@ -6,7 +6,7 @@ import org.bukkit.inventory.Inventory;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.Settings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.configuration.Messages;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
@@ -16,18 +16,18 @@ import tigeax.customwings.wings.WingParticle;
 public class EditorWingParticleSettings {
 
 	CustomWings plugin;
-	Settings settings;
+	Configuration config;
 	Messages messages;
 
 	public EditorWingParticleSettings() {
 		plugin = CustomWings.getInstance();
-		settings = plugin.getSettings();
+		config = plugin.getConfig();
 		messages = plugin.getMessages();
 	}
 
 	public void open(CWPlayer cwPlayer, WingParticle wingParticle) {
 
-		String guiName = settings.getEditorGUIName() + " - Particle Settings";
+		String guiName = config.getEditorGUIName() + " - Particle Settings";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 

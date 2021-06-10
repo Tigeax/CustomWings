@@ -72,8 +72,8 @@ public class InventoryClickEventListener implements Listener {
 		int clickedItemSlot = event.getSlot();
 
 		// Check if the clicked inventory is a CustomWings GUI
-		if (inventoryTitle.equals(CustomWings.getInstance().getSettings().getMainGUIName())
-				|| inventoryTitle.contains(CustomWings.getInstance().getSettings().getEditorGUIName())) {
+		if (inventoryTitle.equals(CustomWings.getInstance().getConfig().getMainGUIName())
+				|| inventoryTitle.contains(CustomWings.getInstance().getConfig().getEditorGUIName())) {
 			
 			event.setCancelled(true);
 

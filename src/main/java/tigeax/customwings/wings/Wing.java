@@ -5,10 +5,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-import org.bukkit.*;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Color;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
 import org.bukkit.inventory.ItemStack;
@@ -18,8 +24,10 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.nms.NMSSupport;
 
 /*
@@ -31,7 +39,7 @@ import tigeax.customwings.nms.NMSSupport;
 public class Wing {
 
 	public CustomWings plugin;
-	private FileConfiguration config;
+	private Configuration config;
 
 	private final String ID;
 
@@ -69,7 +77,7 @@ public class Wing {
 	public Wing(String wingID, CustomWings plugin) {
 		this.plugin = plugin;
 		this.ID = wingID;
-		this.config = plugin.getCWConfig();
+		this.config = plugin.getConfig();
 		this.playersWithWingActive = new ArrayList<>();
 		this.load();
 	}
@@ -77,7 +85,6 @@ public class Wing {
 	public void reload() {
 		if (wingRunnable != null) wingRunnable.cancel(); //Temperatry stop the runnable
 
-		plugin.setupConfig();
 		load();
 
 		if (wingRunnable != null) startWingRunnable(); //Restart the runnable again with the (possibly new) settings
@@ -85,8 +92,6 @@ public class Wing {
 
 	// Get all the wing data from the config and parse them if needed
 	private void load() {
-
-		this.config = plugin.getCWConfig();
 
 		hideInGUI = Boolean.parseBoolean(getConfigFileWing().getString("guiItem.hideInGUI"));
 
@@ -302,7 +307,7 @@ public class Wing {
 		if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) return;
 
 		// Stop rendering wings for player when they have invisibility potion effect
-		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && plugin.getSettings().getInvisPotionHidesWing())
+		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && config.getInvisPotionHidesWing())
 			return;
 
 		// Stop rendering wings if player is sleeping
@@ -392,7 +397,7 @@ public class Wing {
 
 				if (!wingPreview) {
 					// Stop rendering wings for the player if they look down
-					if (wingOwner.getLocation().getPitch() > plugin.getSettings().getWingMaxPitch())
+					if (wingOwner.getLocation().getPitch() > config.getWingMaxPitch())
 						continue;
 				}
 
@@ -408,7 +413,7 @@ public class Wing {
 			Location onlinePlayerLoc = onlinePlayer.getLocation();
 
 			// Skip if the player is more then the wingViewDistance away from the wing
-			if (onlinePlayerLoc.distance(wingLocation) > plugin.getSettings().getWingViewDistance()) continue;
+			if (onlinePlayerLoc.distance(wingLocation) > config.getWingViewDistance()) continue;
 
 			playersWhoCanSeeWing.add(onlinePlayer);
 		}

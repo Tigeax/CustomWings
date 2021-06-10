@@ -3,11 +3,16 @@ package tigeax.customwings.gui;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.gui.guis.Editor;
 import tigeax.customwings.gui.guis.EditorMainSettings;
 import tigeax.customwings.gui.guis.EditorSelectDouble;
@@ -19,9 +24,6 @@ import tigeax.customwings.gui.guis.EditorWingParticleSettings;
 import tigeax.customwings.gui.guis.EditorWingParticlesSelect;
 import tigeax.customwings.gui.guis.EditorWingSettings;
 import tigeax.customwings.gui.guis.WingSelect;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.Settings;
 import tigeax.customwings.wings.Wing;
 import tigeax.customwings.wings.WingParticle;
 
@@ -32,8 +34,8 @@ import tigeax.customwings.wings.WingParticle;
 public class CWGUIManager {
 
 	private CustomWings plugin;
-	
-	private Settings settings;
+	private Configuration config;
+
 	private WingSelect wingSelectGUI;
 	private Editor editorGUI;
 	private EditorMainSettings editorMainSettingsGUI;
@@ -50,7 +52,7 @@ public class CWGUIManager {
 	public CWGUIManager() {
 
 		plugin = CustomWings.getInstance();
-		settings = plugin.getSettings();
+		config = plugin.getConfig();
 
 		wingSelectGUI = new WingSelect();
 		editorGUI = new Editor();
@@ -115,7 +117,7 @@ public class CWGUIManager {
 
 	public CWGUIType getCWGUITypeByInvTitle(String invTitle) {
 
-		if (invTitle.equals(settings.getMainGUIName())) 
+		if (invTitle.equals(config.getMainGUIName())) 
 			return CWGUIType.WINGSELECT;
 
 		String parsedInvName = parseEditorMenuName(invTitle);
@@ -233,7 +235,7 @@ public class CWGUIManager {
 
 	private String parseEditorMenuName(String name) {
 		String menuName = ChatColor.stripColor(name);
-		menuName = menuName.replace(ChatColor.stripColor(plugin.getSettings().getEditorGUIName()), "");
+		menuName = menuName.replace(ChatColor.stripColor(config.getEditorGUIName()), "");
 		menuName = menuName.replace(ChatColor.stripColor("Page 1"), "");
 		menuName = menuName.replace(ChatColor.stripColor("Page 2"), "");
 		menuName = menuName.replaceAll(" - ", "");

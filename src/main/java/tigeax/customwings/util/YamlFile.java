@@ -12,7 +12,7 @@ import tigeax.customwings.CustomWings;
 /**
  * Extention of YamlConfiguration to make it easier to work with YAML files.
  */
-public class YamlFile extends YamlConfiguration {
+public abstract class YamlFile extends YamlConfiguration {
 
 
     private final CustomWings plugin;
@@ -26,14 +26,19 @@ public class YamlFile extends YamlConfiguration {
         this.filename = filename;
         this.file = new File(plugin.getDataFolder(), filename);
         
-        this.updateFile();
+        updateFile();
+    }
+
+    public void update() {
+        updateFile();
+        loadDataFromFile();
     }
 
     /**
     * Reload/update the file, for when it was externally edited.
     * Check if it exists, and if not create it by calling createIfNotExists().
     */
-    public void updateFile() {
+    private void updateFile() {
 
         plugin.getLogger().info("Loading " + filename + "...");
 
@@ -63,4 +68,8 @@ public class YamlFile extends YamlConfiguration {
         file.getParentFile().mkdirs();
         plugin.saveResource(filename, false);
     }
+
+    /** Load data from the YML file. */
+    protected abstract void loadDataFromFile();
+
 }

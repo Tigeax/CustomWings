@@ -10,41 +10,41 @@ import org.bukkit.persistence.PersistentDataType;
 import tigeax.customwings.events.PlayerEquipWingEvent;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.Settings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.wings.Wing;
 import tigeax.customwings.wingpurchase.BuyWings;
 
 public class WingSelect {
 
     CustomWings plugin;
-    Settings settings;
+    Configuration config;
     NamespacedKey CWNamespace = new NamespacedKey(CustomWings.getPlugin(CustomWings.class), "CustomWings");
 
     public WingSelect() {
         plugin = CustomWings.getInstance();
-        settings = plugin.getSettings();
+        config = plugin.getConfig();
     }
 
     public void open(CWPlayer cwPlayer, int page) {
 
-        String guiName = settings.getMainGUIName();
-        int guiSize = settings.getMainGUISize();
+        String guiName = config.getMainGUIName();
+        int guiSize = config.getMainGUISize();
 
         Inventory gui = Bukkit.createInventory(null, guiSize, guiName);
 
-        ItemStack removeWingItem = settings.getRemoveWingItem();
-        int removeWingSlot = settings.getRemoveWingSlot();
+        ItemStack removeWingItem = config.getRemoveWingItem();
+        int removeWingSlot = config.getRemoveWingSlot();
 
         if (guiSize > removeWingSlot) gui.setItem(removeWingSlot, removeWingItem);
 
         ItemStack hideWingsToggleItem;
-        int hideWingsToggleSlot = settings.getHideWingsToggleSlot();
+        int hideWingsToggleSlot = config.getHideWingsToggleSlot();
 
         if (guiSize > hideWingsToggleSlot) {
             if (cwPlayer.getHideOtherPlayerWings()) {
-                hideWingsToggleItem = settings.getHideWingsToggleOFFItem();
+                hideWingsToggleItem = config.getHideWingsToggleOFFItem();
             } else {
-                hideWingsToggleItem = settings.getHideWingsToggleONItem();
+                hideWingsToggleItem = config.getHideWingsToggleONItem();
             }
             gui.setItem(hideWingsToggleSlot, hideWingsToggleItem);
         }
@@ -58,11 +58,11 @@ public class WingSelect {
 
         Player player = cwPlayer.getPlayer();
 
-        if (clickedSlot == plugin.getSettings().getHideWingsToggleSlot()) {
+        if (clickedSlot == config.getHideWingsToggleSlot()) {
             toggleWings(cwPlayer);
             return;
         }
-        if (clickedSlot == plugin.getSettings().getFilterSlot()) {
+        if (clickedSlot == config.getFilterSlot()) {
             switch (cwPlayer.getWingFilter()) {
                 default:
                     cwPlayer.setWingFilter("owned");
@@ -81,9 +81,9 @@ public class WingSelect {
 
         Wing wing;
 
-        if (clickedSlot == plugin.getSettings().getRemoveWingSlot()) {
+        if (clickedSlot == config.getRemoveWingSlot()) {
             wing = null;
-        } else if (clickedSlot == plugin.getSettings().getNavigationBackSlot() || clickedSlot == plugin.getSettings().getNavigationNextSlot()) {
+        } else if (clickedSlot == config.getNavigationBackSlot() || clickedSlot == config.getNavigationNextSlot()) {
             try {
                 String s = clickedItem.getItemMeta().getPersistentDataContainer().get(CWNamespace, PersistentDataType.STRING);
                 if (s.startsWith("CW:PAGE:")) {
@@ -170,37 +170,37 @@ public class WingSelect {
             gui.clear(i++);
         }
 
-        gui.clear(settings.getNavigationNextSlot());
-        gui.clear(settings.getNavigationBackSlot());
-        gui.clear(settings.getFilterSlot());
+        gui.clear(config.getNavigationNextSlot());
+        gui.clear(config.getNavigationBackSlot());
+        gui.clear(config.getFilterSlot());
 
         if (page > 0) {
             int lastPage = page - 1;
-            gui.setItem(settings.getNavigationBackSlot(), settings.getNavigationBackItem(lastPage));
+            gui.setItem(config.getNavigationBackSlot(), config.getNavigationBackItem(lastPage));
         }
 
         int slot = 0;
-        int slotLimit = settings.getMainGUISize() - 9;
+        int slotLimit = config.getMainGUISize() - 9;
         int startLoop = page * slotLimit;
         int loops = -1;
 
         switch (cwPlayer.getWingFilter()) {
             default:
-                gui.setItem(settings.getFilterSlot(), settings.getFilterNoneItem());
+                gui.setItem(config.getFilterSlot(), config.getFilterNoneItem());
                 for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
                     if (wing.getHideInGUI()) continue;
                     if (slotLimit <= slot) {
                         int nextPage = page + 1;
-                        gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
+                        gui.setItem(config.getNavigationNextSlot(), config.getNavigationNextItem(nextPage));
                         break;
                     }
                     gui.setItem(slot++, createWingItem(cwPlayer, wing));
                 }
                 break;
             case "owned":
-                gui.setItem(settings.getFilterSlot(), settings.getFilterOwnedItem());
+                gui.setItem(config.getFilterSlot(), config.getFilterOwnedItem());
                 for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
@@ -208,14 +208,14 @@ public class WingSelect {
                     if (!cwPlayer.hasPermissionForWing(wing)) continue;
                     if (slotLimit <= slot) {
                         int nextPage = page + 1;
-                        gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
+                        gui.setItem(config.getNavigationNextSlot(), config.getNavigationNextItem(nextPage));
                         break;
                     }
                     gui.setItem(slot++, createWingItem(cwPlayer, wing));
                 }
                 break;
             case "unowned":
-                gui.setItem(settings.getFilterSlot(), settings.getFilterUnownedItem());
+                gui.setItem(config.getFilterSlot(), config.getFilterUnownedItem());
                 for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
@@ -223,7 +223,7 @@ public class WingSelect {
                     if (cwPlayer.hasPermissionForWing(wing)) continue;
                     if (slotLimit <= slot) {
                         int nextPage = page + 1;
-                        gui.setItem(settings.getNavigationNextSlot(), settings.getNavigationNextItem(nextPage));
+                        gui.setItem(config.getNavigationNextSlot(), config.getNavigationNextItem(nextPage));
                         break;
                     }
                     gui.setItem(slot++, createWingItem(cwPlayer, wing));
@@ -236,11 +236,11 @@ public class WingSelect {
     private void toggleWings(CWPlayer cwPlayer) {
         Inventory gui = cwPlayer.getPlayer().getOpenInventory().getTopInventory();
         cwPlayer.setHideOtherPlayerWings(!cwPlayer.getHideOtherPlayerWings());
-        gui.clear(settings.getHideWingsToggleSlot());
+        gui.clear(config.getHideWingsToggleSlot());
         if (!cwPlayer.getHideOtherPlayerWings()) {
-            gui.setItem(settings.getHideWingsToggleSlot(), settings.getHideWingsToggleONItem());
+            gui.setItem(config.getHideWingsToggleSlot(), config.getHideWingsToggleONItem());
         } else {
-            gui.setItem(settings.getHideWingsToggleSlot(), settings.getHideWingsToggleOFFItem());
+            gui.setItem(config.getHideWingsToggleSlot(), config.getHideWingsToggleOFFItem());
         }
     }
 }

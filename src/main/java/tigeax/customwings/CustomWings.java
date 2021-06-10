@@ -1,6 +1,5 @@
 package tigeax.customwings;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -14,8 +13,6 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -25,6 +22,7 @@ import org.bukkit.util.Consumer;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import tigeax.customwings.commands.Wings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.configuration.Messages;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
@@ -50,17 +48,16 @@ public class CustomWings extends JavaPlugin {
 	private static CustomWings instance;
 
 	private Messages messages;
-	private static Settings settings;
+	private Configuration config;
+
+	//private static Settings settings;
 	private static EditorConfigManager editorConfigManager;
 	private static CWGUIManager cwGUIManager;
 
 	private static HashMap<UUID, CWPlayer> cwPlayerList;
 	private static ArrayList<Wing> wings;
 
-	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName()
-			.replace("org.bukkit.craftbukkit", "").replace(".", "");
-
-	private static FileConfiguration configFile;
+	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
 
 	private static Economy econ = null;
 	private static Permission perms = null;
@@ -98,9 +95,8 @@ public class CustomWings extends JavaPlugin {
 		int pluginId = 8227;
 		new Metrics(this, pluginId);
 
-		setupConfig();
-
-		settings = new Settings(this);
+		// Setup Configuration
+		config = new Configuration(this);
 		messages = new Messages(this);
 
 		editorConfigManager = new EditorConfigManager(this);
@@ -165,16 +161,13 @@ public class CustomWings extends JavaPlugin {
 		commands.add(commandObj);
 	}
 
-	public FileConfiguration getCWConfig() {
-		return configFile;
-	}
-
 	public String getServerVersion() {
 		return VERSION;
 	}
 
-	public Settings getSettings() {
-		return settings;
+	@Override
+	public Configuration getConfig() {
+		return config;
 	}
 
 	public Messages getMessages() {
@@ -206,8 +199,13 @@ public class CustomWings extends JavaPlugin {
 	}
 
 	public void reload() {
-		setupConfig();
-		settings.reload();
+		onDisable();
+		onEnable();
+	}
+
+	// Old reload
+	public void reloadOld() {
+		config.update();
 		messages.update();
 		editorConfigManager.reload();
 		setupWings();
@@ -302,30 +300,11 @@ public class CustomWings extends JavaPlugin {
 		return supportedVersions.contains(VERSION);
 	}
 
-	public void setupConfig() {
-
-		File cFile = new File(instance.getDataFolder(), "config.yml");
-		configFile = new YamlConfiguration();
-
-		if (!cFile.exists()) {
-			instance.getLogger().info("CustomWings config.yml not found, creating!");
-			cFile.getParentFile().mkdirs();
-			instance.saveResource("config.yml", false);
-		} else {
-			instance.getLogger().info("CustomWings config.yml found, loading!");
-		}
-		try {
-			configFile.load(cFile);
-		} catch (Exception e) {
-			sendError(e);
-		}
-
-	}
 
 	private void setupWings() {
 		wings = new ArrayList<>();
 
-		for (String wingID : configFile.getConfigurationSection("wings").getKeys(false)) {
+		for (String wingID : config.getConfigurationSection("wings").getKeys(false)) {
 			Wing wing = new Wing(wingID, instance);
 			wings.add(wing);
 		}

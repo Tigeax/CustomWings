@@ -111,7 +111,7 @@ public class EditorConfigManager {
 		}
 
 		plugin.saveConfig();
-		plugin.getSettings().reload();
+		plugin.getConfig().update();
 	}
 
 	// Used for all the wing settings

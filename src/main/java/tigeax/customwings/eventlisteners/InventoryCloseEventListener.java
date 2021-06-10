@@ -28,7 +28,7 @@ public class InventoryCloseEventListener implements Listener {
 
 		String inventoryTitle = event.getView().getTitle();
 
-		if (inventoryTitle.contains(plugin.getSettings().getEditorGUIName())) {
+		if (inventoryTitle.contains(plugin.getConfig().getEditorGUIName())) {
 
 			CWGUIType cwGUIType = plugin.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
 

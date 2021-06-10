@@ -1,11 +1,5 @@
 package tigeax.customwings.gui.guis;
 
-import tigeax.customwings.editor.EditorConfigManager;
-import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.gui.CWGUIType;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,21 +7,28 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
+import tigeax.customwings.editor.EditorConfigManager;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
+
 public class EditorSelectDouble {
 
 	CustomWings plugin;
-	Settings settings;
+	Configuration config;
 	EditorConfigManager editorConfigManager;
 
 	public EditorSelectDouble() {
 		plugin = CustomWings.getInstance();
-		settings = plugin.getSettings();
+		config = plugin.getConfig();
 		editorConfigManager = plugin.getEditorConfigManager();
 	}
 
 	public void open(CWPlayer cwPlayer, Double currentValue) {
 
-		String guiName = settings.getEditorGUIName() + " - Set Double";
+		String guiName = config.getEditorGUIName() + " - Set Double";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 
