@@ -16,6 +16,12 @@ import tigeax.customwings.wings.Wing;
 
 public class PlayerJoinEventListener implements Listener {
 
+	CustomWings plugin;
+
+	public PlayerJoinEventListener() {
+		plugin = CustomWings.getInstance();
+	}
+
 	@EventHandler
 	public void event(PlayerJoinEvent event) {
 

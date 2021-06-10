@@ -3,9 +3,10 @@ package tigeax.customwings.commands.subcommands;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
+import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.SubCommand;
 import tigeax.customwings.wings.Wing;
 
@@ -21,37 +22,38 @@ public class TakeAwayWing extends SubCommand {
 
     // If no player or wing ID is specified send an error
     if (args.size() < 2) {
-      sender.sendMessage(plugin.getMessages().getMissingArgumentsTakeAwayWing());
+      Util.sendMessage(sender, plugin.getMessages().missingArgumentsTakeAwayWingError());
       return;
     }
 
     if (!plugin.isVaultEnabled()) {
-      sender.sendMessage("Vault is needed for that action");
+      Util.sendMessage(sender, plugin.getMessages().noVaultError());
+      return;
     }
 
     String playerName = args.get(0);
     String wingName = args.get(1);
 
-    OfflinePlayer player = null;
+    Player player = null;
 
     try {
-      player = Bukkit.getOfflinePlayer(playerName);
+      player = Bukkit.getOfflinePlayer(playerName).getPlayer();
     } catch (NullPointerException e) {
-      sender.sendMessage(plugin.getMessages().getInvalidPlayerError(playerName));
+      Util.sendMessage(sender, plugin.getMessages().invalidPlayerError(playerName));
     }
 
     if (player == null) {
-      sender.sendMessage(plugin.getMessages().getInvalidPlayerError(playerName));
+      Util.sendMessage(sender, plugin.getMessages().invalidPlayerError(playerName));
     }
 
     Wing wing = plugin.getWingByID(args.get(1));
 
     if (wing == null) {
-      sender.sendMessage(plugin.getMessages().getInvalidWingsError(wingName));
+      Util.sendMessage(sender, plugin.getMessages().invalidWingsError(wingName));
     }
 
-    plugin.getPermissions().playerRemove(null, player.getPlayer(), "customwings.wing." + wing.getID().toLowerCase());
-    sender.sendMessage(plugin.getMessages().getWingsRemoved(playerName, wing));
+    plugin.getPermissions().playerRemove(null, player.getPlayer(), "customwings.wing." + wing.getConfig().getID());
+    Util.sendMessage(sender, plugin.getMessages().takeAwayWingCommandSucces(player, wing));
   }
 
 }

@@ -16,14 +16,21 @@ import tigeax.customwings.CustomWings;
 
 public class InventoryCloseEventListener implements Listener {
 
+	CustomWings plugin;
+
+	public InventoryCloseEventListener() {
+		plugin = CustomWings.getInstance();
+	}
+
+
 	@EventHandler
 	public void event(InventoryCloseEvent event) {
 
 		String inventoryTitle = event.getView().getTitle();
 
-		if (inventoryTitle.contains(CustomWings.getInstance().getSettings().getEditorGUIName())) {
+		if (inventoryTitle.contains(plugin.getConfig().getEditorGUIName())) {
 
-			CWGUIType cwGUIType = CustomWings.getInstance().getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
+			CWGUIType cwGUIType = plugin.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
 
 			if (cwGUIType == null
 					|| cwGUIType == CWGUIType.EDITORSELECTDOUBLE
@@ -34,7 +41,7 @@ public class InventoryCloseEventListener implements Listener {
 				return;
 			}
 
-			CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer((Player) event.getPlayer());
+			CWPlayer cwPlayer = plugin.getCWPlayer((Player) event.getPlayer());
 			cwPlayer.setLastEditorInvView(event.getView());
 
 		}

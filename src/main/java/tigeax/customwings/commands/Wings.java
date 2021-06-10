@@ -47,7 +47,7 @@ public class Wings extends Command implements SubCommandManager {
         if (args.size() == 0) {
 
             if (!(sender instanceof Player)) {
-                sender.sendMessage(plugin.getMessages().getNotAPlayerError());
+                Util.sendMessage(sender, plugin.getMessages().notAPlayerError());
                 return;
             }
     
@@ -61,8 +61,7 @@ public class Wings extends Command implements SubCommandManager {
         SubCommand target = Util.getSubCommand(args.get(0), subCommands);
 
         if (target == null) {
-            //TODO
-            Util.sendMessage(sender, "TODO: invalid subcommand");
+            Util.sendMessage(sender, plugin.getMessages().invalidSubCommandError());
             return;
         }
 

@@ -59,7 +59,7 @@ public abstract class Command extends BukkitCommand implements CommandExecutor {
     public void onCommand(CommandSender sender, ArrayList<String> args) {
 
         if (!sender.hasPermission(permission)) {
-            Util.sendMessage(sender, plugin.getMessages().getNoPermissionForCommand());
+            Util.sendMessage(sender, plugin.getMessages().noPermissionForCommandError(getName(), permission));
             return;
         }
 
@@ -79,13 +79,12 @@ public abstract class Command extends BukkitCommand implements CommandExecutor {
 
     @Override
     public void onCommandHasPermAndIsPlayer(Player player, ArrayList<String> args) {
-        // TODO
-        Util.sendMessage(player, "TODO: Your not Console");
+        Util.sendMessage(player, plugin.getMessages().notConsoleError());
     }
 
     @Override
     public void onCommandHasPermAndIsConsole(CommandSender sender, ArrayList<String> args) {
-        Util.sendMessage(sender, plugin.getMessages().getNotAPlayerError());
+        Util.sendMessage(sender, plugin.getMessages().notAPlayerError());
     }
 
 }

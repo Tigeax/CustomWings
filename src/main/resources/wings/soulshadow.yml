@@ -1,0 +1,106 @@
+#If true the wing will also show then the player is moving
+showWhenMoving: true
+#The worlds where wing can be equipped. Use "all" for all worlds in the server
+whitelistedWorlds:
+  - "all"
+  - "world_nether2"
+
+#Type of price to pay
+# "economy" - Default vault economy
+# "token" - TokenManager
+price-type: token
+#Price to pay to unlock the wings
+# -1 = cannot buy; 0 = free
+price: 10
+
+#Message that displays when the wing is bought
+buyMessage: "&3You just bought &5Soulshadow Wing"
+
+#Item that will show up in the main GUI
+guiItem:
+  #If true the wing will not show up in the main GUI
+  hideInGUI: false
+  
+  name: "&5Soul Shadow"
+  material: ENDER_EYE
+  slot: 0
+  loreWhenEquipped: 
+    - "&6You have the &5Soulshadow Wing &6equipped"
+  loreWhenUnequipped:
+    - "&3You do not have the &5Soulshadow Wing &3equipped"
+  loreWhenNoPermission:
+    - "&cYou do not own the &5Soulshadow Wing"
+  loreWhenCanBuy:
+    - "&eYou can buy this for %price% $"
+
+wingLayout:
+  #The starting height of the wing, starting from the players feet. Accepts negative numbers
+  startVertical: -0.1
+  #The starting distance from the player. Accepts negative numbers.
+  startHorizontal: 0.3
+  #The distance between each particle in the horizonal and vertical direction.
+  distanceBetweenParticles: 0.1
+  #The amount of ticks between the spawing of the wing's particles
+  wingTimer: 2
+  
+  #If true the wing will have a flapping animation
+  wingAnimation: true
+  #The speed at which the wing should flap, this is the degrees it moves everything the wing's particles are spawned
+  wingFlapSpeed: 4
+  
+  #The starting postion of the wings in degrees. 0 = next to the player. 90 = behind the player
+  startOffset: 30
+  #Only used when 'wingAnimation: true'. In degrees. 90 = behind the player. 0 = next to the player;
+  stopOffset: 70
+  
+  #The grid layout of the wing. use an '-' to not spawn a particle.
+particleLayout:
+  1:  "-,-,-,-,x,x,x,-,-,-"
+  2:  "-,-,-,x,x,x,x,x,-,-"
+  3:  "-,-,x,x,x,x,x,x,x,-"
+  4:  "-,x,x,x,x,x,x,x,x,-"
+  5:  "x,x,x,x,x,x,x,x,x,x"
+  6:  "x,x,x,x,x,x,x,x,x,x"
+  7:  "x,x,x,x,x,x,x,x,x,x"
+  8:  "x,x,x,x,x,x,x,x,x,x"
+  9:  "-,-,x,x,x,x,x,x,x,x"
+  10: "-,-,-,x,x,x,x,x,x,x"
+  11: "-,-,-,x,x,x,x,x,x,x"
+  12: "-,-,-,-,x,x,x,x,x,x"
+  13: "-,-,-,-,x,x,x,x,x,x"
+  14: "-,-,-,-,-,x,x,x,x,-"
+  15: "-,-,-,-,-,x,x,x,x,-"
+  16: "-,-,-,-,-,-,x,x,x,-"
+  17: "-,-,-,-,-,-,x,x,x,-"
+  18: "-,-,-,-,-,-,-,x,x,-"
+  19: "-,-,-,-,-,-,-,-,x,-"
+    
+#The different particles that can be used in the particleLayout
+particles:
+  #The ID of the particle used as a character in the particleLayout
+    x:
+      #Available particles:
+      #BARRIER, BLOCK_CRACK, BLOCK_DUST,BUBBLE_COLUMN_UP, BUBBLE_POP, CLOUD, CRIT, CRIT_MAGIC, CURRENT_DOWN, DAMAGE_INDICATOR, DOLPHIN, DRAGON_BREATH, DRIP_LAVA, DRIP_WATER, ENCHANTMENT_TABLE, END_ROD, EXPLOSION_HUGE, EXPLOSION_LARGE
+      #EXPLOSION_NORMAL, FALLING_DUST, FIREWORKS_SPARK, FLAME, HEART, ITEM_CRACK, LAVA, LEGACY_BLOCK_CRACK, LEGACY_BLOCK_DUST, LEGACY_FALLING_DUST, MOB_APPEARANCE, NAUTILUS, NOTE, PORTAL, REDSTONE, SLIME, SMOKE_LARGE, SMOKE_NORMAL, SNOW_SHOVEL
+      #SNOWBALL, SPELL, SPELL_INSTANT, SPELL_MOB, SPELL_MOB_AMBIENT, SPELL_WITCH, SPIT, SQUID_INK, SUSPENDED, SUSPENDED_DEPTH, SWEEP_ATTACK, TOTEM, TOWN_AURA, VILLAGER_ANGRY, VILLAGER_HAPPY, WATER_BUBBLE, WATER_DROP, WATER_SPLASH, WATER_WAKE
+      
+      particle: "CRIT_MAGIC"
+      
+      #Directonal Particles
+      #The following particles can have a specific direction
+      #EXPLOSION_NORMAL, FIREWORKS_SPARK, WATER_BUBBLE, WATER_WAKE, CRIT, CRIT_MAGIC, SMOKE_NORMAL, SMOKE_LARGE, PORTAL, ENCHANTMENT_TABLE, CLOUD, DRAGON_BREATH, END_ROD, DAMAGE_INDICATOR, TOTEM, SPIT, SQUID_INK, BUBBLE_POP, BUBBLE_COLUMN_UP, NAUTILUS
+      
+      #"distance" is the horizontal distance the particle will move from it's original location
+      #"height" is the vertical distance the particle will move from it's original location
+      #"angle" is the angle at with the particle will fly towards. 0 = behind the player. 90 = beside the player. 180 = in front of the player.
+      #"speed" is the velocity the particle will have
+      distance: 0
+      height: 0
+      angle: 0
+      speed: 0
+      
+      #Redstone can have a color value. This is given in an RGB int
+      color: 0
+
+      #Some particles (ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST) require a blockType to work correctly
+      blockType: QUARTZ_BLOCK    

@@ -4,29 +4,29 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.Settings;
 
 public class EditorSelectMainGUISize {
 
 	CustomWings plugin;
-	Settings settings;
+	Configuration config;
 	EditorConfigManager editorConfigManager;
 
 	public EditorSelectMainGUISize() {
 		plugin = CustomWings.getInstance();
-		settings = plugin.getSettings();
+		config = plugin.getConfig();
 		editorConfigManager = plugin.getEditorConfigManager();
 	}
 
 	public void open(CWPlayer cwPlayer) {
 
-		String guiName = settings.getEditorGUIName() + " - Main GUI Size";
+		String guiName = config.getEditorGUIName() + " - Main GUI Size";
 
 		Inventory gui = Bukkit.createInventory(null, 9, guiName);
 

@@ -15,17 +15,23 @@ import tigeax.customwings.editor.SettingType;
 
 public class PlayerCommandPreprocessEventListener implements Listener {
 
+	CustomWings plugin;
+
+	public PlayerCommandPreprocessEventListener() {
+		plugin = CustomWings.getInstance();
+	}
+
 	@EventHandler
 	public void event(PlayerCommandPreprocessEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
+		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 		SettingType waitingSetting = cwPlayer.getWaitingSetting();
 
 		if (waitingSetting != null) {
 			cwPlayer.setWaitingSetting(null);
 			if (waitingSetting.isChatInputSetting()) {
-				player.sendMessage(CustomWings.getInstance().getMessages().getSettingCanceled());
+				cwPlayer.sendMessage(plugin.getMessages().settingCancelled());
 			}
 		}
 	}

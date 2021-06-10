@@ -24,12 +24,18 @@ import tigeax.customwings.CustomWings;
 
 public class InventoryClickEventListener implements Listener {
 
+	CustomWings plugin;
+
+	public InventoryClickEventListener() {
+		plugin = CustomWings.getInstance();
+	}
+
 	@EventHandler
 	public void event(InventoryClickEvent event) {
 
 		String inventoryTitle = event.getView().getTitle();
 		Player player = (Player) event.getWhoClicked();
-		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
+		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 		ItemStack clickedItem = event.getCurrentItem();
 
 		// Return if no item is clicked
@@ -49,13 +55,13 @@ public class InventoryClickEventListener implements Listener {
 
 					event.setCancelled(true);
 
-					EditorConfigManager editorConfigManager = CustomWings.getInstance().getEditorConfigManager();
+					EditorConfigManager editorConfigManager = plugin.getEditorConfigManager();
 
 					Material value = clickedItem.getType();
 					editorConfigManager.setSetting(setting, value, settingInfo);
 
 					cwPlayer.setWaitingSetting(null);
-					player.sendMessage(CustomWings.getInstance().getMessages().getSettingChanged());
+					cwPlayer.sendMessage(plugin.getMessages().settingChanged());
 					return;
 				}
 			}
@@ -66,8 +72,8 @@ public class InventoryClickEventListener implements Listener {
 		int clickedItemSlot = event.getSlot();
 
 		// Check if the clicked inventory is a CustomWings GUI
-		if (inventoryTitle.equals(CustomWings.getInstance().getSettings().getMainGUIName())
-				|| inventoryTitle.contains(CustomWings.getInstance().getSettings().getEditorGUIName())) {
+		if (inventoryTitle.equals(CustomWings.getInstance().getConfig().getMainGUIName())
+				|| inventoryTitle.contains(CustomWings.getInstance().getConfig().getEditorGUIName())) {
 			
 			event.setCancelled(true);
 

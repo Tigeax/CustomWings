@@ -1,24 +1,25 @@
 package tigeax.customwings.gui.guis;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.gui.CWGUIManager;
 import tigeax.customwings.gui.CWGUIType;
 import tigeax.customwings.gui.ParticleItem;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.Settings;
-
-import java.util.ArrayList;
 
 public class EditorSelectParticle {
 
 	CustomWings plugin;
-	Settings settings;
+	Configuration config;
 	EditorConfigManager editorConfigManager;
 
 	ArrayList<ItemStack> page1Items;
@@ -26,7 +27,7 @@ public class EditorSelectParticle {
 
 	public EditorSelectParticle() {
 		plugin = CustomWings.getInstance();
-		settings = plugin.getSettings();
+		config = plugin.getConfig();
 		editorConfigManager = plugin.getEditorConfigManager();
 
 		page1Items = new ArrayList<>();
@@ -54,7 +55,7 @@ public class EditorSelectParticle {
 
 	public void openPage1(CWPlayer cwPlayer) {
 
-		String guiName = settings.getEditorGUIName() + " - Select Particle - Page 1";
+		String guiName = config.getEditorGUIName() + " - Select Particle - Page 1";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 
@@ -72,7 +73,7 @@ public class EditorSelectParticle {
 
 	public void openPage2(CWPlayer cwPlayer) {
 
-		String guiName = settings.getEditorGUIName() + " - Select Particle - Page 2";
+		String guiName = config.getEditorGUIName() + " - Select Particle - Page 2";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 

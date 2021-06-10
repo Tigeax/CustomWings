@@ -1,51 +1,52 @@
 package tigeax.customwings.gui.guis;
 
-import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.gui.CWGUIType;
-import tigeax.customwings.CWPlayer;
-import tigeax.customwings.CustomWings;
-import tigeax.customwings.Messages;
-import tigeax.customwings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
+import tigeax.customwings.CWPlayer;
+import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
+import tigeax.customwings.configuration.Messages;
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
+
 public class EditorMainSettings {
 	
 	CustomWings plugin;
-	Settings settings;
+	Configuration config;
 	Messages messages;
 
 	public EditorMainSettings() {
 		plugin = CustomWings.getInstance();
-		settings = plugin.getSettings();
+		config = plugin.getConfig();
 		messages = plugin.getMessages();
 	}
 
 	public void open(CWPlayer cwPlayer) {
 
-		String guiName = settings.getEditorGUIName() + " - Main Settings";
+		String guiName = config.getEditorGUIName() + " - Main Settings";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 
-		gui.setItem(4, CWGUIManager.getItem(Material.ENDER_PEARL, "&3View Distance", settings.getWingViewDistance()));
+		gui.setItem(4, CWGUIManager.getItem(Material.ENDER_PEARL, "&3View Distance", config.getWingViewDistance()));
 
-		gui.setItem(12, CWGUIManager.getItem(Material.CHEST, "&3Main GUI Name", settings.getMainGUIName()));
-		gui.setItem(14, CWGUIManager.getItem(Material.CHEST, "&3Main GUI Size", settings.getMainGUISize()));
+		gui.setItem(12, CWGUIManager.getItem(Material.CHEST, "&3Main GUI Name", config.getMainGUIName()));
+		gui.setItem(14, CWGUIManager.getItem(Material.CHEST, "&3Main GUI Size", config.getMainGUISize()));
 
-		gui.setItem(21, CWGUIManager.getItem(Material.BARRIER, "&3Remove Wing Item name", settings.getRemoveWingItem().getItemMeta().getDisplayName()));
-		gui.setItem(22, CWGUIManager.getItem(Material.BARRIER, "&3Remove Wing Item material", settings.getRemoveWingItem().getType()));
-		gui.setItem(23, CWGUIManager.getItem(Material.BARRIER, "&3Remove Wing Item slot", settings.getRemoveWingSlot()));
+		gui.setItem(21, CWGUIManager.getItem(Material.BARRIER, "&3Remove Wing Item name", config.getRemoveWingItem().getItemMeta().getDisplayName()));
+		gui.setItem(22, CWGUIManager.getItem(Material.BARRIER, "&3Remove Wing Item material", config.getRemoveWingItem().getType()));
+		gui.setItem(23, CWGUIManager.getItem(Material.BARRIER, "&3Remove Wing Item slot", config.getRemoveWingSlot()));
 
-		gui.setItem(29, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Itemname ON", settings.getHideWingsToggleONItem().getItemMeta().getDisplayName()));
-		gui.setItem(30, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Itemname OFF", settings.getHideWingsToggleOFFItem().getItemMeta().getDisplayName()));
-		gui.setItem(31, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Item material ON", settings.getHideWingsToggleONItem().getType()));
-		gui.setItem(32, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Item material OFF", settings.getHideWingsToggleOFFItem().getType()));
-		gui.setItem(33, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Item slot", settings.getHideWingsToggleSlot()));
+		gui.setItem(29, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Itemname ON", config.getHideWingsToggleONItem().getItemMeta().getDisplayName()));
+		gui.setItem(30, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Itemname OFF", config.getHideWingsToggleOFFItem().getItemMeta().getDisplayName()));
+		gui.setItem(31, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Item material ON", config.getHideWingsToggleONItem().getType()));
+		gui.setItem(32, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Item material OFF", config.getHideWingsToggleOFFItem().getType()));
+		gui.setItem(33, CWGUIManager.getItem(Material.ENDER_EYE, "&3Hide Wings Toggle Item slot", config.getHideWingsToggleSlot()));
 
-		gui.setItem(39, CWGUIManager.getItem(Material.CRAFTING_TABLE, "&3Editor GUI name", settings.getEditorGUIName()));
-		gui.setItem(41, CWGUIManager.getItem(Material.CRAFTING_TABLE, "&3Editor Main Settings Slot", settings.getEditorMainSettingsSlot()));
+		gui.setItem(39, CWGUIManager.getItem(Material.CRAFTING_TABLE, "&3Editor GUI name", config.getEditorGUIName()));
+		gui.setItem(41, CWGUIManager.getItem(Material.CRAFTING_TABLE, "&3Editor Main Settings Slot", config.getEditorMainSettingsSlot()));
 
 		gui.setItem(53, CWGUIManager.getItem(Material.WHITE_BED, "&4Previous page"));
 
@@ -129,12 +130,12 @@ public class EditorMainSettings {
 
 
 		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
-			cwPlayer.getPlayer().sendMessage(messages.getTypeSettingInChat());
+			cwPlayer.sendMessage(messages.typeSettingInChat());
 			return;
 		}
 
 		if (cwPlayer.getWaitingSetting().isChatInputSetting()) {
-			cwPlayer.getPlayer().sendMessage(messages.getSelectSettingMaterial());
+			cwPlayer.sendMessage(messages.selectSettingMaterial());
 			return;
 		}
 
