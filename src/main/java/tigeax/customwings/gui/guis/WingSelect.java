@@ -7,12 +7,14 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
-import tigeax.customwings.events.PlayerEquipWingEvent;
+
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.Configuration;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.configuration.WingConfig;
+import tigeax.customwings.events.PlayerEquipWingEvent;
 import tigeax.customwings.wingpurchase.BuyWings;
+import tigeax.customwings.wings.Wing;
 
 public class WingSelect {
 
@@ -138,23 +140,24 @@ public class WingSelect {
     }
 
     private ItemStack createWingItem(CWPlayer cwPlayer, Wing wing) {
-        ItemStack wingItem = wing.getGuiItem().clone();
+        WingConfig wingConfig = wing.getConfig();
+        ItemStack wingItem = wingConfig.getGuiItem().clone();
         ItemMeta wingItemMeta = wingItem.getItemMeta();
 
         // Add Lore to item
         if (cwPlayer.getEquippedWing() == wing)
-            wingItemMeta.setLore(wing.getLoreWhenEquipped());
+            wingItemMeta.setLore(wingConfig.getLoreWhenEquipped());
         else if (!cwPlayer.hasPermissionForWing(wing)) {
 
-            if (wing.getWingPrice() == -1 || wing.getPriceType() == null || wing.getPriceType().equalsIgnoreCase("none")) {
-                wingItemMeta.setLore(wing.getLoreWhenNoPermission());
+            if (wingConfig.getWingPrice() == -1 || wingConfig.getPriceType() == null || wingConfig.getPriceType().equalsIgnoreCase("none")) {
+                wingItemMeta.setLore(wingConfig.getLoreWhenNoPermission());
             } else {
-                wingItemMeta.setLore(wing.getloreWhenCanBuy());
+                wingItemMeta.setLore(wingConfig.getloreWhenCanBuy());
             }
         } else
-            wingItemMeta.setLore(wing.getLoreWhenUnequipped());
+            wingItemMeta.setLore(wingConfig.getLoreWhenUnequipped());
 
-        wingItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, wing.getID());
+        wingItemMeta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, wingConfig.getID());
 
         wingItem.setItemMeta(wingItemMeta);
         return wingItem;
@@ -190,7 +193,7 @@ public class WingSelect {
                 for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
-                    if (wing.getHideInGUI()) continue;
+                    if (wing.getConfig().getHideInGUI()) continue;
                     if (slotLimit <= slot) {
                         int nextPage = page + 1;
                         gui.setItem(config.getNavigationNextSlot(), config.getNavigationNextItem(nextPage));
@@ -204,7 +207,7 @@ public class WingSelect {
                 for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
-                    if (wing.getHideInGUI()) continue;
+                    if (wing.getConfig().getHideInGUI()) continue;
                     if (!cwPlayer.hasPermissionForWing(wing)) continue;
                     if (slotLimit <= slot) {
                         int nextPage = page + 1;
@@ -219,7 +222,7 @@ public class WingSelect {
                 for (Wing wing : plugin.getWings()) {
                     loops++;
                     if (loops < startLoop) continue;
-                    if (wing.getHideInGUI()) continue;
+                    if (wing.getConfig().getHideInGUI()) continue;
                     if (cwPlayer.hasPermissionForWing(wing)) continue;
                     if (slotLimit <= slot) {
                         int nextPage = page + 1;

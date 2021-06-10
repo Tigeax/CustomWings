@@ -15,18 +15,23 @@ import tigeax.customwings.CustomWings;
 public abstract class YamlFile extends YamlConfiguration {
 
 
-    private final CustomWings plugin;
-    private final String filename;
-    private final File file;
-
+    protected final CustomWings plugin;
+    protected final File file;
 
     public YamlFile(CustomWings plugin, String filename) {
 
         this.plugin = plugin;
-        this.filename = filename;
         this.file = new File(plugin.getDataFolder(), filename);
         
-        updateFile();
+        this.updateFile();
+    }
+
+    public YamlFile(CustomWings plugin, File file) {
+
+        this.plugin = plugin;
+        this.file = file;
+        
+        this.updateFile();
     }
 
     public void update() {
@@ -34,13 +39,22 @@ public abstract class YamlFile extends YamlConfiguration {
         loadDataFromFile();
     }
 
+    public void save() {
+        try {
+            save(file);
+            System.out.print("saved");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
     * Reload/update the file, for when it was externally edited.
     * Check if it exists, and if not create it by calling createIfNotExists().
     */
-    private void updateFile() {
+    protected void updateFile() {
 
-        plugin.getLogger().info("Loading " + filename + "...");
+        plugin.getLogger().info("Loading " + file.getName() + "...");
 
         createIfNotExists();
 
@@ -49,6 +63,7 @@ public abstract class YamlFile extends YamlConfiguration {
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
+
     }
 
     /**
@@ -64,12 +79,11 @@ public abstract class YamlFile extends YamlConfiguration {
     * Create the specified file, overwriting it if it already exists.
     */
     private void createFile() {
-        plugin.getLogger().info(filename + " file does not exists. Creating it...");
+        plugin.getLogger().info(file.getName() + " file does not exists. Creating it...");
         file.getParentFile().mkdirs();
-        plugin.saveResource(filename, false);
+        plugin.saveResource(file.getName(), false);
     }
 
-    /** Load data from the YML file. */
     protected abstract void loadDataFromFile();
 
 }

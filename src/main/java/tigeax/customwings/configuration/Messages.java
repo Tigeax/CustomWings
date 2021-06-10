@@ -9,8 +9,6 @@ import tigeax.customwings.wings.Wing;
 
 public class Messages extends YamlFile {
 
-    private CustomWings plugin;
-
     private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingCancelled,
             typeSettingInChat, selectSettingMaterial, reloadSucces, setWingCommandSucces, takeAwayWingCommandSucces,
             noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
@@ -20,11 +18,10 @@ public class Messages extends YamlFile {
 
     public Messages(CustomWings plugin) {
         super(plugin, "messages.yml");
-        this.plugin = plugin;
         loadDataFromFile();
     }
 
-
+    @Override
     protected void loadDataFromFile() {
         // Wings
         wingEquipped = getMessage("wingEquipped");
@@ -56,7 +53,7 @@ public class Messages extends YamlFile {
     }
 
     public String wingEquipped(Wing wing) {
-        return wingEquipped.replace("{WINGNAME}", wing.getGUIItemName());
+        return wingEquipped.replace("{WINGNAME}", wing.getConfig().getGUIItemName());
     }
 
     public String hideOtherPlayerWingsON() {
@@ -93,7 +90,7 @@ public class Messages extends YamlFile {
 
     public String takeAwayWingCommandSucces(Player player, Wing wing) {
         return takeAwayWingCommandSucces.replace("{PLAYERNAME}", player.getDisplayName()).replace("{WINGNAME}",
-                wing.getGUIItemName());
+                wing.getConfig().getGUIItemName());
     }
 
     public String noPermissionForCommandError(String commandName, String permission) {
@@ -101,7 +98,7 @@ public class Messages extends YamlFile {
     }
 
     public String noPermissionToEquipWingError(Wing wing) {
-        return noPermissionToEquipWingError.replace("{WINGNAME}", wing.getGUIItemName()).replace("{PERMISSION}", wing.getPermission());
+        return noPermissionToEquipWingError.replace("{WINGNAME}", wing.getConfig().getGUIItemName()).replace("{PERMISSION}", wing.getPermission());
     }
 
     public String notAPlayerError() {
@@ -137,7 +134,7 @@ public class Messages extends YamlFile {
     }
 
     public String cantAffordWingError(Wing wing) {
-        return cantAffordWingError.replace("{WINGNAME}", wing.getGUIItemName());
+        return cantAffordWingError.replace("{WINGNAME}", wing.getConfig().getGUIItemName());
     }
 
     public String noVaultError() {

@@ -2,7 +2,9 @@ package tigeax.customwings.util;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,6 +25,9 @@ public class Util {
      * @return The parsed String
      */
     public static String parseChatColors(String string) {
+        if (string == null) {
+            return "";
+        }
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
@@ -88,5 +93,10 @@ public class Util {
 
         return null;
     }
+
+
+    public static List<String> parseLoreString(String loreString) {
+		return Arrays.asList(parseChatColors(loreString).replace("]", "").replace("[", "").split(", "));
+	}
 
 }

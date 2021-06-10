@@ -9,6 +9,7 @@ import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
 
 public class EditorSelectSlot {
 	
@@ -38,6 +39,7 @@ public class EditorSelectSlot {
 	public void click(CWPlayer cwPlayer, String itemName) {
 
 		editorConfigManager.setSetting(cwPlayer.getWaitingSetting(), itemName, cwPlayer.getWaitingSettingInfo());
+		cwPlayer.openCWGUI(CWGUIType.LASTEDITORGUI);
 
 
 	}

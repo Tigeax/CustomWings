@@ -31,6 +31,7 @@ public class Configuration extends YamlFile {
         loadDataFromFile();
     }
 
+    @Override
     protected void loadDataFromFile() {
 
         wingViewDistance = getInt("wingViewDistance");
@@ -194,7 +195,7 @@ public class Configuration extends YamlFile {
         meta.getPersistentDataContainer().set(CWNamespace, PersistentDataType.STRING, "CW:PAGE:" + page);
         itemStack.setItemMeta(meta);
         return itemStack;
-    }
+    } 
 
 }
 

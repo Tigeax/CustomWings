@@ -8,6 +8,7 @@ import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.configuration.Messages;
+import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.editor.SettingType;
 import tigeax.customwings.gui.CWGUIManager;
@@ -31,32 +32,34 @@ public class EditorWingSettings {
 
 	public void open(CWPlayer cwPlayer, Wing wing) {
 
+		WingConfig wingConfig = wing.getConfig();
+
 		String guiName = config.getEditorGUIName() + " - Wing Settings";
 
 		Inventory gui = Bukkit.createInventory(null, 54, guiName);
 
-		gui.setItem(4, CWGUIManager.getItem(wing.getGuiItem().getType(), "&f" + wing.getID()));
+		gui.setItem(4, CWGUIManager.getItem(wingConfig.getGuiItem().getType(), "&f" + wingConfig.getID()));
 
-		gui.setItem(12, CWGUIManager.getItem(Material.DIAMOND_LEGGINGS, "&3Show when moving", wing.getShowWhenMoving()));
-		gui.setItem(14, CWGUIManager.getItem(Material.GRASS_BLOCK, "&3Whitelisted Worlds", wing.getWhitelistedWorldsString()));
+		gui.setItem(12, CWGUIManager.getItem(Material.DIAMOND_LEGGINGS, "&3Show when moving", wingConfig.getShowWhenMoving()));
+		gui.setItem(14, CWGUIManager.getItem(Material.GRASS_BLOCK, "&3Whitelisted Worlds", wingConfig.getWhitelistedWorldsString()));
 
-		gui.setItem(19, CWGUIManager.getItem(Material.CHEST, "&3Hide in GUI", wing.getHideInGUI()));
-		gui.setItem(20, CWGUIManager.getItem(Material.CHEST, "&3GUI Itemname", wing.getGUIItemName()));
-		gui.setItem(21, CWGUIManager.getItem(Material.CHEST, "&3GUI Item material", wing.getGuiItem().getType()));
-		gui.setItem(22, CWGUIManager.getItem(Material.CHEST, "&3GUI Item slot", wing.getGuiSlot()));
-		gui.setItem(23, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When Equipped", wing.getLoreWhenEquippedString()));
-		gui.setItem(24, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When Unequipped", wing.getLoreWhenUnequippedString()));
-		gui.setItem(25, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When No Permission", wing.getLoreWhenNoPermissionString()));
+		gui.setItem(19, CWGUIManager.getItem(Material.CHEST, "&3Hide in GUI", wingConfig.getHideInGUI()));
+		gui.setItem(20, CWGUIManager.getItem(Material.CHEST, "&3GUI Itemname", wingConfig.getGUIItemName()));
+		gui.setItem(21, CWGUIManager.getItem(Material.CHEST, "&3GUI Item material", wingConfig.getGuiItem().getType()));
+		gui.setItem(22, CWGUIManager.getItem(Material.CHEST, "&3GUI Item slot", wingConfig.getGuiSlot()));
+		gui.setItem(23, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When Equipped", wingConfig.getLoreWhenEquippedString()));
+		gui.setItem(24, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When Unequipped", wingConfig.getLoreWhenUnequippedString()));
+		gui.setItem(25, CWGUIManager.getItem(Material.ENDER_CHEST, "&3Lore When No Permission", wingConfig.getLoreWhenNoPermissionString()));
 
-		gui.setItem(27, CWGUIManager.getItem(Material.END_ROD, "&3Start Vertical", wing.getStartVertical()));
-		gui.setItem(28, CWGUIManager.getItem(Material.END_ROD, "&3Start Horizontal", wing.getStartHorizontal()));
-		gui.setItem(29, CWGUIManager.getItem(Material.END_ROD, "&3Distance Between Particles", wing.getDistanceBetweenParticles()));
-		gui.setItem(30, CWGUIManager.getItem(Material.CLOCK, "&3Wing Timer", wing.getWingTimer()));
+		gui.setItem(27, CWGUIManager.getItem(Material.END_ROD, "&3Start Vertical", wingConfig.getStartVertical()));
+		gui.setItem(28, CWGUIManager.getItem(Material.END_ROD, "&3Start Horizontal", wingConfig.getStartHorizontal()));
+		gui.setItem(29, CWGUIManager.getItem(Material.END_ROD, "&3Distance Between Particles", wingConfig.getDistanceBetweenParticles()));
+		gui.setItem(30, CWGUIManager.getItem(Material.CLOCK, "&3Wing Timer", wingConfig.getWingTimer()));
 
-		gui.setItem(32, CWGUIManager.getItem(Material.DIAMOND, "&3Wing Animation", wing.getWingAnimation()));
-		gui.setItem(33, CWGUIManager.getItem(Material.DIAMOND, "&3Wing Flap Speed", wing.getWingFlapSpeed()));
-		gui.setItem(34, CWGUIManager.getItem(Material.GREEN_TERRACOTTA, "&3Start Offset", wing.getStartOffset()));
-		gui.setItem(35, CWGUIManager.getItem(Material.RED_TERRACOTTA, "&3Stop Offset", wing.getStopOffset()));
+		gui.setItem(32, CWGUIManager.getItem(Material.DIAMOND, "&3Wing Animation", wingConfig.getWingAnimation()));
+		gui.setItem(33, CWGUIManager.getItem(Material.DIAMOND, "&3Wing Flap Speed", wingConfig.getWingFlapSpeed()));
+		gui.setItem(34, CWGUIManager.getItem(Material.GREEN_TERRACOTTA, "&3Start Offset", wingConfig.getStartOffset()));
+		gui.setItem(35, CWGUIManager.getItem(Material.RED_TERRACOTTA, "&3Stop Offset", wingConfig.getStopOffset()));
 
 		gui.setItem(40, CWGUIManager.getItem(Material.ELYTRA, "&3Particles"));
 
@@ -67,9 +70,11 @@ public class EditorWingSettings {
 
 	public void click(CWPlayer cwPlayer, String itemName, Wing wing) {
 
+		WingConfig wingConfig = wing.getConfig();
+
 		switch (itemName) {
 			case "Show when moving":
-				editorConfigManager.setSetting(SettingType.WINGSHOWWHENMOVING, !wing.getShowWhenMoving(), wing);
+				editorConfigManager.setSetting(SettingType.WINGSHOWWHENMOVING, !wingConfig.getShowWhenMoving(), wing);
 				cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, wing);
 				break;
 
@@ -79,7 +84,7 @@ public class EditorWingSettings {
 				break;
 
 			case "Hide in GUI":
-				editorConfigManager.setSetting(SettingType.WINGHIDEINGUI, !wing.getHideInGUI(), wing);
+				editorConfigManager.setSetting(SettingType.WINGHIDEINGUI, !wingConfig.getHideInGUI(), wing);
 				cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, wing);
 				break;
 
@@ -115,42 +120,42 @@ public class EditorWingSettings {
 
 			case "Start Vertical":
 				cwPlayer.setWaitingSetting(SettingType.WINGSTARTVERTICAL, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTDOUBLE, wing.getStartVertical());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTDOUBLE, wingConfig.getStartVertical());
 				break;
 
 			case "Start Horizontal":
 				cwPlayer.setWaitingSetting(SettingType.WINGSTARTHORIZONTAL, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTDOUBLE, wing.getStartHorizontal());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTDOUBLE, wingConfig.getStartHorizontal());
 				break;
 
 			case "Distance Between Particles":
 				cwPlayer.setWaitingSetting(SettingType.WINGDISTANCEBETWEENPARTICLES, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTDOUBLE, wing.getDistanceBetweenParticles());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTDOUBLE, wingConfig.getDistanceBetweenParticles());
 				break;
 
 			case "Wing Timer":
 				cwPlayer.setWaitingSetting(SettingType.WINGTIMER, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wing.getWingTimer());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wingConfig.getWingTimer());
 				break;
 
 			case "Wing Animation":
-				editorConfigManager.setSetting(SettingType.WINGANIMATION, !wing.getWingAnimation(), wing);
+				editorConfigManager.setSetting(SettingType.WINGANIMATION, !wingConfig.getWingAnimation(), wing);
 				cwPlayer.openCWGUI(CWGUIType.EDITORWINGSETTINGS, wing);
 				break;
 
 			case "Wing Flap Speed":
 				cwPlayer.setWaitingSetting(SettingType.WINGFLAPSPEED, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wing.getWingFlapSpeed());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wingConfig.getWingFlapSpeed());
 				break;
 
 			case "Start Offset":
 				cwPlayer.setWaitingSetting(SettingType.WINGSTARTOFFSET, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wing.getStartOffset());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wingConfig.getStartOffset());
 				break;
 
 			case "Stop Offset":
 				cwPlayer.setWaitingSetting(SettingType.WINGSTOPOFFSET, wing);
-				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wing.getStopOffset());
+				cwPlayer.openCWGUI(CWGUIType.EDITORSELECTINTEGER, wingConfig.getStopOffset());
 				break;
 
 			case "Particles":

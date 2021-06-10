@@ -2,12 +2,13 @@ package tigeax.customwings.editor;
 
 import java.util.Arrays;
 
-import tigeax.customwings.wings.WingParticle;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Configuration;
+import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wings.WingParticle;
 
 /*
  * This classe is used to change settings in the config.yml
@@ -17,21 +18,12 @@ import tigeax.customwings.wings.Wing;
 public class EditorConfigManager {
 
 	private CustomWings plugin;
-	private FileConfiguration config;
+	private Configuration config;
 	private ConfigurationSection mainGUIConfig;
 
 	public EditorConfigManager(CustomWings plugin) {
 		this.plugin = plugin;
-		this.load();
-	}
-
-	public void reload() {
-		load();
-	}
-
-	public void load() {
-		this.plugin.reloadConfig();
-		this.config = plugin.getConfig();
+		config = plugin.getConfig();
 		this.mainGUIConfig = config.getConfigurationSection("mainGUI");
 	}
 
@@ -109,24 +101,24 @@ public class EditorConfigManager {
 				plugin.sendError("Something went wrong while trying to change a setting!");
 				return;
 		}
-
-		plugin.saveConfig();
-		plugin.getConfig().update();
+		plugin.reload();
 	}
 
 	// Used for all the wing settings
 	private void changeSetting(SettingType setting, String value, Wing wing) {
 
+		WingConfig wingConfig = wing.getConfig();
+
 		switch (setting) {
 
 			case WINGSHOWWHENMOVING:
-				getWingConfig(wing).set("showWhenMoving", value);
+				wingConfig.set("showWhenMoving", Boolean.parseBoolean(value));
 				break;
 			case WINGWHITELISTEDWORLDS:
-				getWingConfig(wing).set("whitelistedWorlds", Arrays.asList(value));
+				wingConfig.set("whitelistedWorlds", Arrays.asList(value));
 				break;
 			case WINGHIDEINGUI:
-				getWingGUIItemConfig(wing).set("hideInGUI", value);
+				getWingGUIItemConfig(wing).set("hideInGUI", Boolean.parseBoolean(value));
 				break;
 			case WINGGUINAME:
 				getWingGUIItemConfig(wing).set("name", value);
@@ -159,7 +151,7 @@ public class EditorConfigManager {
 				getWingLayoutConfig(wing).set("wingTimer", parseInt(value));
 				break;
 			case WINGANIMATION:
-				getWingLayoutConfig(wing).set("wingAnimation", value);
+				getWingLayoutConfig(wing).set("wingAnimation", Boolean.parseBoolean(value));
 				break;
 			case WINGFLAPSPEED:
 				getWingLayoutConfig(wing).set("wingFlapSpeed", parseDouble(value));
@@ -176,8 +168,7 @@ public class EditorConfigManager {
 
 		}
 
-		plugin.saveConfig();
-		wing.reload();
+		plugin.reload();
 	}
 
 	// Used for all the wingParticle settings
@@ -211,24 +202,19 @@ public class EditorConfigManager {
 				return;
 		}
 
-		plugin.saveConfig();
-		wingParticle.getWing().reload();
-	}
-
-	public ConfigurationSection getWingConfig(Wing wing) {
-		return config.getConfigurationSection("wings." + wing.getID());
+		plugin.reload();
 	}
 
 	public ConfigurationSection getWingGUIItemConfig(Wing wing) {
-		return getWingConfig(wing).getConfigurationSection("guiItem");
+		return wing.getConfig().getConfigurationSection("guiItem");
 	}
 
 	public ConfigurationSection getWingLayoutConfig(Wing wing) {
-		return getWingConfig(wing).getConfigurationSection("wingLayout");
+		return wing.getConfig().getConfigurationSection("wingLayout");
 	}
 
 	public ConfigurationSection getWingParticleConfig(WingParticle particle) {
-		return getWingConfig(particle.getWing()).getConfigurationSection("particles." + particle.getID());
+		return particle.getWing().getConfigurationSection("particles." + particle.getID());
 	}
 
 	// Shorter version for Integer.parseInt()

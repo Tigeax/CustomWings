@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import tigeax.customwings.gui.CWGUIType;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.Configuration;
+import tigeax.customwings.gui.CWGUIType;
 import tigeax.customwings.wings.Wing;
 
 public class Editor {
@@ -29,8 +29,8 @@ public class Editor {
 
 		for (Wing wing : plugin.getWings()) {
 
-			ItemStack wingItem = wing.getGuiItem();
-			int slot = wing.getGuiSlot();
+			ItemStack wingItem = wing.getConfig().getGuiItem();
+			int slot = wing.getConfig().getGuiSlot();
 
 			if (guiSize < slot) continue;
 
@@ -51,7 +51,7 @@ public class Editor {
 	public void click(CWPlayer cwPlayer, String itemName, Integer clickedSlot) {
 
 		// Open the Main config GUI
-		if (itemName.equals("Main config")) {
+		if (itemName.equals("Main Settings")) {
 			cwPlayer.openCWGUI(CWGUIType.EDITORMAINSETTINGS);
 			return;
 		}

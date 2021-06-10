@@ -56,7 +56,7 @@ public class SetWing extends SubCommand {
 
 		// If the wing was valid let the player equip the wing
 		cwPlayer.setEquippedWing(wing);
-		Util.sendMessage(sender, plugin.getMessages().setWingCommandSucces(wingSetPlayer, wing.getID()));
+		Util.sendMessage(sender, plugin.getMessages().setWingCommandSucces(wingSetPlayer, wing.getConfig().getID()));
 	}
     
 }

@@ -52,7 +52,7 @@ public class TakeAwayWing extends SubCommand {
       Util.sendMessage(sender, plugin.getMessages().invalidWingsError(wingName));
     }
 
-    plugin.getPermissions().playerRemove(null, player.getPlayer(), "customwings.wing." + wing.getID().toLowerCase());
+    plugin.getPermissions().playerRemove(null, player.getPlayer(), "customwings.wing." + wing.getConfig().getID());
     Util.sendMessage(sender, plugin.getMessages().takeAwayWingCommandSucces(player, wing));
   }
 

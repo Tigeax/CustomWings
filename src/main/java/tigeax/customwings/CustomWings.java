@@ -1,5 +1,6 @@
 package tigeax.customwings;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -24,6 +25,7 @@ import net.milkbowl.vault.permission.Permission;
 import tigeax.customwings.commands.Wings;
 import tigeax.customwings.configuration.Configuration;
 import tigeax.customwings.configuration.Messages;
+import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
 import tigeax.customwings.eventlisteners.InventoryClickEventListener;
@@ -50,7 +52,6 @@ public class CustomWings extends JavaPlugin {
 	private Messages messages;
 	private Configuration config;
 
-	//private static Settings settings;
 	private static EditorConfigManager editorConfigManager;
 	private static CWGUIManager cwGUIManager;
 
@@ -99,11 +100,11 @@ public class CustomWings extends JavaPlugin {
 		config = new Configuration(this);
 		messages = new Messages(this);
 
+		wings = setupWings();
+
 		editorConfigManager = new EditorConfigManager(this);
 		cwGUIManager = new CWGUIManager();
 		cwPlayerList = new HashMap<>();
-
-		setupWings();
 
 		// Setup commands
 		registerCommand(new Wings("customwings", Arrays.asList("wings", "w"), "customwings.command"));
@@ -136,6 +137,11 @@ public class CustomWings extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
+
+		// TODO Improve
+		for (Wing wing : getWings()) {
+			wing.removeAllPlayersWithWingActive();
+		}
 
 		// If a player has a CustomWings GUI open, close it
 		for (Player player : Bukkit.getOnlinePlayers()) {
@@ -182,7 +188,7 @@ public class CustomWings extends JavaPlugin {
 		return cwGUIManager;
 	}
 
-	public ArrayList<Wing> getWings() {
+	public List<Wing> getWings() {
 		return wings;
 	}
 
@@ -199,30 +205,72 @@ public class CustomWings extends JavaPlugin {
 	}
 
 	public void reload() {
-		onDisable();
-		onEnable();
-	}
 
-	// Old reload
-	public void reloadOld() {
+		getLogger().info("Reloading!");
+
+		config.save();
+
+		// Save wing config and Stop all wing runnables
+		for (Wing wing : getWings()) {
+			wing.getConfig().save();
+			wing.removeAllPlayersWithWingActive();
+		}
+
 		config.update();
 		messages.update();
-		editorConfigManager.reload();
-		setupWings();
+		editorConfigManager = new EditorConfigManager(this);
+		cwGUIManager = new CWGUIManager();
+		wings = setupWings();
 
 		// If the player had a wing equiped, update it with the newest created winglist
 		for (CWPlayer cwPlayer : cwPlayerList.values()) {
 			Wing wing = cwPlayer.getEquippedWing();
 			if (wing == null) {
-				return;
+				continue;
 			}
-			String wingID = wing.getID();
-			Wing newWing = CustomWings.getInstance().getWingByID(wingID);
+			String wingID = wing.getConfig().getID();
+			Wing newWing = getWingByID(wingID);
 			cwPlayer.setEquippedWing(newWing);
 		}
-
 	}
-	
+
+	private ArrayList<Wing> setupWings() {
+
+		ArrayList<Wing> wings = new ArrayList<>();
+
+		File wingsFolder = new File(getDataFolder(), "wings");
+
+		// Check if the wings folder exits, if not create it with the default wings
+		if (!wingsFolder.exists()) {
+
+			getLogger().info("Could not find wings folder. Creating it, with default wings");
+
+			wingsFolder.mkdirs(); // Create the folder
+			
+			// Save the wing files
+			saveResource("wings/angel.yml", false);
+			saveResource("wings/bloodhound.yml", false);
+			saveResource("wings/frost.yml", false);
+			saveResource("wings/soulshadow.yml", false);
+			saveResource("wings/wisdom.yml", false);
+		}
+
+		File[] wingFiles = wingsFolder.listFiles();
+
+		for (File file : wingFiles) {
+
+			getLogger().info("Loading " + file.getName() + " wing...");
+
+			WingConfig wingConfig = new WingConfig(this, file);
+
+			Wing wing = new Wing(this, wingConfig);
+
+			wings.add(wing);
+
+		}
+
+		return wings;
+	}	
 
 	public Command getPluginCommand(String name) {
         Iterator<Command> commandsIterator = commands.iterator();
@@ -267,7 +315,7 @@ public class CustomWings extends JavaPlugin {
 	public Wing getWingByID(String ID) {
 		Wing getWing = null;
 		for (Wing wing : getWings())
-			if (wing.getID().equalsIgnoreCase(ID))
+			if (wing.getConfig().getID().equalsIgnoreCase(ID))
 				getWing = wing;
 		return getWing;
 	}
@@ -275,7 +323,7 @@ public class CustomWings extends JavaPlugin {
 	public Wing getWingByGUISlot(int slot) {
 		Wing getWing = null;
 		for (Wing wing : getWings())
-			if (wing.getGuiSlot() == slot)
+			if (wing.getConfig().getGuiSlot() == slot)
 				getWing = wing;
 		return getWing;
 	}
@@ -298,16 +346,6 @@ public class CustomWings extends JavaPlugin {
 		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1", "v1_16_R2", "v1_16_R3");
 
 		return supportedVersions.contains(VERSION);
-	}
-
-
-	private void setupWings() {
-		wings = new ArrayList<>();
-
-		for (String wingID : config.getConfigurationSection("wings").getKeys(false)) {
-			Wing wing = new Wing(wingID, instance);
-			wings.add(wing);
-		}
 	}
 
 	private class UpdateChecker {

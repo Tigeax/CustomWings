@@ -3,14 +3,16 @@ package tigeax.customwings;
 import java.time.Instant;
 import java.util.UUID;
 
-import org.bukkit.Location;
-import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
+
+import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.gui.CWGUIType;
 import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.wings.Wing;

@@ -110,7 +110,7 @@ public class CWGUIManager {
 			}
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			cwPlayer.openCWGUI(CWGUIType.EDITOR);
 		}
 	}
@@ -228,7 +228,7 @@ public class CWGUIManager {
 			}
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			cwPlayer.openCWGUI(CWGUIType.EDITOR);
 		}
 	}
@@ -250,7 +250,7 @@ public class CWGUIManager {
 
 	private WingParticle getWingParticleFromGUI(InventoryView invView) {
 		String[] IDs = ChatColor.stripColor(invView.getTopInventory().getItem(4).getItemMeta().getDisplayName()).split(" - ");
-		return CustomWings.getInstance().getWingByID(IDs[0]).getWingParticleByID(IDs[1]);
+		return CustomWings.getInstance().getWingByID(IDs[0]).getConfig().getWingParticleByID(IDs[1]);
 	}
 
 	public static ItemStack getItem(Material material, String name) {

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.gui.ParticleItem;
 
 /*
@@ -19,7 +20,7 @@ import tigeax.customwings.gui.ParticleItem;
 
 public class WingParticle {
 
-	private Wing wing;
+	private WingConfig wing;
 	private String id;
 
 	private Particle particle;
@@ -32,7 +33,7 @@ public class WingParticle {
 	private DustOptions dustOptions;
 	private Material material;
 
-	public WingParticle(Wing wing, String id, Particle particle, double distance, double height, int angle, double speed, DustOptions dustOptions, Material material) {
+	public WingParticle(WingConfig wing, String id, Particle particle, double distance, double height, int angle, double speed, DustOptions dustOptions, Material material) {
 		this.wing = wing;
 		this.id = id;
 		this.particle = particle;
@@ -61,7 +62,9 @@ public class WingParticle {
 			if (particle == Particle.ITEM_CRACK) particleData = new ItemStack(material);
 	}
 
-	public Wing getWing() { return this.wing; }
+	public WingConfig getWing() {
+		return wing;
+	}
 
 	public String getID() { return this.id; }
 
