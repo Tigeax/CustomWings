@@ -1,4 +1,4 @@
-package tigeax.customwings.wings;
+package tigeax.customwings.wing;
 
 import java.util.ArrayList;
 
@@ -9,9 +9,7 @@ import org.bukkit.Particle.DustOptions;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.WingConfig;
-import tigeax.customwings.gui.ParticleItem;
 
 /*
  * Class containing all information about a wingParticle
@@ -20,11 +18,10 @@ import tigeax.customwings.gui.ParticleItem;
 
 public class WingParticle {
 
-	private WingConfig wing;
+	private WingConfig wingConfig;
 	private String id;
 
 	private Particle particle;
-	private ParticleItem particleItem;
 
 	private double distance, height, speed;
 	private int angle;
@@ -33,11 +30,10 @@ public class WingParticle {
 	private DustOptions dustOptions;
 	private Material material;
 
-	public WingParticle(WingConfig wing, String id, Particle particle, double distance, double height, int angle, double speed, DustOptions dustOptions, Material material) {
-		this.wing = wing;
+	public WingParticle(WingConfig wingConfig, String id, Particle particle, double distance, double height, int angle, double speed, DustOptions dustOptions, Material material) {
+		this.wingConfig = wingConfig;
 		this.id = id;
 		this.particle = particle;
-		this.particleItem = ParticleItem.valueOf(particle.toString());
 		this.distance = distance;
 		this.height = height;
 		this.angle = angle;
@@ -55,22 +51,22 @@ public class WingParticle {
 			try {
 				particleData = material.createBlockData();
 			} catch (Exception e) {
-				CustomWings.getInstance().sendError(e);
+				e.printStackTrace();
 				particleData = Material.BARRIER.createBlockData();
 			}
 		} else
 			if (particle == Particle.ITEM_CRACK) particleData = new ItemStack(material);
 	}
 
-	public WingConfig getWing() {
-		return wing;
+	public void reload() {
+		//TODO
+	}
+
+	public WingConfig getWingConfig() {
+		return wingConfig;
 	}
 
 	public String getID() { return this.id; }
-
-	public Material getItemMaterial() { return particleItem.getMaterial(); }
-
-	public String getItemName() { return particleItem.getName(); }
 
 	public Particle getParticle() { return particle; }
 

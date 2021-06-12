@@ -28,7 +28,7 @@ public class PlayerQuitEventListener implements Listener {
 		Player player = event.getPlayer();
 		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 		
-		cwPlayer.setLastEditorInvView(null);
+		cwPlayer.setLastEditorMenu(null);
 
 		if (cwPlayer.getEquippedWing() != null) {
 			cwPlayer.getEquippedWing().removePlayersWithWingActive(player);

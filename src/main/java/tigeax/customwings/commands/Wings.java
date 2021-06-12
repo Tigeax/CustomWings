@@ -13,7 +13,6 @@ import tigeax.customwings.commands.subcommands.Preview;
 import tigeax.customwings.commands.subcommands.Reload;
 import tigeax.customwings.commands.subcommands.SetWing;
 import tigeax.customwings.commands.subcommands.TakeAwayWing;
-import tigeax.customwings.gui.CWGUIType;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.Command;
 import tigeax.customwings.util.commands.SubCommand;
@@ -53,7 +52,7 @@ public class Wings extends Command implements SubCommandManager {
     
             Player player = (Player) sender;
     
-            plugin.getCWPlayer(player).openCWGUI(CWGUIType.WINGSELECT);
+            plugin.getMenus().openWingSelectMenu(player);
 
             return;
         }

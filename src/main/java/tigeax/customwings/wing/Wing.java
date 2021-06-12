@@ -1,4 +1,4 @@
-package tigeax.customwings.wings;
+package tigeax.customwings.wing;
 
 import java.util.ArrayList;
 
@@ -15,63 +15,67 @@ import org.bukkit.util.Vector;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.configuration.Configuration;
+import tigeax.customwings.configuration.Config;
 import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.nms.NMSSupport;
 
 public class Wing {
 
-    private CustomWings plugin;
-	private Configuration config;
+	private CustomWings plugin;
+	private Config config;
 	private WingConfig wingConfig;
 
-    private ArrayList<Player> playersWithWingActive;
-    private BukkitTask wingRunnable;
+	private ArrayList<Player> playersWithWingActive;
+	private BukkitTask wingRunnable;
 
-
-    public Wing(CustomWings plugin, WingConfig wingConfig) {
-        this.wingConfig = wingConfig;
-        this.plugin = plugin;
+	public Wing(CustomWings plugin, WingConfig wingConfig) {
+		this.wingConfig = wingConfig;
+		this.plugin = plugin;
 		this.config = plugin.getConfig();
 		this.playersWithWingActive = new ArrayList<>();
-    }
+	}
 
 	public WingConfig getConfig() {
-        return wingConfig;
-    }
+		return wingConfig;
+	}
 
-    public void reload() {
-		if (wingRunnable != null) wingRunnable.cancel(); //Temperatry stop the runnable
+	public void reload() {
+		if (wingRunnable != null)
+			wingRunnable.cancel(); // Temperatry stop the runnable
 
 		wingConfig.reload();
 
-		if (wingRunnable != null) startWingRunnable(); //Restart the runnable again with the (possibly new) settings
+		if (wingRunnable != null)
+			startWingRunnable(); // Restart the runnable again with the (possibly new) settings
 	}
 
 	public void removeAllPlayersWithWingActive() {
 		playersWithWingActive = new ArrayList<>();
 	}
 
-    public String getPermission() {
-        return "customwings.wing." + wingConfig.getID();
-    }
+	public String getPermission() {
+		return "customwings.wing." + wingConfig.getID();
+	}
 
-    public ArrayList<Player> getPlayersWithWingActive() { return playersWithWingActive; }
+	public ArrayList<Player> getPlayersWithWingActive() {
+		return playersWithWingActive;
+	}
 
 	public void addPlayersWithWingActive(Player player) {
 
 		playersWithWingActive.add(player);
 
-		// If there where no players that had the wing equipped before, start the wing runnable
-		if (playersWithWingActive.size() == 1) this.startWingRunnable();
+		// If there where no players that had the wing equipped before, start the wing
+		// runnable
+		if (playersWithWingActive.size() == 1)
+			this.startWingRunnable();
 	}
 
 	public void removePlayersWithWingActive(Player player) {
 		playersWithWingActive.remove(player);
 	}
 
-
-    private void startWingRunnable() {
+	private void startWingRunnable() {
 
 		wingRunnable = new BukkitRunnable() {
 
@@ -90,11 +94,14 @@ public class Wing {
 				// To go back and forth between the start and stop offset
 				if (wingConfig.getWingAnimation()) {
 
-					animationState = flapDirectionSwitch ? animationState - wingConfig.getWingFlapSpeed() : animationState + wingConfig.getWingFlapSpeed();
+					animationState = flapDirectionSwitch ? animationState - wingConfig.getWingFlapSpeed()
+							: animationState + wingConfig.getWingFlapSpeed();
 
-					if (animationState >= wingConfig.getStopOffset()) flapDirectionSwitch = true;
+					if (animationState >= wingConfig.getStopOffset())
+						flapDirectionSwitch = true;
 
-					if (animationState <= wingConfig.getStartOffset()) flapDirectionSwitch = false;
+					if (animationState <= wingConfig.getStartOffset())
+						flapDirectionSwitch = false;
 				}
 
 				// Loop through all the players that have the wing active
@@ -131,30 +138,37 @@ public class Wing {
 		}
 
 		// Skip if the owner is dead
-		if (wingOwner.isDead()) return;
+		if (wingOwner.isDead())
+			return;
 
 		// Hide wings if owner is in spectator or in vanish
-		if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner)) return;
+		if (wingOwner.getGameMode().equals(GameMode.SPECTATOR) || isVanished(wingOwner))
+			return;
 
 		// Stop rendering wings for player when they have invisibility potion effect
-		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && config.getInvisPotionHidesWing())
+		if (wingOwner.hasPotionEffect(PotionEffectType.INVISIBILITY) && config.getInvisibilityPotionHidesWing())
 			return;
 
 		// Stop rendering wings if player is sleeping
-		if (wingOwner.isSleeping()) return;
+		if (wingOwner.isSleeping())
+			return;
 
 		// Stop rendering wings if player is in vehicle
-		if (wingOwner.isInsideVehicle()) return;
+		if (wingOwner.isInsideVehicle())
+			return;
 
 		// Stop rendering wings for player that is swimming or crawling
-		if (wingOwner.getPose().equals(Pose.SWIMMING)) return;
+		if (wingOwner.getPose().equals(Pose.SWIMMING))
+			return;
 
 		// Stop rendering wings for player that is gliding
-		if (wingOwner.isGliding()) return;
+		if (wingOwner.isGliding())
+			return;
 
 		Location wingLoc = wingOwner.getLocation();
 
-		// Instead of using the Yaw of the head of the player we will try to use the Yaw of the player's body
+		// Instead of using the Yaw of the head of the player we will try to use the Yaw
+		// of the player's body
 		float bodyYaw = NMSSupport.getBodyRotation(wingOwner);
 		wingLoc.setYaw(bodyYaw);
 
@@ -171,7 +185,8 @@ public class Wing {
 	// Spawn all the particles of the wing at a certain location for certain players
 	private void spawnWing(Location wingLoc, ArrayList<Player> showToPlayers, int animationState) {
 
-		// Loop through all the coordinates of the wing and spawn a particle for both the left and right part at that location
+		// Loop through all the coordinates of the wing and spawn a particle for both
+		// the left and right part at that location
 		for (double[] coordinate : wingConfig.getParticleCoordinates().keySet()) {
 
 			WingParticle wingParticle = wingConfig.getParticleCoordinates().get(coordinate);
@@ -186,17 +201,19 @@ public class Wing {
 		}
 	}
 
-
 	// Return the location the particle should be spawned at
 	// Relative to the location the wing is spawned at
-	// Based on the x and y offset from the center of the wing and which side of the Wing the particle is on
+	// Based on the x and y offset from the center of the wing and which side of the
+	// Wing the particle is on
 	private Location getParticleSpawnLoc(Location loc, double x, double y, WingSide wingSide, int animationState) {
 
 		Location wingParticleLoc = loc.clone();
 		float yaw = wingParticleLoc.getYaw();
 
-		if (wingSide == WingSide.LEFT) yaw = yaw - animationState;
-		if (wingSide == WingSide.RIGHT) yaw = yaw + 180 + animationState;
+		if (wingSide == WingSide.LEFT)
+			yaw = yaw - animationState;
+		if (wingSide == WingSide.RIGHT)
+			yaw = yaw + 180 + animationState;
 
 		double yawRad = Math.toRadians(yaw);
 		Vector vector = new Vector(Math.cos(yawRad) * x, y, Math.sin(yawRad) * x);
@@ -207,8 +224,7 @@ public class Wing {
 	}
 
 	public enum WingSide {
-		LEFT,
-		RIGHT
+		LEFT, RIGHT
 	}
 
 	// Return all the player that can see the wing of player
@@ -220,7 +236,8 @@ public class Wing {
 		for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 
 			// Skip if the player is not in the same world as the wing
-			if (!(onlinePlayer.getWorld() == wingLocation.getWorld())) continue;
+			if (!(onlinePlayer.getWorld() == wingLocation.getWorld()))
+				continue;
 
 			// Add the player himself to the list
 			if (onlinePlayer == wingOwner) {
@@ -238,12 +255,14 @@ public class Wing {
 			CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(onlinePlayer);
 
 			// Skip if onlinePlayer doesn't want to see other players wings
-			if (cwPlayer.getHideOtherPlayerWings()) continue;
+			if (cwPlayer.getHideOtherPlayerWings())
+				continue;
 
 			Location onlinePlayerLoc = onlinePlayer.getLocation();
 
 			// Skip if the player is more then the wingViewDistance away from the wing
-			if (onlinePlayerLoc.distance(wingLocation) > config.getWingViewDistance()) continue;
+			if (onlinePlayerLoc.distance(wingLocation) > config.getWingViewDistance())
+				continue;
 
 			playersWhoCanSeeWing.add(onlinePlayer);
 		}
@@ -252,7 +271,7 @@ public class Wing {
 
 	}
 
-	//vanish check
+	// vanish check
 	private boolean isVanished(Player player) {
 		for (MetadataValue meta : player.getMetadata("vanished")) {
 			if (meta.asBoolean())

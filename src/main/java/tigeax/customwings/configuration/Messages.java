@@ -5,24 +5,29 @@ import org.bukkit.entity.Player;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wing.Wing;
 
 public class Messages extends YamlFile {
 
     private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingCancelled,
             typeSettingInChat, selectSettingMaterial, reloadSucces, setWingCommandSucces, takeAwayWingCommandSucces,
-            noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
+            wingBuySuccess, noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
             invalidPlayerError, invalidWingsError, noWingToPreviewError, missingArugmentsError,
             missingArgumentsSetwingError, missingArgumentsTakeAwayWingError, cantAffordWingError, noVaultError,
             invalidSubCommandError;
 
     public Messages(CustomWings plugin) {
         super(plugin, "messages.yml");
-        loadDataFromFile();
     }
 
     @Override
-    protected void loadDataFromFile() {
+    protected void initDataFromFile() {
+        updateDataFromFile();
+    }
+
+    @Override
+    protected void updateDataFromFile() {
+
         // Wings
         wingEquipped = getMessage("wingEquipped");
         hideOtherPlayerWingsON = getMessage("hideOtherPlayerWingsON");
@@ -36,6 +41,7 @@ public class Messages extends YamlFile {
         reloadSucces = getMessage("reloadSucces");
         setWingCommandSucces = getMessage("setWingCommandSucces");
         takeAwayWingCommandSucces = getMessage("takeAwayWingCommandSucces");
+        wingBuySuccess = getMessage("wingBuySuccess");
         // Error messages
         noPermissionForCommandError = getMessage("noPermissionForCommandError");
         noPermissionToEquipWingError = getMessage("noPermissionToEquipWingError");
@@ -50,10 +56,11 @@ public class Messages extends YamlFile {
         cantAffordWingError = getMessage("cantAffordWingError");
         noVaultError = getMessage("noVaultError");
         invalidSubCommandError = getMessage("invalidSubCommandError");
+
     }
 
     public String wingEquipped(Wing wing) {
-        return wingEquipped.replace("{WINGNAME}", wing.getConfig().getGUIItemName());
+        return wingEquipped.replace("{WINGNAME}", wing.getConfig().getGuiItemName());
     }
 
     public String hideOtherPlayerWingsON() {
@@ -90,7 +97,11 @@ public class Messages extends YamlFile {
 
     public String takeAwayWingCommandSucces(Player player, Wing wing) {
         return takeAwayWingCommandSucces.replace("{PLAYERNAME}", player.getDisplayName()).replace("{WINGNAME}",
-                wing.getConfig().getGUIItemName());
+                wing.getConfig().getGuiItemName());
+    }
+
+    public String wingBuySuccess(int price) {
+        return wingBuySuccess.replace("{PRICE}", price + "");
     }
 
     public String noPermissionForCommandError(String commandName, String permission) {
@@ -98,7 +109,8 @@ public class Messages extends YamlFile {
     }
 
     public String noPermissionToEquipWingError(Wing wing) {
-        return noPermissionToEquipWingError.replace("{WINGNAME}", wing.getConfig().getGUIItemName()).replace("{PERMISSION}", wing.getPermission());
+        return noPermissionToEquipWingError.replace("{WINGNAME}", wing.getConfig().getGuiItemName())
+                .replace("{PERMISSION}", wing.getPermission());
     }
 
     public String notAPlayerError() {
@@ -134,7 +146,7 @@ public class Messages extends YamlFile {
     }
 
     public String cantAffordWingError(Wing wing) {
-        return cantAffordWingError.replace("{WINGNAME}", wing.getConfig().getGUIItemName());
+        return cantAffordWingError.replace("{WINGNAME}", wing.getConfig().getGuiItemName());
     }
 
     public String noVaultError() {

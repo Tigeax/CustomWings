@@ -1,6 +1,5 @@
 package tigeax.customwings.eventlisteners;
 
-import tigeax.customwings.gui.CWGUIType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -8,6 +7,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.menus.wingselect.WingSelectMenu;
+import tigeax.customwings.util.menu.ItemMenu;
+import tigeax.customwings.util.menu.MenuHolder;
 
 /*
  * This EventLisnter listends when a CustomWings Editor GUI is closed
@@ -22,28 +24,25 @@ public class InventoryCloseEventListener implements Listener {
 		plugin = CustomWings.getInstance();
 	}
 
-
 	@EventHandler
 	public void event(InventoryCloseEvent event) {
 
-		String inventoryTitle = event.getView().getTitle();
+		if (!(event.getPlayer() instanceof Player)) {
+			return;
+		}
 
-		if (inventoryTitle.contains(plugin.getConfig().getEditorGUIName())) {
+		if (event.getInventory().getHolder() instanceof MenuHolder) {
 
-			CWGUIType cwGUIType = plugin.getCWGUIManager().getCWGUITypeByInvTitle(inventoryTitle);
+			MenuHolder menuHolder = ((MenuHolder) event.getInventory().getHolder());
+			ItemMenu menu = menuHolder.getMenu();
 
-			if (cwGUIType == null
-					|| cwGUIType == CWGUIType.EDITORSELECTDOUBLE
-					|| cwGUIType == CWGUIType.EDITORSELECTGUISIZE
-					|| cwGUIType == CWGUIType.EDITORSELECTINTEGER
-					|| cwGUIType == CWGUIType.EDITORSELECTPARTICLE
-					|| cwGUIType == CWGUIType.EDITORSELECTSLOT) {
+			if (menu instanceof WingSelectMenu) {
 				return;
 			}
 
 			CWPlayer cwPlayer = plugin.getCWPlayer((Player) event.getPlayer());
-			cwPlayer.setLastEditorInvView(event.getView());
 
+			cwPlayer.setLastEditorMenu(menu);
 		}
 	}
 }

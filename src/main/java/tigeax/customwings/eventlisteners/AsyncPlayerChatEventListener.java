@@ -1,13 +1,7 @@
 package tigeax.customwings.eventlisteners;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import tigeax.customwings.editor.EditorConfigManager;
-import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 
 /*
@@ -23,25 +17,26 @@ public class AsyncPlayerChatEventListener implements Listener {
 		plugin = CustomWings.getInstance();
 	}
 
-	@EventHandler
-	public void event(AsyncPlayerChatEvent event) {
+	// TODO
+	// @EventHandler
+	// public void event(AsyncPlayerChatEvent event) {
 
-		Player player = event.getPlayer();
-		CWPlayer cwPlayer = plugin.getCWPlayer(player);
-		SettingType setting = cwPlayer.getWaitingSetting();
-		Object settingInfo = cwPlayer.getWaitingSettingInfo();
+	// 	Player player = event.getPlayer();
+	// 	CWPlayer cwPlayer = plugin.getCWPlayer(player);
+	// 	SettingType setting = cwPlayer.getWaitingSetting();
+	// 	Object settingInfo = cwPlayer.getWaitingSettingInfo();
 		
-		if (setting == null) return;
+	// 	if (setting == null) return;
 
-		if (!setting.isChatInputSetting()) return;
+	// 	if (!setting.isChatInputSetting()) return;
 
-		event.setCancelled(true);
+	// 	event.setCancelled(true);
 
-		EditorConfigManager editorConfigManager = plugin.getEditorConfigManager();
-		String value = event.getMessage();
+	// 	EditorConfigManager editorConfigManager = plugin.getEditorConfigManager();
+	// 	String value = event.getMessage();
 
-		editorConfigManager.setSetting(setting, value, settingInfo);
-		cwPlayer.setWaitingSetting(null);
-		cwPlayer.sendMessage(plugin.getMessages().settingChanged());
-	}
+	// 	editorConfigManager.setSetting(setting, value, settingInfo);
+	// 	cwPlayer.setWaitingSetting(null);
+	// 	cwPlayer.sendMessage(plugin.getMessages().settingChanged());
+	// }
 }

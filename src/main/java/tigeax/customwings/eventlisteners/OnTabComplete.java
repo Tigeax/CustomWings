@@ -28,6 +28,10 @@ public class OnTabComplete implements Listener {
 
         Command command = plugin.getPluginCommand(commandName);
 
+        if (command == null) {
+            return;
+        }
+
         List<String> tabCompletions = command.getTabCompletions(args);
 
         if (tabCompletions == null) {

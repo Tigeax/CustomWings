@@ -16,6 +16,7 @@ selectSettingMaterial: "&b&l{CustomWings} &3Click the item in your inventory to 
 reloadSucces: "&b&l{CustomWings} &3CustomWings has been reloaded"
 setWingCommandSucces: "&b&l{CustomWings} &bPlayer {PLAYERNAME} &bwing set to {WINGNAME}"
 takeAwayWingCommandSucces: "&b&l{CustomWings} &3{PLAYERNAME} had access to {WINGNAME} removed."
+wingBuySuccess: "&b&l{CustomWings} You just bought the {WINGNAME} wing"
 
 
 # Error messages

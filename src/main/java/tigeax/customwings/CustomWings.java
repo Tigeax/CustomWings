@@ -1,32 +1,26 @@
 package tigeax.customwings;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.util.Consumer;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import tigeax.customwings.commands.Wings;
-import tigeax.customwings.configuration.Configuration;
+import tigeax.customwings.configuration.Config;
 import tigeax.customwings.configuration.Messages;
 import tigeax.customwings.configuration.WingConfig;
-import tigeax.customwings.editor.EditorConfigManager;
 import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
 import tigeax.customwings.eventlisteners.InventoryClickEventListener;
 import tigeax.customwings.eventlisteners.InventoryCloseEventListener;
@@ -35,9 +29,11 @@ import tigeax.customwings.eventlisteners.PlayerCommandPreprocessEventListener;
 import tigeax.customwings.eventlisteners.PlayerJoinEventListener;
 import tigeax.customwings.eventlisteners.PlayerMoveListener;
 import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
-import tigeax.customwings.gui.CWGUIManager;
+import tigeax.customwings.menus.MenuManager;
+import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.Command;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.util.menu.MenuHolder;
+import tigeax.customwings.wing.Wing;
 
 /*
  * Main class of the CustomWings plugin
@@ -50,15 +46,15 @@ public class CustomWings extends JavaPlugin {
 	private static CustomWings instance;
 
 	private Messages messages;
-	private Configuration config;
+	private Config config;
 
-	private static EditorConfigManager editorConfigManager;
-	private static CWGUIManager cwGUIManager;
+	private MenuManager menus;
 
 	private static HashMap<UUID, CWPlayer> cwPlayerList;
 	private static ArrayList<Wing> wings;
 
-	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
+	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName()
+			.replace("org.bukkit.craftbukkit", "").replace(".", "");
 
 	private static Economy econ = null;
 	private static Permission perms = null;
@@ -77,37 +73,29 @@ public class CustomWings extends JavaPlugin {
 		getLogger().info("Server running on: " + VERSION);
 
 		if (!isServerVersionSupported()) {
-			sendError("CustomWings does not support this server version! Plugin will now disable.");
+			getLogger().severe("CustomWings does not support this server version! Plugin will now disable.");
 			getServer().getPluginManager().disablePlugin(this);
 		}
 
 		// Check if there is a newer version available on Spigot
-		new UpdateChecker(this, spigotResourceId).getVersion(version -> {
-			if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-				Bukkit.getConsoleSender()
-						.sendMessage(ChatColor.AQUA + "{CustomWings} You are running the latest CustomWings version");
-			} else {
-				Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA
-						+ "{CustomWings} A new CustomWings version is available on Spigot: https://www.spigotmc.org/resources/59912/");
-			}
-		});
+		Util.runUpdateChecker(this, spigotResourceId);
 
 		// bStats setup
 		int pluginId = 8227;
 		new Metrics(this, pluginId);
 
 		// Setup Configuration
-		config = new Configuration(this);
+		config = new Config(this);
 		messages = new Messages(this);
 
 		wings = setupWings();
 
-		editorConfigManager = new EditorConfigManager(this);
-		cwGUIManager = new CWGUIManager();
+		menus = new MenuManager(this);
+
 		cwPlayerList = new HashMap<>();
 
-		// Setup commands
-		registerCommand(new Wings("customwings", Arrays.asList("wings", "w"), "customwings.command"));
+		// Setup command
+		registerCommand(new Wings(config.commandName(), config.commandAliases(), "customwings.command"));
 
 		// Register events
 		Bukkit.getPluginManager().registerEvents(new AsyncPlayerChatEventListener(), this);
@@ -145,11 +133,11 @@ public class CustomWings extends JavaPlugin {
 
 		// If a player has a CustomWings GUI open, close it
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			InventoryView invView = player.getOpenInventory();
+			Inventory inv = player.getOpenInventory().getTopInventory();
 
-			if (cwGUIManager.getCWGUITypeByInvTitle(invView.getTitle()) == null)
-				continue;
-			player.closeInventory();
+			if (inv.getHolder() instanceof MenuHolder) {
+				player.closeInventory();
+			}
 		}
 
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been disabled");
@@ -172,7 +160,7 @@ public class CustomWings extends JavaPlugin {
 	}
 
 	@Override
-	public Configuration getConfig() {
+	public Config getConfig() {
 		return config;
 	}
 
@@ -180,12 +168,8 @@ public class CustomWings extends JavaPlugin {
 		return messages;
 	}
 
-	public EditorConfigManager getEditorConfigManager() {
-		return editorConfigManager;
-	}
-
-	public CWGUIManager getCWGUIManager() {
-		return cwGUIManager;
+	public MenuManager getMenus() {
+		return menus;
 	}
 
 	public List<Wing> getWings() {
@@ -206,21 +190,14 @@ public class CustomWings extends JavaPlugin {
 
 	public void reload() {
 
-		getLogger().info("Reloading!");
-
-		config.save();
-
-		// Save wing config and Stop all wing runnables
-		for (Wing wing : getWings()) {
-			wing.getConfig().save();
-			wing.removeAllPlayersWithWingActive();
-		}
-
 		config.update();
 		messages.update();
-		editorConfigManager = new EditorConfigManager(this);
-		cwGUIManager = new CWGUIManager();
-		wings = setupWings();
+
+		for (Wing wing : getWings()) {
+			wing.reload();
+		}
+
+		menus.reload();
 
 		// If the player had a wing equiped, update it with the newest created winglist
 		for (CWPlayer cwPlayer : cwPlayerList.values()) {
@@ -246,7 +223,7 @@ public class CustomWings extends JavaPlugin {
 			getLogger().info("Could not find wings folder. Creating it, with default wings");
 
 			wingsFolder.mkdirs(); // Create the folder
-			
+
 			// Save the wing files
 			saveResource("wings/angel.yml", false);
 			saveResource("wings/bloodhound.yml", false);
@@ -259,8 +236,6 @@ public class CustomWings extends JavaPlugin {
 
 		for (File file : wingFiles) {
 
-			getLogger().info("Loading " + file.getName() + " wing...");
-
 			WingConfig wingConfig = new WingConfig(this, file);
 
 			Wing wing = new Wing(this, wingConfig);
@@ -270,27 +245,27 @@ public class CustomWings extends JavaPlugin {
 		}
 
 		return wings;
-	}	
+	}
 
 	public Command getPluginCommand(String name) {
-        Iterator<Command> commandsIterator = commands.iterator();
+		Iterator<Command> commandsIterator = commands.iterator();
 
-        while (commandsIterator.hasNext()) {
-            Command command = (Command) commandsIterator.next();
+		while (commandsIterator.hasNext()) {
+			Command command = (Command) commandsIterator.next();
 
-            if (command.getName().equalsIgnoreCase(name)) {
-                return command;
-            }
+			if (command.getName().equalsIgnoreCase(name)) {
+				return command;
+			}
 
-            for (String alias : command.getAliases()) {
-                if (name.equalsIgnoreCase(alias)) {
-                    return command;
-                }
-            }
+			for (String alias : command.getAliases()) {
+				if (name.equalsIgnoreCase(alias)) {
+					return command;
+				}
+			}
 
-        }
-        return null;
-    }
+		}
+		return null;
+	}
 
 	private boolean setupEconomy() {
 		RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
@@ -304,26 +279,10 @@ public class CustomWings extends JavaPlugin {
 		return perms != null;
 	}
 
-	public void sendError(Exception e) {
-		sendError(e + "");
-	}
-
-	public void sendError(String error) {
-		Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "{CustomWings} " + error);
-	}
-
 	public Wing getWingByID(String ID) {
 		Wing getWing = null;
 		for (Wing wing : getWings())
 			if (wing.getConfig().getID().equalsIgnoreCase(ID))
-				getWing = wing;
-		return getWing;
-	}
-
-	public Wing getWingByGUISlot(int slot) {
-		Wing getWing = null;
-		for (Wing wing : getWings())
-			if (wing.getConfig().getGuiSlot() == slot)
 				getWing = wing;
 		return getWing;
 	}
@@ -343,34 +302,10 @@ public class CustomWings extends JavaPlugin {
 
 	private boolean isServerVersionSupported() {
 
-		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1", "v1_16_R2", "v1_16_R3");
+		List<String> supportedVersions = Arrays.asList("v1_13_R1", "v1_13_R2", "v1_14_R1", "v1_15_R1", "v1_16_R1",
+				"v1_16_R2", "v1_16_R3");
 
 		return supportedVersions.contains(VERSION);
-	}
-
-	private class UpdateChecker {
-
-		private JavaPlugin plugin;
-		private int resourceId;
-
-		public UpdateChecker(JavaPlugin plugin, int resourceId) {
-			this.plugin = plugin;
-			this.resourceId = resourceId;
-		}
-
-		public void getVersion(final Consumer<String> consumer) {
-			Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
-				try (InputStream inputStream = new URL(
-						"https://api.spigotmc.org/legacy/update.php?resource=" + this.resourceId).openStream();
-						Scanner scanner = new Scanner(inputStream)) {
-					if (scanner.hasNext()) {
-						consumer.accept(scanner.next());
-					}
-				} catch (IOException exception) {
-					this.plugin.getLogger().info("Cannot look for updates: " + exception.getMessage());
-				}
-			});
-		}
 	}
 
 }
