@@ -31,9 +31,9 @@ public enum WingSetting implements SettingInterface {
     WING_TIMER("wing.wingTimer", SettingType.INT),
 
     WING_FLAP_ANIMATION("wing.flapAnimation", SettingType.BOOLEAN),
-    WING_WINGFLAPSPEED("wing.flapSpeed", SettingType.INT), 
-    WING_STARTOFFSET("wing.startOffset", SettingType.INT),
-    WING_STOPOFFSET("wing.stopOffset", SettingType.INT);
+    WING_WING_FLAP_SPEED("wing.flapSpeed", SettingType.INT), 
+    WING_START_OFFSET("wing.startOffset", SettingType.INT),
+    WING_STOP_OFFSET("wing.stopOffset", SettingType.INT);
 
     public String path;
     private SettingType settingType;
@@ -96,11 +96,11 @@ public enum WingSetting implements SettingInterface {
                 return wingConfig.getWingTimer();
             case WING_FLAP_ANIMATION:
                 return wingConfig.getWingAnimation();
-            case WING_WINGFLAPSPEED:
+            case WING_WING_FLAP_SPEED:
                 return wingConfig.getWingFlapSpeed();
-            case WING_STARTOFFSET:
+            case WING_START_OFFSET:
                 return wingConfig.getStartOffset();
-            case WING_STOPOFFSET:
+            case WING_STOP_OFFSET:
                 return wingConfig.getStopOffset();
         }
         return null;

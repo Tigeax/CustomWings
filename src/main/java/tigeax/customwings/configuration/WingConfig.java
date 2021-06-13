@@ -93,9 +93,9 @@ public class WingConfig extends YamlFile {
         wingTimer = getInt(WingSetting.WING_TIMER.path);
 
         wingAnimation = getBoolean(WingSetting.WING_FLAP_ANIMATION.path);
-        wingFlapSpeed = getInt(WingSetting.WING_WINGFLAPSPEED.path);
-        startOffset = getInt(WingSetting.WING_STARTOFFSET.path);
-        stopOffset = getInt(WingSetting.WING_STOPOFFSET.path);
+        wingFlapSpeed = getInt(WingSetting.WING_WING_FLAP_SPEED.path);
+        startOffset = getInt(WingSetting.WING_START_OFFSET.path);
+        stopOffset = getInt(WingSetting.WING_STOP_OFFSET.path);
 
         particleCoordinates = parseParticleCoordinates(getConfigurationSection("wing.particleLayout"));
 
