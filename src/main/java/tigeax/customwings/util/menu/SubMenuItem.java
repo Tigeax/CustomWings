@@ -5,14 +5,14 @@ package tigeax.customwings.util.menu;
  */
 public class SubMenuItem extends MenuItem {
 
-    private final ItemMenu menu;
+    private final ItemMenu subMenu;
 
-    public SubMenuItem(ItemMenu menu) {
-        this.menu = menu;
+    public SubMenuItem(ItemMenu subMenu) {
+        this.subMenu = subMenu;
     }
 
     @Override
     public void onItemClick(ItemClickEvent event) {
-        menu.open(event.getPlayer());
+        subMenu.open(event.getPlayer());
     }
 }

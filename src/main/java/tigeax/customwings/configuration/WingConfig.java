@@ -7,10 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
 
 import tigeax.customwings.CustomWings;
@@ -66,10 +63,11 @@ public class WingConfig extends YamlFile {
 
     @Override
     protected void initDataFromFile() {
-        wingParticles = parseWingParticles(getConfigurationSection("wing.particles"));
+        wingParticles = createWingParticles(getConfigurationSection("wing.particles"));
         updateDataFromFile();
     }
 
+    @Override
     protected void updateDataFromFile() {
 
         showWhenMoving = getBoolean(WingSetting.SHOW_WHEN_MOVING.path);
@@ -104,7 +102,7 @@ public class WingConfig extends YamlFile {
     }
 
     public void reload() {
-        updateDataFromFile();
+        super.update();
 
         for (WingParticle wingParticle : wingParticles) {
             wingParticle.reload();
@@ -283,34 +281,14 @@ public class WingConfig extends YamlFile {
     }
 
     // Turn the data gotten from the config.yml into all the WingParticles of a wing
-    private ArrayList<WingParticle> parseWingParticles(ConfigurationSection wingParticlesConfig) {
+    private ArrayList<WingParticle> createWingParticles(ConfigurationSection wingParticlesConfig) {
 
         ArrayList<WingParticle> particles = new ArrayList<>();
 
         // Loop throught all the wing particles of the wing
         for (String key : wingParticlesConfig.getKeys(false)) {
 
-            ConfigurationSection particleConfig = wingParticlesConfig.getConfigurationSection(key);
-
-            Particle particle;
-
-            try {
-                particle = Particle.valueOf(particleConfig.getString("particle"));
-            } catch (Exception e) {
-                e.printStackTrace();
-                particle = Particle.BARRIER;
-            }
-
-            double distance = particleConfig.getDouble("distance");
-            double height = particleConfig.getDouble("height");
-            int angle = particleConfig.getInt("angle");
-            double speed = particleConfig.getDouble("speed");
-
-            Material material = Material.valueOf(particleConfig.getString("blockType"));
-            DustOptions color = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color")), (float) 1);
-
-            WingParticle wingParticle = new WingParticle(this, key, particle, distance, height, angle, speed, color,
-                    material);
+            WingParticle wingParticle = new WingParticle(this, key);
 
             particles.add(wingParticle);
         }

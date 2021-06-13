@@ -9,6 +9,8 @@ import org.bukkit.inventory.ItemStack;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.settings.Setting;
+import tigeax.customwings.configuration.settings.SettingType;
 import tigeax.customwings.util.menu.MenuHolder;
 
 /*
@@ -32,47 +34,42 @@ public class InventoryClickEventListener implements Listener {
 		// -----CustomWings GUI Click-----
 
 		if (event.getWhoClicked() instanceof Player && event.getInventory().getHolder() instanceof MenuHolder) {
+			event.setCancelled(true);
 
-            event.setCancelled(true);
+			MenuHolder menuHolder = ((MenuHolder) event.getInventory().getHolder());
 
-            MenuHolder menuHolder = ((MenuHolder) event.getInventory().getHolder());
-            
-            menuHolder.getMenu().onInventoryClick(event);
-			
+			menuHolder.getMenu().onInventoryClick(event);
+
 			return;
-        }
+		}
+
+		// -----Waiting on a Setting Input-----
 
 		Player player = (Player) event.getWhoClicked();
 		CWPlayer cwPlayer = plugin.getCWPlayer(player);
+		Setting setting = cwPlayer.getWaitingSetting();
+
+		if (setting == null) {
+			return;
+		}
+
 		ItemStack clickedItem = event.getCurrentItem();
 
 		// Return if no item is clicked
-		if (clickedItem == null) { return; }
-		if (clickedItem.getType() == Material.AIR) { return; }
-		
-		// -----Waiting on a Setting Input-----
+		if (clickedItem == null) {
+			return;
+		}
 
-		// Check if we are waiting for a setting input, that is a material TODO
-		// if (event.getClickedInventory() == player.getInventory()) {
-			
-		// 	SettingType setting = cwPlayer.getWaitingSetting();
-		// 	Object settingInfo = cwPlayer.getWaitingSettingInfo();
-			
-		// 	if (setting != null) {
-		// 		if (setting.isInventoryInputSetting()) {
+		if (clickedItem.getType() == Material.AIR) {
+			return;
+		}
 
-		// 			event.setCancelled(true);
+		if (setting.getSettingType() == SettingType.MATERIAL) {
 
-		// 			EditorConfigManager editorConfigManager = plugin.getEditorConfigManager();
+			Material value = clickedItem.getType();
+			setting.setValue(value);
 
-		// 			Material value = clickedItem.getType();
-		// 			editorConfigManager.setSetting(setting, value, settingInfo);
-
-		// 			cwPlayer.setWaitingSetting(null);
-		// 			cwPlayer.sendMessage(plugin.getMessages().settingChanged());
-		// 			return;
-		// 		}
-		// 	}
-		// }
+			cwPlayer.sendMessage(plugin.getMessages().settingChanged());
+		}
 	}
 }

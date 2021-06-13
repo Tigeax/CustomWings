@@ -8,8 +8,8 @@ hideOtherPlayerWingsOFF: "&b&l{CustomWings} &3You can now see other players wing
 # Editor
 settingChanged: "&b&l{CustomWings} &3Setting changed"
 settingCancelled: "&b&l{CustomWings} &cSetting change canceled"
-typeSettingInChat: "&b&l{CustomWings} &3Type the setting in chat"
-selectSettingMaterial: "&b&l{CustomWings} &3Click the item in your inventory to select the material"
+typeSettingInChat: "&b&l{CustomWings} &3Type the new value for the setting in chat. Use any commnd to cancel."
+selectSettingMaterial: "&b&l{CustomWings} &3Click an item in an inventory to select a material. Type anything in chat to stop selecting materials."
 
 
 # General
@@ -32,5 +32,5 @@ missingArgumentsSetwingError: "&b&l{CustomWings} &cMissing arguments, use /wings
 missingArgumentsTakeAwayWingError: "&b&l{CustomWings} &cMissing arguments, use /wings takeaway [player] [wingID]"
 cantAffordWingError: "&b&l{CustomWings} &cYou cannot afford {WINGNAME}"
 noVaultError: "&b&l{CustomWings} &cVault is needed to use this action"
-invalidSubCommandError: "&b&l{CustomWings} &Invalid subcommand, use /wings <setwing/preview/edit/reload/takeawaywing>"
+invalidSubCommandError: "&b&l{CustomWings} &cInvalid subcommand, use /wings <setwing/preview/edit/reload/takeawaywing>"
 

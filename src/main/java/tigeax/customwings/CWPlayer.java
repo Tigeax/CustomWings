@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import tigeax.customwings.configuration.WingConfig;
-import tigeax.customwings.editor.SettingType;
+import tigeax.customwings.configuration.settings.Setting;
 import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.menu.ItemMenu;
@@ -29,8 +29,8 @@ public class CWPlayer {
 	private boolean hideOtherPlayerWings;
 	private String wingFilter;
 
-	private SettingType waitingSetting;
-	private Object waitingSettingInfo;
+	private Setting waitingSetting;
+
 	private ItemMenu lastEditorMenu;
 
 	private Location wingPreviewLocation = null;
@@ -46,7 +46,6 @@ public class CWPlayer {
 		this.wingFilter = "none";
 
 		this.waitingSetting = null;
-		this.waitingSettingInfo = null;
 		this.lastEditorMenu = null;
 
 		this.lastMove = Instant.now().getEpochSecond() - 1;
@@ -119,21 +118,12 @@ public class CWPlayer {
 		return this.lastMove >= (now - 1);
 	}
 
-	public SettingType getWaitingSetting() {
+	public Setting getWaitingSetting() {
 		return waitingSetting;
 	}
 
-	public Object getWaitingSettingInfo() {
-		return waitingSettingInfo;
-	}
-
-	public void setWaitingSetting(SettingType waitingSetting) {
-		setWaitingSetting(waitingSetting, null);
-	}
-
-	public void setWaitingSetting(SettingType waitingSetting, Object waitingSettingInfo) {
+	public void setWaitingSetting(Setting waitingSetting) {
 		this.waitingSetting = waitingSetting;
-		this.waitingSettingInfo = waitingSettingInfo;
 	}
 
 	public boolean hasPermissionForWing(Wing wing) {

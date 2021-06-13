@@ -32,8 +32,10 @@ import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
 import tigeax.customwings.menus.MenuManager;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.Command;
+import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.util.menu.MenuHolder;
 import tigeax.customwings.wing.Wing;
+import tigeax.customwings.wing.WingParticle;
 
 /*
  * Main class of the CustomWings plugin
@@ -195,9 +197,22 @@ public class CustomWings extends JavaPlugin {
 
 		for (Wing wing : getWings()) {
 			wing.reload();
+			for (WingParticle wingParticle: wing.getConfig().getWingParticles()) {
+				wingParticle.reload();
+			}
 		}
 
 		menus.reload();
+
+		// If a player has a CustomWings GUI open, update it
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			Inventory inv = player.getOpenInventory().getTopInventory();
+
+			if (inv.getHolder() instanceof MenuHolder) {
+				ItemMenu menu = ((MenuHolder) inv.getHolder()).getMenu();
+				menu.update(player);
+			}
+		}
 
 		// If the player had a wing equiped, update it with the newest created winglist
 		for (CWPlayer cwPlayer : cwPlayerList.values()) {

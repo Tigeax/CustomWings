@@ -9,7 +9,7 @@ import tigeax.customwings.wing.Wing;
 
 public class Messages extends YamlFile {
 
-    private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingCancelled,
+    private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingChangeCancelled,
             typeSettingInChat, selectSettingMaterial, reloadSucces, setWingCommandSucces, takeAwayWingCommandSucces,
             wingBuySuccess, noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
             invalidPlayerError, invalidWingsError, noWingToPreviewError, missingArugmentsError,
@@ -34,7 +34,7 @@ public class Messages extends YamlFile {
         hideOtherPlayerWingsOFF = getMessage("hideOtherPlayerWingsOFF");
         // Editor
         settingChanged = getMessage("settingChanged");
-        settingCancelled = getMessage("settingCancelled");
+        settingChangeCancelled = getMessage("settingCancelled");
         typeSettingInChat = getMessage("typeSettingInChat");
         selectSettingMaterial = getMessage("selectSettingMaterial");
         // General
@@ -75,8 +75,8 @@ public class Messages extends YamlFile {
         return settingChanged;
     }
 
-    public String settingCancelled() {
-        return settingCancelled;
+    public String settingChangeCancelled() {
+        return settingChangeCancelled;
     }
 
     public String typeSettingInChat() {

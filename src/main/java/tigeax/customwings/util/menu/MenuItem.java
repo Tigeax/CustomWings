@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import tigeax.customwings.util.Util;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class MenuItem {
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+        this.displayName = Util.parseChatColors(displayName);
     }
 
     // Material

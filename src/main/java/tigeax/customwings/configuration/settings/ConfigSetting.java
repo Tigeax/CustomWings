@@ -1,5 +1,7 @@
 package tigeax.customwings.configuration.settings;
 
+import org.bukkit.Material;
+
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.Config;
 
@@ -26,24 +28,24 @@ public enum ConfigSetting implements SettingInterface {
     NAGIVATION_ITEM_NEXT_NAME("wingSelectMenu.navigationItem.next.name", SettingType.STRING),
     NAGIVATION_ITEM_NEXT_MATERIAL("wingSelectMenu.navigationItem.next.material", SettingType.MATERIAL),
     NAGIVATION_ITEM_NEXT_SLOT("wingSelectMenu.navigationItem.next.slot", SettingType.GUISLOT),
-    NAGIVATION_ITEM_BACK_NAME("wingSelectMenu.navigationItem.next.name", SettingType.STRING),
-    NAGIVATION_ITEM_BACK_MATERIAL("wingSelectMenu.navigationItem.next.material", SettingType.MATERIAL),
-    NAGIVATION_ITEM_BACK_SLOT("wingSelectMenu.navigationItem.next.slot", SettingType.GUISLOT),
+    NAGIVATION_ITEM_PREVIOUS_NAME("wingSelectMenu.navigationItem.previous.name", SettingType.STRING),
+    NAGIVATION_ITEM_PREVIOUS_MATERIAL("wingSelectMenu.navigationItem.previous.material", SettingType.MATERIAL),
+    NAGIVATION_ITEM_PREVIOUS_SLOT("wingSelectMenu.navigationItem.previous.slot", SettingType.GUISLOT),
 
     FILTER_ITEM_ENABLE("wingSelectMenu.filterItem.enable", SettingType.BOOLEAN),
     FILTER_ITEM_SLOT("wingSelectMenu.filterItem.slot", SettingType.GUISLOT),
 
     FILTER_ITEM_NO_FILTER_NAME("wingSelectMenu.filterItem.noFilter.name", SettingType.STRING),
     FILTER_ITEM_NO_FILTER_MATERIAL("wingSelectMenu.filterItem.noFilter.material", SettingType.MATERIAL),
-    FILTER_ITEM_NO_FILTER_LORE("wingSelectMenu.filterItem.noFilter.lore", SettingType.LORE),
+    FILTER_ITEM_NO_FILTER_LORE("wingSelectMenu.filterItem.noFilter.lore", SettingType.STRINGLIST),
 
     FILTER_ITEM_OWNED_WINGS_NAME("wingSelectMenu.filterItem.ownedWings.name", SettingType.STRING),
     FILTER_ITEM_OWNED_WINGS_MATERIAL("wingSelectMenu.filterItem.ownedWings.material", SettingType.MATERIAL),
-    FILTER_ITEM_OWNED_WINGS_LORE("wingSelectMenu.filterItem.ownedWings.lore", SettingType.LORE),
+    FILTER_ITEM_OWNED_WINGS_LORE("wingSelectMenu.filterItem.ownedWings.lore", SettingType.STRINGLIST),
 
     FILTER_ITEM_UNOWNED_WINGS_NAME("wingSelectMenu.filterItem.unownedWings.name", SettingType.STRING),
     FILTER_ITEM_UNOWNED_WINGS_MATERIAL("wingSelectMenu.filterItem.unownedWings.material", SettingType.MATERIAL),
-    FILTER_ITEM_UNOWNED_WINGS_LORE("wingSelectMenu.filterItem.unownedWings.lore", SettingType.LORE);
+    FILTER_ITEM_UNOWNED_WINGS_LORE("wingSelectMenu.filterItem.unownedWings.lore", SettingType.STRINGLIST);
 
     public String path;
     private SettingType settingType;
@@ -58,6 +60,10 @@ public enum ConfigSetting implements SettingInterface {
     }
 
     public void setValue(Object value) {
+        if (value instanceof Material) {
+            value = value.toString();
+        }
+
         Config config = CustomWings.getInstance().getConfig();
         config.set(this.path, value);
         config.save();
@@ -103,12 +109,12 @@ public enum ConfigSetting implements SettingInterface {
                 return config.getNavigationNextItemMaterial();
             case NAGIVATION_ITEM_NEXT_SLOT:
                 return config.getNavigationNextSlot();
-            case NAGIVATION_ITEM_BACK_NAME:
-                return config.getNavigationBacktItemName();
-            case NAGIVATION_ITEM_BACK_MATERIAL:
-                return config.getNavigationBackItemMaterial();
-            case NAGIVATION_ITEM_BACK_SLOT:
-                return config.getNavigationBackSlot();
+            case NAGIVATION_ITEM_PREVIOUS_NAME:
+                return config.getNavigationPreviousItemName();
+            case NAGIVATION_ITEM_PREVIOUS_MATERIAL:
+                return config.getNavigationPreviousItemMaterial();
+            case NAGIVATION_ITEM_PREVIOUS_SLOT:
+                return config.getNavigationPreviousSlot();
             case FILTER_ITEM_ENABLE:
                 return config.getFilterItemEnable();
             case FILTER_ITEM_SLOT:

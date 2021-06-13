@@ -16,14 +16,14 @@ public class Config extends YamlFile {
     private int removeWingSlot;
     private int hideWingsToggleSlot;
     private int navigationNextSlot;
-    private int navigationBackSlot;
+    private int navigationPreviousSlot;
     private int filterSlot;
     private String commandName, wingSelectMenuName, removeWingItemName, hideWingsToggleONItemName,
-            hideWingsToggleOFFItemName, navigationNextItemName, navigationBackItemName, filterNoneItemName,
+            hideWingsToggleOFFItemName, navigationNextItemName, navigationPreviousItemName, filterNoneItemName,
             filterOwnedItemName, filterUnownedItemName;
     private List<String> commandAliases, filterNoneItemLore, filterOwnedItemLore, filterUnownedItemLore;
     private Material removeWingItemMaterial, hideWingsToggleONItemMaterial, hideWingsToggleOFFItemMaterial,
-            navigationNextItemMaterial, navigationBackItemMaterial, filterNoneItemMaterial, filterOwnedItemMaterial,
+            navigationNextItemMaterial, navigationPreviousItemMaterial, filterNoneItemMaterial, filterOwnedItemMaterial,
             filterUnownedItemMaterial;
     private boolean invisibilityPotionHidesWing, filterItemEnable;
 
@@ -43,7 +43,7 @@ public class Config extends YamlFile {
     @Override
     protected void updateDataFromFile() {
 
-        wingViewDistance = getInt(ConfigSetting.WING_MAX_PITCH.path);
+        wingViewDistance = getInt(ConfigSetting.WING_VIEW_DISTANCE.path);
         wingMaxPitch = getInt(ConfigSetting.WING_MAX_PITCH.path);
         invisibilityPotionHidesWing = getBoolean(ConfigSetting.INVISIBILITY_POTION_HIDES_WING.path);
 
@@ -65,24 +65,21 @@ public class Config extends YamlFile {
         navigationNextItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_NEXT_MATERIAL.path);
         navigationNextSlot = getInt(ConfigSetting.NAGIVATION_ITEM_NEXT_SLOT.path);
 
-        navigationBackItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_BACK_NAME.path);
-        navigationBackItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_BACK_MATERIAL.path);
-        navigationBackSlot = getInt(ConfigSetting.NAGIVATION_ITEM_BACK_SLOT.path);
+        navigationPreviousItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_NAME.path);
+        navigationPreviousItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_MATERIAL.path);
+        navigationPreviousSlot = getInt(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_SLOT.path);
 
         filterItemEnable = getBoolean(ConfigSetting.FILTER_ITEM_ENABLE.path);
         filterSlot = getInt(ConfigSetting.FILTER_ITEM_SLOT.path);
 
         filterNoneItemName = getColorString(ConfigSetting.FILTER_ITEM_NO_FILTER_NAME.path);
         filterNoneItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_NO_FILTER_MATERIAL.path);
-        filterNoneItemLore = getColorLore(ConfigSetting.FILTER_ITEM_NO_FILTER_LORE.path);
 
         filterOwnedItemName = getColorString(ConfigSetting.FILTER_ITEM_OWNED_WINGS_NAME.path);
         filterOwnedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_OWNED_WINGS_MATERIAL.path);
-        filterOwnedItemLore = getColorLore(ConfigSetting.FILTER_ITEM_OWNED_WINGS_LORE.path);
 
         filterUnownedItemName = getColorString(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_NAME.path);
         filterUnownedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL.path);
-        filterUnownedItemLore = getColorLore(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_LORE.path);
 
         // Make sure the removeWingSlot is always inside the menu
         if (removeWingSlot > (wingSelectMenuSize - 1)) {
@@ -167,16 +164,16 @@ public class Config extends YamlFile {
         return navigationNextSlot;
     }
 
-    public String getNavigationBacktItemName() {
-        return navigationBackItemName;
+    public String getNavigationPreviousItemName() {
+        return navigationPreviousItemName;
     }
 
-    public Material getNavigationBackItemMaterial() {
-        return navigationBackItemMaterial;
+    public Material getNavigationPreviousItemMaterial() {
+        return navigationPreviousItemMaterial;
     }
 
-    public int getNavigationBackSlot() {
-        return navigationBackSlot;
+    public int getNavigationPreviousSlot() {
+        return navigationPreviousSlot;
     }
 
     public boolean getFilterItemEnable() {

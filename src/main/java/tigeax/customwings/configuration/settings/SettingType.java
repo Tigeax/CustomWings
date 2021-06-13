@@ -6,13 +6,10 @@ public enum SettingType {
     DOUBLE,
     STRING,
     BOOLEAN,
-    LORE,
+    STRINGLIST,
     GUISLOT,
     GUISIZE,
     MATERIAL,
     PARTICLE,
-    COLOR,
-    WHITELISTEDWORLDS;
-
-    
+    COLOR,    
 }

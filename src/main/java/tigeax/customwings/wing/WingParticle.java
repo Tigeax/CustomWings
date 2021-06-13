@@ -2,10 +2,12 @@ package tigeax.customwings.wing;
 
 import java.util.ArrayList;
 
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,6 +21,7 @@ import tigeax.customwings.configuration.WingConfig;
 public class WingParticle {
 
 	private WingConfig wingConfig;
+	private ConfigurationSection particleConfig;
 	private String id;
 
 	private Particle particle;
@@ -30,40 +33,62 @@ public class WingParticle {
 	private DustOptions dustOptions;
 	private Material material;
 
-	public WingParticle(WingConfig wingConfig, String id, Particle particle, double distance, double height, int angle, double speed, DustOptions dustOptions, Material material) {
+	public WingParticle(WingConfig wingConfig, String id) {
 		this.wingConfig = wingConfig;
 		this.id = id;
-		this.particle = particle;
-		this.distance = distance;
-		this.height = height;
-		this.angle = angle;
-		this.speed = speed;
-		this.dustOptions = dustOptions;
-		this.material = material;
 
+		reload();
+	}
+
+	// TODO refractor
+	public void reload() {
+
+		particleConfig = wingConfig.getConfigurationSection("wing.particles." + id);
+
+		try {
+			this.particle = Particle.valueOf(particleConfig.getString("particle"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.particle = Particle.BARRIER;
+		}
+
+		this.distance = particleConfig.getDouble("distance");
+		this.height = particleConfig.getDouble("height");
+		this.angle = particleConfig.getInt("angle");
+		this.speed = particleConfig.getDouble("speed");
+
+		this.material = Material.valueOf(particleConfig.getString("blockType"));
+		this.dustOptions = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color")), (float) 10);
+
+		this.particleData = null;
+
+		// Refractor
 		if (particle == Particle.REDSTONE) {
-			particleData = dustOptions;
+			this.particleData = dustOptions;
 		}
 
 		if (particle == Particle.BLOCK_CRACK
 				|| particle == Particle.BLOCK_DUST
 				|| particle == Particle.FALLING_DUST) {
 			try {
-				particleData = material.createBlockData();
+				this.particleData = material.createBlockData();
 			} catch (Exception e) {
 				e.printStackTrace();
-				particleData = Material.BARRIER.createBlockData();
+				this.particleData = Material.BARRIER.createBlockData();
 			}
 		} else
-			if (particle == Particle.ITEM_CRACK) particleData = new ItemStack(material);
-	}
-
-	public void reload() {
-		//TODO
+			if (particle == Particle.ITEM_CRACK) {
+				this.particleData = new ItemStack(material);
+			}
+		
 	}
 
 	public WingConfig getWingConfig() {
 		return wingConfig;
+	}
+
+	public ConfigurationSection getParticleConfig() {
+		return this.particleConfig;
 	}
 
 	public String getID() { return this.id; }
@@ -98,6 +123,8 @@ public class WingParticle {
 		double z = Math.sin(direction);
 
 		for (Player player : spawnForPlayers) {
+			// TODO
+			// Note changes based on xyz values? And potions (speed value?)
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.menus.editor.EditorMenu;
+import tigeax.customwings.menus.editor.settingmenus.EditorMenu;
 import tigeax.customwings.menus.wingselect.WingSelectMenu;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.menu.ItemMenu;

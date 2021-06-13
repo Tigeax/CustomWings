@@ -12,9 +12,10 @@ import tigeax.customwings.util.Util;
  * A Menu controlled by ItemStacks in an Inventory.
  */
 public class ItemMenu {
+    
     private String name;
     private Rows size;
-    public MenuItem[] items;
+    private MenuItem[] items;
     private ItemMenu parent;
 
     /**
@@ -112,14 +113,21 @@ public class ItemMenu {
         return this;
     }
 
+    public void openPreviousPage(Player player) {
+        // Do nothing by default
+    }
+
+    public void openNextPage(Player player) {
+        // Do nothing by default
+    }
+
     /**
      * Opens the {@link ItemMenu} for a player.
      *
      * @param player The player.
      */
     public void open(Player player) {
-        Inventory inventory = Bukkit.createInventory(
-                new MenuHolder(this, Bukkit.createInventory(player, size.getSize())), size.getSize(), name);
+        Inventory inventory = Bukkit.createInventory(new MenuHolder(this, Bukkit.createInventory(player, size.getSize())), size.getSize(), name);
         apply(inventory, player);
         player.openInventory(inventory);
     }
@@ -137,9 +145,9 @@ public class ItemMenu {
 
         Inventory inventory = player.getOpenInventory().getTopInventory();
 
-            if (inventory.getHolder() instanceof MenuHolder && ((MenuHolder) inventory.getHolder()).getMenu().equals(this)) {
-                apply(inventory, player);
-                player.updateInventory();
+        if (inventory.getHolder() instanceof MenuHolder && ((MenuHolder) inventory.getHolder()).getMenu().equals(this)) {
+            apply(inventory, player);
+            player.updateInventory();
         }
     }
 

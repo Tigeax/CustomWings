@@ -1,12 +1,15 @@
 package tigeax.customwings.configuration.settings;
 
+import org.bukkit.Material;
+
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.WingConfig;
+import tigeax.customwings.wing.Wing;
 
 public enum WingSetting implements SettingInterface {
 
     SHOW_WHEN_MOVING("showWhenMoving", SettingType.BOOLEAN),
-    WHITELISTED_WORLDS("whitelistedWorlds", SettingType.WHITELISTEDWORLDS),
+    WHITELISTED_WORLDS("whitelistedWorlds", SettingType.STRINGLIST),
 
     ECONOMY_PRICE_TYPE("economy.priceType", SettingType.STRING), 
     ECONOMY_PRICE("economy.price", SettingType.INT),
@@ -17,10 +20,10 @@ public enum WingSetting implements SettingInterface {
     MENU_ITEM_MATERIAL("menuItem.material", SettingType.MATERIAL),
     MENU_ITEM_SLOT("menuItem.slot", SettingType.GUISLOT),
 
-    MENU_ITEM_LORE_WHEN_EQUIPPED("menuItem.loreWhenEquipped", SettingType.LORE),
-    MENU_ITEM_LORE_WHEN_UNEQUIPPED("menuItem.loreWhenUnequipped", SettingType.LORE),
-    MENU_ITEM_LORE_WHEN_NO_PERMISSION("menuItem.loreWhenNoPermission", SettingType.LORE),
-    MENU_ITEM_LORE_WHEN_CAN_BUY("menuItem.loreWhenCanBuy", SettingType.LORE),
+    MENU_ITEM_LORE_WHEN_EQUIPPED("menuItem.loreWhenEquipped", SettingType.STRINGLIST),
+    MENU_ITEM_LORE_WHEN_UNEQUIPPED("menuItem.loreWhenUnequipped", SettingType.STRINGLIST),
+    MENU_ITEM_LORE_WHEN_NO_PERMISSION("menuItem.loreWhenNoPermission", SettingType.STRINGLIST),
+    MENU_ITEM_LORE_WHEN_CAN_BUY("menuItem.loreWhenCanBuy", SettingType.STRINGLIST),
 
     WING_START_VERTICAL("wing.startVertical", SettingType.DOUBLE),
     WING_START_HORIZONTAL("wing.startHorizontal", SettingType.DOUBLE),
@@ -44,13 +47,19 @@ public enum WingSetting implements SettingInterface {
         return settingType;
     }
 
-    public void setValue(WingConfig wingConfig, Object value) {
-        wingConfig.set(this.path, value);
-        wingConfig.save();
+    public void setValue(Object value, Wing wing) {
+        if (value instanceof Material) {
+            value = value.toString();
+        }
+
+        wing.getConfig().set(this.path, value);
+        wing.getConfig().save();
         CustomWings.getInstance().reload();
     }
 
-    public Object getCurrentValue(WingConfig wingConfig) {
+    public Object getCurrentValue(Wing wing) {
+
+        WingConfig wingConfig = wing.getConfig();
 
         switch (this) {
             case SHOW_WHEN_MOVING:

@@ -1,8 +1,17 @@
 package tigeax.customwings.eventlisteners;
 
-import org.bukkit.event.Listener;
+import java.util.Arrays;
+import java.util.List;
 
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+
+import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.settings.Setting;
+import tigeax.customwings.configuration.settings.SettingType;
 
 /*
  * This EventListener gets the value from chat when we are waiting from a chat input from a player
@@ -17,26 +26,37 @@ public class AsyncPlayerChatEventListener implements Listener {
 		plugin = CustomWings.getInstance();
 	}
 
-	// TODO
-	// @EventHandler
-	// public void event(AsyncPlayerChatEvent event) {
+	@EventHandler
+	public void event(AsyncPlayerChatEvent event) {
 
-	// 	Player player = event.getPlayer();
-	// 	CWPlayer cwPlayer = plugin.getCWPlayer(player);
-	// 	SettingType setting = cwPlayer.getWaitingSetting();
-	// 	Object settingInfo = cwPlayer.getWaitingSettingInfo();
-		
-	// 	if (setting == null) return;
+		Player player = event.getPlayer();
+		CWPlayer cwPlayer = plugin.getCWPlayer(player);
+		Setting setting = cwPlayer.getWaitingSetting();
 
-	// 	if (!setting.isChatInputSetting()) return;
+		if (setting == null) {
+			return;
+		}
 
-	// 	event.setCancelled(true);
+		event.setCancelled(true);
 
-	// 	EditorConfigManager editorConfigManager = plugin.getEditorConfigManager();
-	// 	String value = event.getMessage();
+		if (setting.getSettingType() == SettingType.MATERIAL) {
+			cwPlayer.sendMessage(plugin.getMessages().settingChangeCancelled());
+		}
 
-	// 	editorConfigManager.setSetting(setting, value, settingInfo);
-	// 	cwPlayer.setWaitingSetting(null);
-	// 	cwPlayer.sendMessage(plugin.getMessages().settingChanged());
-	// }
+		if (setting.getSettingType() == SettingType.STRING) {
+			String value = event.getMessage();
+			setting.setValue(value);
+			cwPlayer.sendMessage(plugin.getMessages().settingChanged());
+		}
+
+		if (setting.getSettingType() == SettingType.STRINGLIST) {
+			String value = event.getMessage();
+			List<String> valueList = Arrays.asList(value.split(","));
+			setting.setValue(valueList);
+			cwPlayer.sendMessage(plugin.getMessages().settingChanged());
+		}
+
+
+		cwPlayer.setWaitingSetting(null);
+	}
 }

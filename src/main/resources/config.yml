@@ -44,10 +44,10 @@ wingSelectMenu:
       name: "&9Next Page"
       material: FEATHER
       slot: 50
-    back:
+    previous:
       name: "&9Previous Page"
       material: FEATHER
-      slot: 49
+      slot: 48
 
   # Allow player to hide wings in the gui that they own/don't own.
   filterItem:
