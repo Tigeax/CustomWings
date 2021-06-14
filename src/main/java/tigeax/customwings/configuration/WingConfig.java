@@ -23,7 +23,7 @@ public class WingConfig extends YamlFile {
     private boolean hideInGUI;
     private String guiItemName;
     private Material guiItemMaterial;
-    private int guiSlot;
+    private int guiSlot, guiPage;
 
     private List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission, loreWhenCanBuy;
 
@@ -81,6 +81,7 @@ public class WingConfig extends YamlFile {
         guiItemName = getColorString(WingSetting.MENU_ITEM_NAME.path);
         guiItemMaterial = Material.valueOf(getString(WingSetting.MENU_ITEM_MATERIAL.path));
         guiSlot = getInt(WingSetting.MENU_ITEM_SLOT.path);
+        guiPage = getInt(WingSetting.MENU_ITEM_PAGE.path);
 
         loreWhenEquipped = getColorLore(WingSetting.MENU_ITEM_LORE_WHEN_EQUIPPED.path);
         loreWhenUnequipped = getColorLore(WingSetting.MENU_ITEM_LORE_WHEN_UNEQUIPPED.path);
@@ -132,6 +133,10 @@ public class WingConfig extends YamlFile {
 
     public int getGuiSlot() {
         return guiSlot;
+    }
+
+    public int getGuiPage() {
+        return guiPage;
     }
 
     public List<String> getLoreWhenEquipped() {

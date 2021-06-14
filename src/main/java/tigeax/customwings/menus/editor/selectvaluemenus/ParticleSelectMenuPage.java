@@ -4,10 +4,10 @@ import org.bukkit.entity.Player;
 
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.settings.Setting;
-import tigeax.customwings.menus.editor.items.GoBackItem;
-import tigeax.customwings.menus.editor.items.NextPageItem;
-import tigeax.customwings.menus.editor.items.PreviousPageItem;
 import tigeax.customwings.menus.editor.selectvaluemenus.items.ParticleSelectItem;
+import tigeax.customwings.menus.items.GoBackItem;
+import tigeax.customwings.menus.items.NextPageItem;
+import tigeax.customwings.menus.items.PreviousPageItem;
 import tigeax.customwings.util.ParticleItem;
 import tigeax.customwings.util.menu.ItemMenu;
 
@@ -58,7 +58,6 @@ public class ParticleSelectMenuPage extends ItemMenu {
 	public void openPreviousPage(Player player) {
 		if (page > 1) {
 			new ParticleSelectMenuPage(parent, setting, page - 1).open(player);
-			;
 		}
 	}
 
@@ -66,7 +65,6 @@ public class ParticleSelectMenuPage extends ItemMenu {
 	public void openNextPage(Player player) {
 		if (page < totalPages) {
 			new ParticleSelectMenuPage(parent, setting, page + 1).open(player);
-			;
 		}
 	}
 

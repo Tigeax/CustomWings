@@ -22,7 +22,7 @@ invisibilityPotionHidesWing: true
 wingSelectMenu:
   name: "&c&lWing selector"
   size: 54 # Must be a multiple of 9.
-  pages: 1
+  pages: 2
 
   # Item plaeyrs can use to not equip any wing.
   removeWingItem:

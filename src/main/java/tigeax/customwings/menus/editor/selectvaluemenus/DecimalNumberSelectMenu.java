@@ -1,9 +1,9 @@
 package tigeax.customwings.menus.editor.selectvaluemenus;
 
 import tigeax.customwings.configuration.settings.Setting;
-import tigeax.customwings.menus.editor.items.GoBackItem;
 import tigeax.customwings.menus.editor.selectvaluemenus.items.DecimalNumberSelectItem;
 import tigeax.customwings.menus.editor.selectvaluemenus.items.SettingItem;
+import tigeax.customwings.menus.items.GoBackItem;
 import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.util.menu.MenuItem;
 

@@ -1,7 +1,7 @@
 package tigeax.customwings.menus.editor.selectvaluemenus;
 
 import tigeax.customwings.configuration.settings.Setting;
-import tigeax.customwings.menus.editor.items.GoBackItem;
+import tigeax.customwings.menus.items.GoBackItem;
 import tigeax.customwings.util.menu.ItemMenu;
 
 public class MenuSizeSelectMenu extends ItemMenu {

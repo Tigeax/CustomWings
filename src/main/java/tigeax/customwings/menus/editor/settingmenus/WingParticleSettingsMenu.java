@@ -4,8 +4,8 @@ import org.bukkit.Material;
 
 import tigeax.customwings.configuration.settings.Setting;
 import tigeax.customwings.configuration.settings.WingParticleSetting;
-import tigeax.customwings.menus.editor.items.GoBackItem;
 import tigeax.customwings.menus.editor.selectvaluemenus.items.SettingItem;
+import tigeax.customwings.menus.items.GoBackItem;
 import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.wing.WingParticle;
 

@@ -1,7 +1,7 @@
 package tigeax.customwings.menus.editor.settingmenus;
 
-import tigeax.customwings.menus.editor.items.GoBackItem;
 import tigeax.customwings.menus.editor.settingmenus.items.WingParticleSettingsMenuItem;
+import tigeax.customwings.menus.items.GoBackItem;
 import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.wing.Wing;
 import tigeax.customwings.wing.WingParticle;

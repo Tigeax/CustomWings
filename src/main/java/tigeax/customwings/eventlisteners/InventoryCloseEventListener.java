@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.menus.wingselect.WingSelectMenu;
+import tigeax.customwings.menus.wingselect.WingSelectMenuPage;
 import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.util.menu.MenuHolder;
 
@@ -36,7 +36,7 @@ public class InventoryCloseEventListener implements Listener {
 			MenuHolder menuHolder = ((MenuHolder) event.getInventory().getHolder());
 			ItemMenu menu = menuHolder.getMenu();
 
-			if (menu instanceof WingSelectMenu) {
+			if (menu instanceof WingSelectMenuPage) {
 				return;
 			}
 

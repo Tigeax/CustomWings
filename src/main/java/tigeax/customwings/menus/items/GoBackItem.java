@@ -1,4 +1,4 @@
-package tigeax.customwings.menus.editor.items;
+package tigeax.customwings.menus.items;
 
 import org.bukkit.Material;
 

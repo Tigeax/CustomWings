@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.menus.editor.settingmenus.EditorMenu;
-import tigeax.customwings.menus.wingselect.WingSelectMenu;
+import tigeax.customwings.menus.wingselect.WingSelectMenuPage;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.menu.ItemMenu;
 
@@ -17,23 +17,20 @@ public class MenuManager {
 
     private CustomWings plugin;
 
-    private WingSelectMenu wingSelectMenu;
     private EditorMenu editorMenu;
 
     public MenuManager(CustomWings plugin) {
         this.plugin = plugin;
 
-        wingSelectMenu = new WingSelectMenu(plugin);
         editorMenu = new EditorMenu(plugin);
     }
 
     public void reload() {
-        wingSelectMenu.reload();
         editorMenu.reload();
     }
 
     public void openWingSelectMenu(Player player) {
-        wingSelectMenu.open(player);
+        new WingSelectMenuPage(plugin, 1).open(player);
     }
 
     public void openEditorMenu(Player player) {

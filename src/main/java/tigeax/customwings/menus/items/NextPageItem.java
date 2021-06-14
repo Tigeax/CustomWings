@@ -1,19 +1,19 @@
-package tigeax.customwings.menus.editor.items;
+package tigeax.customwings.menus.items;
 
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.menu.ItemClickEvent;
 import tigeax.customwings.util.menu.MenuItem;
 
-public class PreviousPageItem extends MenuItem {
+public class NextPageItem extends MenuItem {
 
-    public PreviousPageItem() {
+    public NextPageItem() {
         CustomWings plugin = CustomWings.getInstance();
-        setDisplayName(plugin.getConfig().getNavigationPreviousItemName());
+        setDisplayName(plugin.getConfig().getNavigationNextItemName());
         setMaterial(plugin.getConfig().getNavigationNextItemMaterial());
     }
 
     @Override
     public void onItemClick(ItemClickEvent event) {
-        event.getItemMenu().openPreviousPage(event.getPlayer());
+        event.getItemMenu().openNextPage(event.getPlayer());
     }
 }

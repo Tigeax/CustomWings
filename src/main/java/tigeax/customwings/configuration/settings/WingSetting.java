@@ -19,6 +19,7 @@ public enum WingSetting implements SettingInterface {
     MENU_ITEM_NAME("menuItem.name", SettingType.STRING),
     MENU_ITEM_MATERIAL("menuItem.material", SettingType.MATERIAL),
     MENU_ITEM_SLOT("menuItem.slot", SettingType.GUISLOT),
+    MENU_ITEM_PAGE("menuItem.page", SettingType.INT),
 
     MENU_ITEM_LORE_WHEN_EQUIPPED("menuItem.loreWhenEquipped", SettingType.STRINGLIST),
     MENU_ITEM_LORE_WHEN_UNEQUIPPED("menuItem.loreWhenUnequipped", SettingType.STRINGLIST),
@@ -78,6 +79,8 @@ public enum WingSetting implements SettingInterface {
                 return wingConfig.getGuiItemMaterial();
             case MENU_ITEM_SLOT:
                 return wingConfig.getGuiSlot();
+            case MENU_ITEM_PAGE:
+                return wingConfig.getGuiPage();
             case MENU_ITEM_LORE_WHEN_EQUIPPED:
                 return wingConfig.getLoreWhenEquipped();
             case MENU_ITEM_LORE_WHEN_UNEQUIPPED:
