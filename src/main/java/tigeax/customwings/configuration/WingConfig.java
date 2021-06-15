@@ -7,58 +7,48 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.Particle;
-import org.bukkit.Particle.DustOptions;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.util.Util;
+import tigeax.customwings.configuration.settings.WingSetting;
 import tigeax.customwings.util.YamlFile;
-import tigeax.customwings.wings.WingParticle;
+import tigeax.customwings.wing.WingParticle;
 
 public class WingConfig extends YamlFile {
 
-    protected final String ID;
+    private final String ID;
 
-    protected boolean hideInGUI;
-    protected ItemStack guiItem;
-    protected String guiItemName;
-    protected int guiSlot;
+    private boolean hideInGUI;
+    private String guiItemName;
+    private Material guiItemMaterial;
+    private int guiSlot, guiPage;
 
-    protected List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission, loreWhenCanBuy;
+    private List<String> loreWhenEquipped, loreWhenUnequipped, loreWhenNoPermission, loreWhenCanBuy;
 
-    protected boolean showWhenMoving;
-    protected List<String> whitelistedWorlds;
+    private boolean showWhenMoving;
+    private List<String> whitelistedWorlds;
 
-    protected double startVertical, startHorizontal, distanceBetweenParticles;
-    protected int wingTimer;
+    private double startVertical, startHorizontal, distanceBetweenParticles;
+    private int wingTimer;
 
-    protected boolean wingAnimation;
-    protected int wingFlapSpeed, startOffset, stopOffset;
+    private boolean wingAnimation;
+    private int wingFlapSpeed, startOffset, stopOffset;
 
-    protected ArrayList<WingParticle> wingParticles;
+    private ArrayList<WingParticle> wingParticles;
 
-    protected int wingPrice;
-    protected String priceType;
-    protected String buyMessage;
+    private int wingPrice;
+    private String priceType;
 
     // Hasmap containing the coordinates relative to the player
     // And the assinged particle at that coordinate
     // double[] functions as double[distance from player, height]
-    protected HashMap<double[], WingParticle> particleCoordinates;
+    private HashMap<double[], WingParticle> particleCoordinates;
 
     public WingConfig(CustomWings plugin, File configFile) {
         super(plugin, configFile);
 
         this.ID = configFile.getName().replace(".yml", "").toLowerCase();
-
-        loadDataFromFile();
-
     }
 
     @Override
@@ -68,74 +58,84 @@ public class WingConfig extends YamlFile {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
-    protected void loadDataFromFile() {
-        hideInGUI = getBoolean("guiItem.hideInGUI", false);
+    @Override
+    protected void initDataFromFile() {
+        wingParticles = createWingParticles(getConfigurationSection("wing.particles"));
+        updateDataFromFile();
+    }
 
-        guiItemName = getString("guiItem.name");
-        guiItem = getItem(guiItemName, getString("guiItem.material"));
-        guiSlot = getInt("guiItem.slot");
+    @Override
+    protected void updateDataFromFile() {
 
-        loreWhenEquipped = Util.parseLoreString(getStringList("guiItem.loreWhenEquipped").toString());
-        loreWhenUnequipped = Util.parseLoreString(getStringList("guiItem.loreWhenUnequipped").toString());
-        loreWhenNoPermission = Util.parseLoreString(getStringList("guiItem.loreWhenNoPermission").toString());
+        showWhenMoving = getBoolean(WingSetting.SHOW_WHEN_MOVING.path);
+        whitelistedWorlds = parseWhitelistedWorlds(getStringList(WingSetting.WHITELISTED_WORLDS.path).toString());
 
-        showWhenMoving = getBoolean("showWhenMoving", true);
-        whitelistedWorlds = parseWhitelistedWorlds(getStringList("whitelistedWorlds").toString());
+        wingPrice = getInt(WingSetting.WHITELISTED_WORLDS.path);
+        priceType = getString(WingSetting.ECONOMY_PRICE.path);
 
-        startVertical = getDouble("wingLayout.startVertical", 0.0);
-        startHorizontal = getDouble("wingLayout.startHorizontal", 0.0);
-        distanceBetweenParticles = getDouble("wingLayout.distanceBetweenParticles", 0.1);
-        wingTimer = getInt("wingLayout.wingTimer", 5);
+        hideInGUI = getBoolean(WingSetting.MENU_ITEM_HIDE_IN_MENU.path);
 
-        wingAnimation = getBoolean("wingLayout.wingAnimation", false);
-        wingFlapSpeed = getInt("wingLayout.wingFlapSpeed", 1);
-        startOffset = getInt("wingLayout.startOffset", 30);
-        stopOffset = getInt("wingLayout.stopOffset", 70);
+        guiItemName = getColorString(WingSetting.MENU_ITEM_NAME.path);
+        guiItemMaterial = Material.valueOf(getString(WingSetting.MENU_ITEM_MATERIAL.path));
+        guiSlot = getInt(WingSetting.MENU_ITEM_SLOT.path);
+        guiPage = getInt(WingSetting.MENU_ITEM_PAGE.path);
 
-        wingParticles = parseWingParticles(getConfigurationSection("particles"));
-        particleCoordinates = parseParticleCoordinates(getConfigurationSection("particleLayout"));
+        loreWhenEquipped = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_EQUIPPED.path);
+        loreWhenUnequipped = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_UNEQUIPPED.path);
+        loreWhenNoPermission = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_NO_PERMISSION.path);
+        loreWhenCanBuy = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_CAN_BUY.path);
 
-        wingPrice = getInt("price");
-        priceType = getString("price-type");
+        startVertical = getDouble(WingSetting.WING_START_VERTICAL.path);
+        startHorizontal = getDouble(WingSetting.WING_START_HORIZONTAL.path);
+        distanceBetweenParticles = getDouble(WingSetting.WING_DISTANCE_BETWEEN_PARTICLES.path);
+        wingTimer = getInt(WingSetting.WING_TIMER.path);
 
-        try {
-            buyMessage = getString("buyMessage");
-            if (buyMessage == null) {
-                buyMessage = "&3You just bought " + guiItemName;
-            }
-        } catch (NullPointerException e) {
-            // If buy message was not supplied set it to this
-            buyMessage = "&3You just bought " + guiItemName;
-        }
+        wingAnimation = getBoolean(WingSetting.WING_FLAP_ANIMATION.path);
+        wingFlapSpeed = getInt(WingSetting.WING_WING_FLAP_SPEED.path);
+        startOffset = getInt(WingSetting.WING_START_OFFSET.path);
+        stopOffset = getInt(WingSetting.WING_STOP_OFFSET.path);
 
-        loreWhenCanBuy = getStringList("guiItem.loreWhenCanBuy");
+        particleCoordinates = parseParticleCoordinates(getConfigurationSection("wing.particleLayout"));
+
     }
 
     public void reload() {
-        loadDataFromFile();
+        super.update();
+
+        for (WingParticle wingParticle : wingParticles) {
+            wingParticle.reload();
+        }
+
     }
 
     public String getID() {
         return ID;
     }
 
-    public boolean getHideInGUI() {
+    public boolean isHiddenInGUI() {
         return hideInGUI;
     }
 
-    public String getGUIItemName() {
+    public int getPrice() {
+        return wingPrice;
+    }
+
+    public String getGuiItemName() {
         return guiItemName;
     }
 
-    public ItemStack getGuiItem() {
-        return guiItem;
+    public Material getGuiItemMaterial() {
+        return guiItemMaterial;
     }
 
     public int getGuiSlot() {
         return guiSlot;
+    }
+
+    public int getGuiPage() {
+        return guiPage;
     }
 
     public List<String> getLoreWhenEquipped() {
@@ -151,33 +151,12 @@ public class WingConfig extends YamlFile {
     }
 
     public List<String> getloreWhenCanBuy() {
-
         List<String> lore = new ArrayList<>();
 
-        try {
-            loreWhenCanBuy.isEmpty();
-        } catch (NullPointerException e) {
-            lore.add(ChatColor.translateAlternateColorCodes('&', "You can buy this for " + wingPrice));
-            return lore;
-        }
-
-        for (String s : loreWhenCanBuy) {
-            s = s.replaceAll("%price%", String.valueOf(wingPrice));
-            lore.add(ChatColor.translateAlternateColorCodes('&', s));
+        for (String string : loreWhenCanBuy) {
+            string = string.replace("{PRICE}", wingPrice + "");
         }
         return lore;
-    }
-
-    public String getLoreWhenEquippedString() {
-        return getLoreWhenEquipped().toString().replace("[", "").replace("]", "");
-    }
-
-    public String getLoreWhenUnequippedString() {
-        return getLoreWhenUnequipped().toString().replace("[", "").replace("]", "");
-    }
-
-    public String getLoreWhenNoPermissionString() {
-        return getLoreWhenNoPermission().toString().replace("[", "").replace("]", "");
     }
 
     public List<String> getWhitelistedWorlds() {
@@ -237,121 +216,76 @@ public class WingConfig extends YamlFile {
         return null;
     }
 
-    public int getWingPrice() {
-        return wingPrice;
-    }
 
     public String getPriceType() {
         return priceType;
-    }
-
-    public String getBuyMessage() {
-        return buyMessage;
     }
 
     public HashMap<double[], WingParticle> getParticleCoordinates() {
         return particleCoordinates;
     }
 
-
-
-
     // Util
 
-    @Override
-    public String getString(String path) {
-        String string = super.getString(path);
-        string = Util.parseChatColors(string);
-        return string;
-    }
-
-    private ItemStack getItem(String name, String material) {
-		ItemStack item = new ItemStack(Material.valueOf(material));
-
-		ItemMeta itemMeta = item.getItemMeta();
-		itemMeta.setDisplayName(name);
-		item.setItemMeta(itemMeta);
-
-		return item;
-	}
-
     private List<String> parseWhitelistedWorlds(String list) {
-		return Arrays.asList(list.replace("]", "").replace("[", "").split(", "));
-	}
+        return Arrays.asList(list.replace("]", "").replace("[", "").split(", "));
+    }
 
     // TODO Refractor
 
-    // Turn the data gotten from the config.yml into a HashMap containing the relative coordinates and the assinged wingParticle
-	private HashMap<double[], WingParticle> parseParticleCoordinates(ConfigurationSection particleLayout) {
+    // Turn the data gotten from the config.yml into a HashMap containing the
+    // relative coordinates and the assinged wingParticle
+    private HashMap<double[], WingParticle> parseParticleCoordinates(ConfigurationSection particleLayout) {
 
-		HashMap<double[], WingParticle> particleCoordinates = new HashMap<>();
-		Set<String> rows = particleLayout.getKeys(false);
-		double distance;
-		double height = startVertical + (rows.size() * distanceBetweenParticles); // Highest vertical point of the wing
+        HashMap<double[], WingParticle> particleCoordinates = new HashMap<>();
+        Set<String> rows = particleLayout.getKeys(false);
+        double distance;
+        double height = startVertical + (rows.size() * distanceBetweenParticles); // Highest vertical point of the wing
 
-		// Go through all the horizontal rows
-		for (String rowNumber : rows) {
+        // Go through all the horizontal rows
+        for (String rowNumber : rows) {
 
-			height = height - distanceBetweenParticles;
-			distance = startHorizontal;
+            height = height - distanceBetweenParticles;
+            distance = startHorizontal;
 
-			String[] particleLine = particleLayout.getString(rowNumber).split(",");
+            String[] particleLine = particleLayout.getString(rowNumber).split(",");
 
-			// Go though each "particle" on the row
-			for (String particleID : particleLine) {
+            // Go though each "particle" on the row
+            for (String particleID : particleLine) {
 
-				// "-" means there should be no particle at the coordinate
-				if (particleID.equals("-")) {
-					distance = distance + distanceBetweenParticles;
-					continue;
-				}
+                // "-" means there should be no particle at the coordinate
+                if (particleID.equals("-")) {
+                    distance = distance + distanceBetweenParticles;
+                    continue;
+                }
 
-				double[] coordinates = new double[2];
-				coordinates[0] = distance;
-				coordinates[1] = height;
+                double[] coordinates = new double[2];
+                coordinates[0] = distance;
+                coordinates[1] = height;
 
-				particleCoordinates.put(coordinates, getWingParticleByID(particleID));
+                particleCoordinates.put(coordinates, getWingParticleByID(particleID));
 
-				distance = distance + distanceBetweenParticles;
+                distance = distance + distanceBetweenParticles;
 
-			}
-		}
-		return particleCoordinates;
-	}
+            }
+        }
+        return particleCoordinates;
+    }
 
-	// Turn the data gotten from the config.yml into all the WingParticles of a wing
-	private ArrayList<WingParticle> parseWingParticles(ConfigurationSection wingParticlesConfig) {
+    // Turn the data gotten from the config.yml into all the WingParticles of a wing
+    private ArrayList<WingParticle> createWingParticles(ConfigurationSection wingParticlesConfig) {
 
-		ArrayList<WingParticle> particles = new ArrayList<>();
+        ArrayList<WingParticle> particles = new ArrayList<>();
 
-		// Loop throught all the wing particles of the wing
-		for (String key : wingParticlesConfig.getKeys(false)) {
+        // Loop throught all the wing particles of the wing
+        for (String key : wingParticlesConfig.getKeys(false)) {
 
-			ConfigurationSection particleConfig = wingParticlesConfig.getConfigurationSection(key);
+            WingParticle wingParticle = new WingParticle(this, key);
 
-			Particle particle;
+            particles.add(wingParticle);
+        }
 
-			try {
-				particle = Particle.valueOf(particleConfig.getString("particle"));
-			} catch (Exception e) {
-				plugin.sendError(e);
-				particle = Particle.BARRIER;
-			}
+        return particles;
 
-			double distance = particleConfig.getDouble("distance");
-			double height = particleConfig.getDouble("height");
-			int angle = particleConfig.getInt("angle");
-			double speed = particleConfig.getDouble("speed");
-
-			Material material = Material.valueOf(particleConfig.getString("blockType"));
-			DustOptions color = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color")), (float) 1);
-
-			WingParticle wingParticle = new WingParticle(this, key, particle, distance, height, angle, speed, color, material);
-
-			particles.add(wingParticle);
-		}
-
-		return particles;
-
-	}
+    }
 }

@@ -6,3 +6,6 @@ api-version: 1.13
 softdepend:
   - Vault
   - TokenManager
+permissions:
+  customwings.command:
+    deflaut: op

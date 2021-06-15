@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wing.Wing;
 
 /*
  * This EventListener Listends for when a player joins

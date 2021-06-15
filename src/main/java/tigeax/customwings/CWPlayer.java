@@ -1,6 +1,7 @@
 package tigeax.customwings;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -8,14 +9,13 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 
-import tigeax.customwings.editor.SettingType;
-import tigeax.customwings.gui.CWGUIManager;
-import tigeax.customwings.gui.CWGUIType;
+import tigeax.customwings.configuration.WingConfig;
+import tigeax.customwings.configuration.settings.Setting;
 import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.util.Util;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.util.menu.ItemMenu;
+import tigeax.customwings.wing.Wing;
 
 /*
  * Class made for every player interacting with the plugin
@@ -23,19 +23,15 @@ import tigeax.customwings.wings.Wing;
 
 public class CWPlayer {
 
-	private CustomWings plugin;
-
-	private final CWGUIManager cwGUIManager;
-
 	private final Player player;
 
 	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
 	private String wingFilter;
 
-	private SettingType waitingSetting;
-	private Object waitingSettingInfo;
-	private InventoryView lastEditorInvView;
+	private Setting waitingSetting;
+
+	private ItemMenu lastEditorMenu;
 
 	private Location wingPreviewLocation = null;
 
@@ -43,20 +39,16 @@ public class CWPlayer {
 
 	public CWPlayer(UUID uuid) {
 
-		plugin = CustomWings.getInstance();
-
-		cwGUIManager = plugin.getCWGUIManager();
 		player = Bukkit.getPlayer(uuid);
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
-		this.wingFilter = "none";
+		this.wingFilter = "noFilter"; //Either 'noFilter', 'ownedWings', 'unownedWings'
 
 		this.waitingSetting = null;
-		this.waitingSettingInfo = null;
-		this.lastEditorInvView = null;
+		this.lastEditorMenu = null;
 
-		this.lastMove = Instant.now().getEpochSecond()-1;
+		this.lastMove = Instant.now().getEpochSecond() - 1;
 	}
 
 	/**
@@ -68,9 +60,13 @@ public class CWPlayer {
 		Util.sendMessage(player, message);
 	}
 
-	public Player getPlayer() { return player; }
-	
-	public Wing getEquippedWing() { return equippedWing; }
+	public Player getPlayer() {
+		return player;
+	}
+
+	public Wing getEquippedWing() {
+		return equippedWing;
+	}
 
 	public boolean isPreviewingWing() {
 		return (wingPreviewLocation != null);
@@ -88,57 +84,55 @@ public class CWPlayer {
 	}
 
 	/**
-	 * Return the location to spawn a wing. Returns null is the player is not previewing a wing.
+	 * Return the location to spawn a wing. Returns null is the player is not
+	 * previewing a wing.
 	 */
 	public Location getPreviewWingLocation() {
 		return wingPreviewLocation;
 	}
 
-	public boolean getHideOtherPlayerWings() { return hideOtherPlayerWings; }
-	
+	public boolean getHideOtherPlayerWings() {
+		return hideOtherPlayerWings;
+	}
+
 	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) {
 		this.hideOtherPlayerWings = hideOtherPlayerWings;
 	}
-	
-	public InventoryView getLastEditorInvView() { return lastEditorInvView; }
-	public void setLastEditorInvView(InventoryView invView) { this.lastEditorInvView = invView; }
+
+	public ItemMenu getLastEditorMenu() {
+		return lastEditorMenu;
+	}
+
+	public void setLastEditorMenu(ItemMenu itemMenu) {
+		this.lastEditorMenu = itemMenu;
+	}
 
 	/**
-	 * Calculate if the player is currently moving, based on when the player was last detected as moving
+	 * Calculate if the player is currently moving, based on when the player was
+	 * last detected as moving
 	 */
 	public boolean isMoving() {
 		Instant instant = Instant.now();
 		long now = instant.getEpochSecond();
 		return this.lastMove >= (now - 1);
 	}
-	
-	public SettingType getWaitingSetting() { return waitingSetting; }
-	
-	public Object getWaitingSettingInfo() { return waitingSettingInfo; }
 
-	public void setWaitingSetting(SettingType waitingSetting) {
-		setWaitingSetting(waitingSetting, null);
+	public Setting getWaitingSetting() {
+		return waitingSetting;
 	}
 
-	public void setWaitingSetting(SettingType waitingSetting, Object waitingSettingInfo) {
+	public void setWaitingSetting(Setting waitingSetting) {
 		this.waitingSetting = waitingSetting;
-		this.waitingSettingInfo = waitingSettingInfo;
 	}
 
 	public boolean hasPermissionForWing(Wing wing) {
 		return getPlayer().hasPermission(wing.getPermission()) || getPlayer().hasPermission(("customwings.wing.*"));
 	}
 
-	public void openCWGUI(CWGUIType cwGUIType) {
-		openCWGUI(cwGUIType, null);
-	}
-
-	public void openCWGUI(CWGUIType cwGUIType, Object info) {
-		cwGUIManager.openGUI(this, cwGUIType, info);
-	}
-
 	public void setEquippedWing(Wing wing) {
-		if (this.equippedWing == wing) { return; }
+		if (this.equippedWing == wing) {
+			return;
+		}
 
 		// Remove the player from the old wing
 		if (this.equippedWing != null) {
@@ -154,13 +148,35 @@ public class CWPlayer {
 
 	}
 
-	//Set the time when the player was last counted at moving
+	public List<String> getWingMenuItemLore(Wing wing) {
+
+		WingConfig wingConfig = wing.getConfig();
+
+		if (getEquippedWing() == wing) {
+			return wingConfig.getLoreWhenEquipped();
+		}
+
+		if (hasPermissionForWing(wing)) {
+			return wingConfig.getLoreWhenUnequipped();
+		}
+
+		if (wingConfig.getPrice() == -1 || wingConfig.getPriceType() == null
+				|| wingConfig.getPriceType().equalsIgnoreCase("none")) {
+			return wingConfig.getLoreWhenNoPermission();
+		}
+
+		return wingConfig.getloreWhenCanBuy();
+
+	}
+
+	// Set the time when the player was last counted at moving
 	public void setLastTimeMoving(long moveTimestamp) {
 		this.lastMove = moveTimestamp;
 	}
-	
+
 	public void closeInventory() {
-		//Open an empty inventory and then close it to make sure they cannot shift click items out of their inventory
+		// Open an empty inventory and then close it to make sure they cannot shift
+		// click items out of their inventory
 		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
 		this.getPlayer().openInventory(emptyInv);
 		this.getPlayer().closeInventory();
@@ -170,8 +186,23 @@ public class CWPlayer {
 		return wingFilter;
 	}
 
-	public void setWingFilter(String filter) {
-		wingFilter = filter;
+	public void cycleWingFilter() {
+
+		if (wingFilter.equals("noFilter")) {
+			wingFilter = "ownedWings";
+			return;
+		}
+
+		if (wingFilter.equals("ownedWings")) {
+			wingFilter = "unownedWings";
+			return;
+		}
+
+		if (wingFilter.equals("unownedWings")) {
+			wingFilter = "noFilter";
+			return;
+		}
+
 	}
 
 }

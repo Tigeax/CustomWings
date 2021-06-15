@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.SubCommand;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wing.Wing;
 
 public class TakeAwayWing extends SubCommand {
 
@@ -36,11 +36,7 @@ public class TakeAwayWing extends SubCommand {
 
     Player player = null;
 
-    try {
-      player = Bukkit.getOfflinePlayer(playerName).getPlayer();
-    } catch (NullPointerException e) {
-      Util.sendMessage(sender, plugin.getMessages().invalidPlayerError(playerName));
-    }
+    player = Bukkit.getPlayer(playerName).getPlayer();
 
     if (player == null) {
       Util.sendMessage(sender, plugin.getMessages().invalidPlayerError(playerName));

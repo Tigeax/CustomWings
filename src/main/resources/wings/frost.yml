@@ -2,15 +2,17 @@ showWhenMoving: false
 whitelistedWorlds:
   - "all"
 
-price: 10
+economy:
+  priceType: economy
+  price: 10
 
-
-guiItem:
-  hideInGUI: false
+menuItem:
+  hideInMenu: false
   
   name: "&bFrost Wing"
   material: DIAMOND
   slot: 1
+  page: 1
   loreWhenEquipped: 
     - "&6You have the &bFrost Wing &6equipped"
   loreWhenUnequipped:
@@ -18,7 +20,7 @@ guiItem:
   loreWhenNoPermission:
     - "&cYou do not own the &bFrost Wing"
 
-wingLayout:
+wing:
   startVertical: -0.1
   startHorizontal: 0.2
   distanceBetweenParticles: 0.1
@@ -30,34 +32,34 @@ wingLayout:
   startOffset: 30
   stopOffset: 70
 
-particleLayout:
-  1:  "-,-,-,-,x,x,x,-,-,-"
-  2:  "-,-,-,x,x,x,x,x,-,-"
-  3:  "-,-,x,x,x,x,x,x,x,-"
-  4:  "-,x,x,x,x,x,x,x,x,-"
-  5:  "x,x,x,x,x,x,x,x,x,x"
-  6:  "x,x,x,x,x,x,x,x,x,x"
-  7:  "x,x,x,x,x,x,x,x,x,x"
-  8:  "x,x,x,x,x,x,x,x,x,x"
-  9:  "-,-,x,x,x,x,x,x,x,x"
-  10: "-,-,-,x,x,x,x,x,x,x"
-  11: "-,-,-,x,x,x,x,x,x,x"
-  12: "-,-,-,-,x,x,x,x,x,x"
-  13: "-,-,-,-,x,x,x,x,x,x"
-  14: "-,-,-,-,-,x,x,x,x,-"
-  15: "-,-,-,-,-,x,x,x,x,-"
-  16: "-,-,-,-,-,-,x,x,x,-"
-  17: "-,-,-,-,-,-,x,x,x,-"
-  18: "-,-,-,-,-,-,-,x,x,-"
-  19: "-,-,-,-,-,-,-,-,x,-"
-    
-particles:
-    x:
-      particle: "REDSTONE"
-      distance: 0
-      height: 0
-      angle: 0
-      speed: 0
+  particleLayout:
+    1:  "-,-,-,-,x,x,x,-,-,-"
+    2:  "-,-,-,x,x,x,x,x,-,-"
+    3:  "-,-,x,x,x,x,x,x,x,-"
+    4:  "-,x,x,x,x,x,x,x,x,-"
+    5:  "x,x,x,x,x,x,x,x,x,x"
+    6:  "x,x,x,x,x,x,x,x,x,x"
+    7:  "x,x,x,x,x,x,x,x,x,x"
+    8:  "x,x,x,x,x,x,x,x,x,x"
+    9:  "-,-,x,x,x,x,x,x,x,x"
+    10: "-,-,-,x,x,x,x,x,x,x"
+    11: "-,-,-,x,x,x,x,x,x,x"
+    12: "-,-,-,-,x,x,x,x,x,x"
+    13: "-,-,-,-,x,x,x,x,x,x"
+    14: "-,-,-,-,-,x,x,x,x,-"
+    15: "-,-,-,-,-,x,x,x,x,-"
+    16: "-,-,-,-,-,-,x,x,x,-"
+    17: "-,-,-,-,-,-,x,x,x,-"
+    18: "-,-,-,-,-,-,-,x,x,-"
+    19: "-,-,-,-,-,-,-,-,x,-"
       
-      blockType: QUARTZ_BLOCK
-      color: 5036527
+  particles:
+      x:
+        particle: "REDSTONE"
+        distance: 0
+        height: 0
+        angle: 0
+        speed: 0
+        
+        blockType: QUARTZ_BLOCK
+        color: 5036527

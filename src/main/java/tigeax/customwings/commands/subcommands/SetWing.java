@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.SubCommand;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wing.Wing;
 
 public class SetWing extends SubCommand {
 

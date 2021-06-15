@@ -11,11 +11,22 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.commands.SubCommand;
 
 public class Util {
+
+    public static void runUpdateChecker(JavaPlugin plugin, int spigotResourceId) {
+        new UpdateChecker(plugin, spigotResourceId).getVersion(version -> {
+			if (plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
+                plugin.getLogger().info("You are running the latest version of this plugin");
+			} else {
+                plugin.getLogger().info("There is a new version of this plugin avaiable on Spigot: https://www.spigotmc.org/resources/ " + spigotResourceId +  "/");
+			}
+		});
+    }
 
     /**
      * Translates a string using the '&' color code character into a string that
@@ -95,8 +106,15 @@ public class Util {
     }
 
 
-    public static List<String> parseLoreString(String loreString) {
-		return Arrays.asList(parseChatColors(loreString).replace("]", "").replace("[", "").split(", "));
+    public static List<String> parseLoreChatColor(List<String> loreList) {
+
+        String loreString = loreList.toString();
+
+        loreString = parseChatColors(loreString).replace("]", "").replace("[", "");
+        String[] loreArray = loreString.split(", ");
+        loreList = Arrays.asList(loreArray);
+        
+		return loreList;
 	}
 
 }

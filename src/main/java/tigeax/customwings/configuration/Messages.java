@@ -3,57 +3,63 @@ package tigeax.customwings.configuration;
 import org.bukkit.entity.Player;
 
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.wing.Wing;
 
 public class Messages extends YamlFile {
 
-    private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingCancelled,
+    private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingChangeCancelled,
             typeSettingInChat, selectSettingMaterial, reloadSucces, setWingCommandSucces, takeAwayWingCommandSucces,
-            noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
+            wingBuySuccess, noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
             invalidPlayerError, invalidWingsError, noWingToPreviewError, missingArugmentsError,
             missingArgumentsSetwingError, missingArgumentsTakeAwayWingError, cantAffordWingError, noVaultError,
             invalidSubCommandError;
 
     public Messages(CustomWings plugin) {
         super(plugin, "messages.yml");
-        loadDataFromFile();
     }
 
     @Override
-    protected void loadDataFromFile() {
+    protected void initDataFromFile() {
+        updateDataFromFile();
+    }
+
+    @Override
+    protected void updateDataFromFile() {
+
         // Wings
-        wingEquipped = getMessage("wingEquipped");
-        hideOtherPlayerWingsON = getMessage("hideOtherPlayerWingsON");
-        hideOtherPlayerWingsOFF = getMessage("hideOtherPlayerWingsOFF");
+        wingEquipped = getColorString("wingEquipped");
+        hideOtherPlayerWingsON = getColorString("hideOtherPlayerWingsON");
+        hideOtherPlayerWingsOFF = getColorString("hideOtherPlayerWingsOFF");
         // Editor
-        settingChanged = getMessage("settingChanged");
-        settingCancelled = getMessage("settingCancelled");
-        typeSettingInChat = getMessage("typeSettingInChat");
-        selectSettingMaterial = getMessage("selectSettingMaterial");
+        settingChanged = getColorString("settingChanged");
+        settingChangeCancelled = getColorString("settingCancelled");
+        typeSettingInChat = getColorString("typeSettingInChat");
+        selectSettingMaterial = getColorString("selectSettingMaterial");
         // General
-        reloadSucces = getMessage("reloadSucces");
-        setWingCommandSucces = getMessage("setWingCommandSucces");
-        takeAwayWingCommandSucces = getMessage("takeAwayWingCommandSucces");
+        reloadSucces = getColorString("reloadSucces");
+        setWingCommandSucces = getColorString("setWingCommandSucces");
+        takeAwayWingCommandSucces = getColorString("takeAwayWingCommandSucces");
+        wingBuySuccess = getColorString("wingBuySuccess");
         // Error messages
-        noPermissionForCommandError = getMessage("noPermissionForCommandError");
-        noPermissionToEquipWingError = getMessage("noPermissionToEquipWingError");
-        notAPlayerError = getMessage("notAPlayerError");
-        notConsoleError = getMessage("notConsoleError");
-        invalidPlayerError = getMessage("invalidPlayerError");
-        invalidWingsError = getMessage("invalidWingsError");
-        noWingToPreviewError = getMessage("noWingToPreviewError");
-        missingArugmentsError = getMessage("missingArugmentsError");
-        missingArgumentsSetwingError = getMessage("missingArgumentsSetwingError");
-        missingArgumentsTakeAwayWingError = getMessage("missingArgumentsTakeAwayWingError");
-        cantAffordWingError = getMessage("cantAffordWingError");
-        noVaultError = getMessage("noVaultError");
-        invalidSubCommandError = getMessage("invalidSubCommandError");
+        noPermissionForCommandError = getColorString("noPermissionForCommandError");
+        noPermissionToEquipWingError = getColorString("noPermissionToEquipWingError");
+        notAPlayerError = getColorString("notAPlayerError");
+        notConsoleError = getColorString("notConsoleError");
+        invalidPlayerError = getColorString("invalidPlayerError");
+        invalidWingsError = getColorString("invalidWingsError");
+        noWingToPreviewError = getColorString("noWingToPreviewError");
+        missingArugmentsError = getColorString("missingArugmentsError");
+        missingArgumentsSetwingError = getColorString("missingArgumentsSetwingError");
+        missingArgumentsTakeAwayWingError = getColorString("missingArgumentsTakeAwayWingError");
+        cantAffordWingError = getColorString("cantAffordWingError");
+        noVaultError = getColorString("noVaultError");
+        invalidSubCommandError = getColorString("invalidSubCommandError");
+
     }
 
     public String wingEquipped(Wing wing) {
-        return wingEquipped.replace("{WINGNAME}", wing.getConfig().getGUIItemName());
+        return wingEquipped.replace("{WINGNAME}", wing.getConfig().getGuiItemName());
     }
 
     public String hideOtherPlayerWingsON() {
@@ -68,8 +74,8 @@ public class Messages extends YamlFile {
         return settingChanged;
     }
 
-    public String settingCancelled() {
-        return settingCancelled;
+    public String settingChangeCancelled() {
+        return settingChangeCancelled;
     }
 
     public String typeSettingInChat() {
@@ -90,7 +96,11 @@ public class Messages extends YamlFile {
 
     public String takeAwayWingCommandSucces(Player player, Wing wing) {
         return takeAwayWingCommandSucces.replace("{PLAYERNAME}", player.getDisplayName()).replace("{WINGNAME}",
-                wing.getConfig().getGUIItemName());
+                wing.getConfig().getGuiItemName());
+    }
+
+    public String wingBuySuccess(int price) {
+        return wingBuySuccess.replace("{PRICE}", price + "");
     }
 
     public String noPermissionForCommandError(String commandName, String permission) {
@@ -98,7 +108,8 @@ public class Messages extends YamlFile {
     }
 
     public String noPermissionToEquipWingError(Wing wing) {
-        return noPermissionToEquipWingError.replace("{WINGNAME}", wing.getConfig().getGUIItemName()).replace("{PERMISSION}", wing.getPermission());
+        return noPermissionToEquipWingError.replace("{WINGNAME}", wing.getConfig().getGuiItemName())
+                .replace("{PERMISSION}", wing.getPermission());
     }
 
     public String notAPlayerError() {
@@ -134,7 +145,7 @@ public class Messages extends YamlFile {
     }
 
     public String cantAffordWingError(Wing wing) {
-        return cantAffordWingError.replace("{WINGNAME}", wing.getConfig().getGUIItemName());
+        return cantAffordWingError.replace("{WINGNAME}", wing.getConfig().getGuiItemName());
     }
 
     public String noVaultError() {
@@ -144,24 +155,4 @@ public class Messages extends YamlFile {
     public String invalidSubCommandError() {
         return invalidSubCommandError;
     }
-
-    /**
-     * Get a messages from the message.yml file and parse the ChatColors.
-     * 
-     * @param name Name of the message
-     * @return The message
-     */
-    private String getMessage(String name) {
-        String message;
-
-        try {
-            message = Util.parseChatColors(getString(name));
-        } catch (IllegalArgumentException e) {
-            message = "";
-            plugin.getLogger().warning("Failed to get message " + name + " from messages.yml");
-        }
-
-        return message;
-    }
-
 }
