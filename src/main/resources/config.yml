@@ -54,7 +54,7 @@ wingSelectMenu:
     enable: true
     slot: 45
     noFilter:
-      name: "&fCurrent filter: No filter"
+      name: "&aNo filter"
       material: BARRIER
       lore:
         - "&7Show all wings"
@@ -62,9 +62,9 @@ wingSelectMenu:
       name: "&aOwned wings"
       material: LIME_WOOL
       lore:
-        - "&7Current filter: Show only the wings you can use"
+        - "&7Show only the wings you can use"
     unownedWings:
       name: "&cUnowned wings"
       material: RED_WOOL
       lore:
-        - "&7Current filter: Show only the wings you cannot use"
+        - "&7Show only the wings you cannot use"

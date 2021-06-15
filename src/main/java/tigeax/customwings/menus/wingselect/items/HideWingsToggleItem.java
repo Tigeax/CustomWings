@@ -13,7 +13,6 @@ public class HideWingsToggleItem extends MenuItem {
     private CustomWings plugin;
 
     public HideWingsToggleItem(CustomWings plugin) {
-        super();
         this.plugin = plugin;
     }
 

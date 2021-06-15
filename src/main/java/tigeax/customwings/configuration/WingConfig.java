@@ -12,7 +12,6 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.settings.WingSetting;
-import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
 import tigeax.customwings.wing.WingParticle;
 
@@ -83,10 +82,10 @@ public class WingConfig extends YamlFile {
         guiSlot = getInt(WingSetting.MENU_ITEM_SLOT.path);
         guiPage = getInt(WingSetting.MENU_ITEM_PAGE.path);
 
-        loreWhenEquipped = getColorLore(WingSetting.MENU_ITEM_LORE_WHEN_EQUIPPED.path);
-        loreWhenUnequipped = getColorLore(WingSetting.MENU_ITEM_LORE_WHEN_UNEQUIPPED.path);
-        loreWhenNoPermission = getColorLore(WingSetting.MENU_ITEM_LORE_WHEN_NO_PERMISSION.path);
-        loreWhenCanBuy = getColorLore(WingSetting.MENU_ITEM_LORE_WHEN_CAN_BUY.path);
+        loreWhenEquipped = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_EQUIPPED.path);
+        loreWhenUnequipped = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_UNEQUIPPED.path);
+        loreWhenNoPermission = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_NO_PERMISSION.path);
+        loreWhenCanBuy = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_CAN_BUY.path);
 
         startVertical = getDouble(WingSetting.WING_START_VERTICAL.path);
         startHorizontal = getDouble(WingSetting.WING_START_HORIZONTAL.path);
@@ -227,18 +226,6 @@ public class WingConfig extends YamlFile {
     }
 
     // Util
-
-    public String getColorString(String path) {
-        String string = getString(path);
-        string = Util.parseChatColors(string);
-        return string;
-    }
-
-    public List<String> getColorLore(String path) {
-        List<String> stringList = getStringList(path);
-        stringList = Util.parseLoreChatColor(stringList);
-        return stringList;
-    }
 
     private List<String> parseWhitelistedWorlds(String list) {
         return Arrays.asList(list.replace("]", "").replace("[", "").split(", "));

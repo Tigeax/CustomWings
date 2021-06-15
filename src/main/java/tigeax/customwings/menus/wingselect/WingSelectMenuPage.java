@@ -3,9 +3,11 @@ package tigeax.customwings.menus.wingselect;
 import org.bukkit.entity.Player;
 
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.configuration.Config;
 import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.menus.items.NextPageItem;
 import tigeax.customwings.menus.items.PreviousPageItem;
+import tigeax.customwings.menus.wingselect.items.FilterCycleItem;
 import tigeax.customwings.menus.wingselect.items.HideWingsToggleItem;
 import tigeax.customwings.menus.wingselect.items.WingRemoveItem;
 import tigeax.customwings.menus.wingselect.items.WingSelectItem;
@@ -24,7 +26,8 @@ public class WingSelectMenuPage extends ItemMenu {
 
         this.plugin = plugin;
         this.page = page;
-        this.totalPages = plugin.getConfig().getWingSelectMenuPages();
+        Config config = plugin.getConfig();
+        this.totalPages = config.getWingSelectMenuPages();
 
         // Wing items
         for (Wing wing : plugin.getWings()) {
@@ -42,19 +45,22 @@ public class WingSelectMenuPage extends ItemMenu {
 
         }
 
+        // Wing filter item
+        setItem(config.getFilterSlot(), new FilterCycleItem(plugin));
+
         // Remove wing item
-        setItem(plugin.getConfig().getRemoveWingSlot(), new WingRemoveItem(plugin));
+        setItem(config.getRemoveWingSlot(), new WingRemoveItem(plugin));
 
         // Hide other players wing item
-        setItem(plugin.getConfig().getHideWingsToggleSlot(), new HideWingsToggleItem(plugin));
+        setItem(config.getHideWingsToggleSlot(), new HideWingsToggleItem(plugin));
 
         
         if (page > 1) {
-			setItem(plugin.getConfig().getNavigationPreviousSlot(), new PreviousPageItem());
+			setItem(config.getNavigationPreviousSlot(), new PreviousPageItem());
 		}
 
 		if (page < totalPages) {
-			setItem(plugin.getConfig().getNavigationNextSlot(), new NextPageItem());
+			setItem(config.getNavigationNextSlot(), new NextPageItem());
 		}
         
 

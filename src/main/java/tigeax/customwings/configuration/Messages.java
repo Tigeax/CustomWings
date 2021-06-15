@@ -3,7 +3,6 @@ package tigeax.customwings.configuration;
 import org.bukkit.entity.Player;
 
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
 import tigeax.customwings.wing.Wing;
 
@@ -29,33 +28,33 @@ public class Messages extends YamlFile {
     protected void updateDataFromFile() {
 
         // Wings
-        wingEquipped = getMessage("wingEquipped");
-        hideOtherPlayerWingsON = getMessage("hideOtherPlayerWingsON");
-        hideOtherPlayerWingsOFF = getMessage("hideOtherPlayerWingsOFF");
+        wingEquipped = getColorString("wingEquipped");
+        hideOtherPlayerWingsON = getColorString("hideOtherPlayerWingsON");
+        hideOtherPlayerWingsOFF = getColorString("hideOtherPlayerWingsOFF");
         // Editor
-        settingChanged = getMessage("settingChanged");
-        settingChangeCancelled = getMessage("settingCancelled");
-        typeSettingInChat = getMessage("typeSettingInChat");
-        selectSettingMaterial = getMessage("selectSettingMaterial");
+        settingChanged = getColorString("settingChanged");
+        settingChangeCancelled = getColorString("settingCancelled");
+        typeSettingInChat = getColorString("typeSettingInChat");
+        selectSettingMaterial = getColorString("selectSettingMaterial");
         // General
-        reloadSucces = getMessage("reloadSucces");
-        setWingCommandSucces = getMessage("setWingCommandSucces");
-        takeAwayWingCommandSucces = getMessage("takeAwayWingCommandSucces");
-        wingBuySuccess = getMessage("wingBuySuccess");
+        reloadSucces = getColorString("reloadSucces");
+        setWingCommandSucces = getColorString("setWingCommandSucces");
+        takeAwayWingCommandSucces = getColorString("takeAwayWingCommandSucces");
+        wingBuySuccess = getColorString("wingBuySuccess");
         // Error messages
-        noPermissionForCommandError = getMessage("noPermissionForCommandError");
-        noPermissionToEquipWingError = getMessage("noPermissionToEquipWingError");
-        notAPlayerError = getMessage("notAPlayerError");
-        notConsoleError = getMessage("notConsoleError");
-        invalidPlayerError = getMessage("invalidPlayerError");
-        invalidWingsError = getMessage("invalidWingsError");
-        noWingToPreviewError = getMessage("noWingToPreviewError");
-        missingArugmentsError = getMessage("missingArugmentsError");
-        missingArgumentsSetwingError = getMessage("missingArgumentsSetwingError");
-        missingArgumentsTakeAwayWingError = getMessage("missingArgumentsTakeAwayWingError");
-        cantAffordWingError = getMessage("cantAffordWingError");
-        noVaultError = getMessage("noVaultError");
-        invalidSubCommandError = getMessage("invalidSubCommandError");
+        noPermissionForCommandError = getColorString("noPermissionForCommandError");
+        noPermissionToEquipWingError = getColorString("noPermissionToEquipWingError");
+        notAPlayerError = getColorString("notAPlayerError");
+        notConsoleError = getColorString("notConsoleError");
+        invalidPlayerError = getColorString("invalidPlayerError");
+        invalidWingsError = getColorString("invalidWingsError");
+        noWingToPreviewError = getColorString("noWingToPreviewError");
+        missingArugmentsError = getColorString("missingArugmentsError");
+        missingArgumentsSetwingError = getColorString("missingArgumentsSetwingError");
+        missingArgumentsTakeAwayWingError = getColorString("missingArgumentsTakeAwayWingError");
+        cantAffordWingError = getColorString("cantAffordWingError");
+        noVaultError = getColorString("noVaultError");
+        invalidSubCommandError = getColorString("invalidSubCommandError");
 
     }
 
@@ -156,24 +155,4 @@ public class Messages extends YamlFile {
     public String invalidSubCommandError() {
         return invalidSubCommandError;
     }
-
-    /**
-     * Get a messages from the message.yml file and parse the ChatColors.
-     * 
-     * @param name Name of the message
-     * @return The message
-     */
-    private String getMessage(String name) {
-        String message;
-
-        try {
-            message = Util.parseChatColors(getString(name));
-        } catch (IllegalArgumentException e) {
-            message = "";
-            plugin.getLogger().warning("Failed to get message " + name + " from messages.yml");
-        }
-
-        return message;
-    }
-
 }

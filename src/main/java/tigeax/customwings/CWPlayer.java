@@ -43,7 +43,7 @@ public class CWPlayer {
 
 		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
-		this.wingFilter = "none";
+		this.wingFilter = "noFilter"; //Either 'noFilter', 'ownedWings', 'unownedWings'
 
 		this.waitingSetting = null;
 		this.lastEditorMenu = null;
@@ -52,8 +52,7 @@ public class CWPlayer {
 	}
 
 	/**
-	 * Own implmentaton to send a message to a player using
-	 * {@link Util#sendMessage(CommandSender, String)}.
+	 * Own implmentaton to send a message to a player using {@link Util#sendMessage(CommandSender, String)}.
 	 * 
 	 * @param message Message to send
 	 */
@@ -187,8 +186,23 @@ public class CWPlayer {
 		return wingFilter;
 	}
 
-	public void setWingFilter(String filter) {
-		wingFilter = filter;
+	public void cycleWingFilter() {
+
+		if (wingFilter.equals("noFilter")) {
+			wingFilter = "ownedWings";
+			return;
+		}
+
+		if (wingFilter.equals("ownedWings")) {
+			wingFilter = "unownedWings";
+			return;
+		}
+
+		if (wingFilter.equals("unownedWings")) {
+			wingFilter = "noFilter";
+			return;
+		}
+
 	}
 
 }

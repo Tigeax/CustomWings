@@ -2,6 +2,7 @@ package tigeax.customwings.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -77,6 +78,28 @@ public abstract class YamlFile extends YamlConfiguration {
         plugin.getLogger().info(file.getName() + " file does not exists. Creating it...");
         file.getParentFile().mkdirs();
         plugin.saveResource(file.getName(), false);
+    }
+
+    
+    public String getColorString(String path) {
+
+        String string;
+
+        try {
+            string = getString(path);
+            string = Util.parseChatColors(string);
+        } catch (IllegalArgumentException e) {
+            string = "";
+            plugin.getLogger().warning("Failed to get " + path + ". Replacing with an empty string");
+        }
+
+        return string;
+    }
+
+    public List<String> getColorStringList(String path) {
+        List<String> stringList = getStringList(path);
+        stringList = Util.parseLoreChatColor(stringList);
+        return stringList;
     }
 
 }

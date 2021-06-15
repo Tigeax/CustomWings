@@ -6,7 +6,6 @@ import org.bukkit.Material;
 
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.settings.ConfigSetting;
-import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
 
 public class Config extends YamlFile {
@@ -74,12 +73,15 @@ public class Config extends YamlFile {
 
         filterNoneItemName = getColorString(ConfigSetting.FILTER_ITEM_NO_FILTER_NAME.path);
         filterNoneItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_NO_FILTER_MATERIAL.path);
+        filterNoneItemLore = getColorStringList(ConfigSetting.FILTER_ITEM_NO_FILTER_LORE.path);
 
         filterOwnedItemName = getColorString(ConfigSetting.FILTER_ITEM_OWNED_WINGS_NAME.path);
         filterOwnedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_OWNED_WINGS_MATERIAL.path);
+        filterOwnedItemLore = getColorStringList(ConfigSetting.FILTER_ITEM_OWNED_WINGS_LORE.path);
 
         filterUnownedItemName = getColorString(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_NAME.path);
         filterUnownedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL.path);
+        filterUnownedItemLore = getColorStringList(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_LORE.path);
 
         // Make sure the removeWingSlot is always inside the menu
         if (removeWingSlot >= wingSelectMenuSize) {
@@ -233,18 +235,6 @@ public class Config extends YamlFile {
 
         return material;
 
-    }
-
-    public String getColorString(String path) {
-        String string = getString(path);
-        string = Util.parseChatColors(string);
-        return string;
-    }
-
-    public List<String> getColorLore(String path) {
-        List<String> stringList = getStringList(path);
-        stringList = Util.parseLoreChatColor(stringList);
-        return stringList;
     }
 
 }

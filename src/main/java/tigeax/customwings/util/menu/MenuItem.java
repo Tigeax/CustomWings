@@ -91,6 +91,12 @@ public class MenuItem {
      */
     public static ItemStack setNameAndLore(ItemStack itemStack, String displayName, List<String> lore) {
         ItemMeta meta = itemStack.getItemMeta();
+
+        // The IteMeta can be null in rare cases
+        if (meta == null) {
+            return itemStack;
+        }
+
         meta.setDisplayName(displayName);
         meta.setLore(lore);
         itemStack.setItemMeta(meta);

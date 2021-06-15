@@ -1,5 +1,6 @@
 package tigeax.customwings.menus.wingselect.items;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -18,14 +19,23 @@ public class WingSelectItem extends MenuItem {
         this.plugin = plugin;
         this.wing = wing;
         setDisplayName(wing.getConfig().getGuiItemName());
-        setMaterial(wing.getConfig().getGuiItemMaterial());
     }
 
     @Override
     public ItemStack getFinalItem(Player player) {
 
         CWPlayer cwPlayer = plugin.getCWPlayer(player);
-        setLore(cwPlayer.getWingMenuItemLore(wing));
+        String filterString = cwPlayer.getWingFilter();
+        Boolean permissonWing = cwPlayer.hasPermissionForWing(wing);
+
+        if ((filterString.equals("ownedWings") && !permissonWing) || (filterString.equals("unownedWings") && permissonWing)) {
+            // Don't show the wing
+            setMaterial(Material.AIR);
+        } else {
+            // Show the wing
+            setMaterial(wing.getConfig().getGuiItemMaterial());
+            setLore(cwPlayer.getWingMenuItemLore(wing));
+        }
 
         return super.getFinalItem(player);
     }
