@@ -8,10 +8,10 @@ import tigeax.customwings.wing.WingParticle;
 public enum WingParticleSetting implements SettingInterface {
 
     PARTICLE("particle", SettingType.PARTICLE),
-    DISTANCE("distance", SettingType.PARTICLE),
-    HEIGHT("height", SettingType.PARTICLE),
-    ANGLE("angle", SettingType.PARTICLE),
-    SPEED("speed", SettingType.PARTICLE),
+    DISTANCE("distance", SettingType.DOUBLE),
+    HEIGHT("height", SettingType.DOUBLE),
+    ANGLE("angle", SettingType.INT),
+    SPEED("speed", SettingType.DOUBLE),
     COLOR("color", SettingType.COLOR),
     BLOCK_TYPE("blockType", SettingType.MATERIAL);
 
