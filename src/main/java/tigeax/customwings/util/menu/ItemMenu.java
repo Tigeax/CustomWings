@@ -6,6 +6,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
+import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.Util;
 
 /**
@@ -67,7 +68,7 @@ public class ItemMenu {
 
         MenuItem[] newItems = new MenuItem[size.size];
 
-        for (int i = 0; i < items.length || i < newItems.length; i++) {
+        for (int i = 0; i < items.length && i < newItems.length; i++) {
             newItems[i] = items[i];
         }
 
@@ -109,7 +110,14 @@ public class ItemMenu {
      * @return The {@link ItemMenu}.
      */
     public ItemMenu setItem(int position, MenuItem menuItem) {
-        items[position] = menuItem;
+
+        try {
+            items[position] = menuItem;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            CustomWings.getInstance().getLogger().warning("The item '" + menuItem.getDisplayName() + "' is placed outside the inventory, at position " + position);
+            e.printStackTrace();
+        }
+
         return this;
     }
 

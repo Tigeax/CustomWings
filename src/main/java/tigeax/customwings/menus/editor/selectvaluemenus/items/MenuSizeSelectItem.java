@@ -2,8 +2,7 @@ package tigeax.customwings.menus.editor.selectvaluemenus.items;
 
 import org.bukkit.Material;
 
-import tigeax.customwings.configuration.settings.ConfigSetting;
-import tigeax.customwings.configuration.settings.SettingInterface;
+import tigeax.customwings.configuration.settings.Setting;
 import tigeax.customwings.menus.editor.selectvaluemenus.MenuSizeSelectMenu;
 import tigeax.customwings.util.menu.ItemClickEvent;
 import tigeax.customwings.util.menu.ItemMenu;
@@ -17,6 +16,7 @@ public class MenuSizeSelectItem extends MenuItem {
     public MenuSizeSelectItem(Rows rows) {
         this.rows = rows;
 
+        setDisplayName("&fRows: " + rows.toString().toLowerCase());
         setMaterial(Material.CHEST);
         setAmount(rows.getSize());
     }
@@ -33,15 +33,9 @@ public class MenuSizeSelectItem extends MenuItem {
 
         MenuSizeSelectMenu menu = (MenuSizeSelectMenu) itemMenu;
 
-        SettingInterface setting = menu.getSetting();
+        Setting setting = menu.getSetting();
 
-        if (setting instanceof ConfigSetting) {
-
-            ConfigSetting configSetting = (ConfigSetting) setting;
-
-            configSetting.setValue(rows.getSize());
-
-        }
+        setting.setValue(rows.getSize());
         
         event.setWillGoBack(true);
     }

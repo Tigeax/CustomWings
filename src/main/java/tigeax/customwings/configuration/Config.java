@@ -82,8 +82,8 @@ public class Config extends YamlFile {
         filterUnownedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL.path);
 
         // Make sure the removeWingSlot is always inside the menu
-        if (removeWingSlot > (wingSelectMenuSize - 1)) {
-            removeWingSlot = 9;
+        if (removeWingSlot >= wingSelectMenuSize) {
+            removeWingSlot = 8;
         }
 
     }
