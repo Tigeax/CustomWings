@@ -11,6 +11,7 @@ import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.settings.Setting;
 import tigeax.customwings.configuration.settings.SettingType;
 import tigeax.customwings.menus.MenuManager;
+import tigeax.customwings.menus.editor.selectvaluemenus.ColorSelectMenu;
 import tigeax.customwings.menus.editor.selectvaluemenus.DecimalNumberSelectMenu;
 import tigeax.customwings.menus.editor.selectvaluemenus.MenuSizeSelectMenu;
 import tigeax.customwings.menus.editor.selectvaluemenus.MenuSlotSelectMenu;
@@ -105,6 +106,7 @@ public class SettingItem extends MenuItem {
                 break;
 
             case COLOR:
+                new ColorSelectMenu(event.getItemMenu(), setting).open(player);
                 break;
 
             case MATERIAL:

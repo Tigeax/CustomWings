@@ -58,7 +58,7 @@ public class WingParticle {
 		this.speed = particleConfig.getDouble("speed");
 
 		this.material = Material.valueOf(particleConfig.getString("blockType"));
-		this.dustOptions = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color")), (float) 10);
+		this.dustOptions = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color")), (float) 1);
 
 		this.particleData = null;
 
