@@ -6,22 +6,21 @@ import java.util.List;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-
-import tigeax.customwings.CustomWings;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Extention of YamlConfiguration to make it easier to work with YAML files.
  */
 public abstract class YamlFile extends YamlConfiguration {
 
-    protected final CustomWings plugin;
+    protected final JavaPlugin plugin;
     protected final File file;
 
-    public YamlFile(CustomWings plugin, String filename) {
+    public YamlFile(JavaPlugin plugin, String filename) {
         this(plugin, new File(plugin.getDataFolder(), filename));
     }
 
-    public YamlFile(CustomWings plugin, File file) {
+    public YamlFile(JavaPlugin plugin, File file) {
         this.plugin = plugin;
         this.file = file;
 
@@ -29,9 +28,13 @@ public abstract class YamlFile extends YamlConfiguration {
         initDataFromFile();
     }
 
-    protected abstract void initDataFromFile();
+    protected void initDataFromFile() {
+        // Do nothing by default
+    }
 
-    protected abstract void updateDataFromFile();
+    protected void updateDataFromFile() {
+        // Do nothing by default
+    }
 
     public void update() {
         updateFile();

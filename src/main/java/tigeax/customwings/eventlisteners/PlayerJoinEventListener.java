@@ -26,12 +26,22 @@ public class PlayerJoinEventListener implements Listener {
 	public void event(PlayerJoinEvent event) {
 
 		Player player = event.getPlayer();
-		CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(player);
-		Wing wing = cwPlayer.getEquippedWing();
+		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 
-		if (wing == null) return;
+		String wingId = plugin.getYamlDatabase().getPlayerEquippedWingID(player);
 
-		wing.addPlayersWithWingActive(player);
+		if (wingId != null) {
+
+			Wing wing = plugin.getWingByID(wingId);
+
+			if (wing != null) {
+				cwPlayer.setEquippedWing(wing);
+			}
+		}
+
+		Boolean hideOtherPlayerWings = plugin.getYamlDatabase().getPlayerHideOtherPlayerWings(player);
+		cwPlayer.setHideOtherPlayerWings(hideOtherPlayerWings);
+
 	}
 
 }

@@ -3,8 +3,8 @@ package tigeax.customwings.configuration;
 import java.util.List;
 
 import org.bukkit.Material;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.settings.ConfigSetting;
 import tigeax.customwings.util.YamlFile;
 
@@ -26,7 +26,7 @@ public class Config extends YamlFile {
             filterUnownedItemMaterial;
     private boolean invisibilityPotionHidesWing, filterItemEnable;
 
-    public Config(CustomWings plugin) {
+    public Config(JavaPlugin plugin) {
         super(plugin, "config.yml");
     }
 

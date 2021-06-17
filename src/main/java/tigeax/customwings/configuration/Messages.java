@@ -1,8 +1,8 @@
 package tigeax.customwings.configuration;
 
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.YamlFile;
 import tigeax.customwings.wing.Wing;
 
@@ -15,7 +15,7 @@ public class Messages extends YamlFile {
             missingArgumentsSetwingError, missingArgumentsTakeAwayWingError, cantAffordWingError, noVaultError,
             invalidSubCommandError;
 
-    public Messages(CustomWings plugin) {
+    public Messages(JavaPlugin plugin) {
         super(plugin, "messages.yml");
     }
 

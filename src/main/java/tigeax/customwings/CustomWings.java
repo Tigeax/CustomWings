@@ -3,10 +3,8 @@ package tigeax.customwings;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -21,6 +19,7 @@ import tigeax.customwings.commands.Wings;
 import tigeax.customwings.configuration.Config;
 import tigeax.customwings.configuration.Messages;
 import tigeax.customwings.configuration.WingConfig;
+import tigeax.customwings.database.YamlDatabase;
 import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
 import tigeax.customwings.eventlisteners.InventoryClickEventListener;
 import tigeax.customwings.eventlisteners.InventoryCloseEventListener;
@@ -49,14 +48,14 @@ public class CustomWings extends JavaPlugin {
 
 	private Messages messages;
 	private Config config;
+	private YamlDatabase yamlDatabase;
 
 	private MenuManager menus;
 
-	private static HashMap<UUID, CWPlayer> cwPlayerList;
+	private static ArrayList<CWPlayer> cwPlayerList;
 	private static ArrayList<Wing> wings;
 
-	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName()
-			.replace("org.bukkit.craftbukkit", "").replace(".", "");
+	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
 
 	private static Economy econ = null;
 	private static Permission perms = null;
@@ -90,11 +89,14 @@ public class CustomWings extends JavaPlugin {
 		config = new Config(this);
 		messages = new Messages(this);
 
+		// Setup database
+		yamlDatabase = new YamlDatabase(this);
+
 		wings = setupWings();
 
 		menus = new MenuManager(this);
 
-		cwPlayerList = new HashMap<>();
+		cwPlayerList = new ArrayList<>();
 
 		// Setup command
 		registerCommand(new Wings(config.commandName(), config.commandAliases(), "customwings.command"));
@@ -122,19 +124,51 @@ public class CustomWings extends JavaPlugin {
 			getLogger().info("Vault not detected. Buy functionality disabled.");
 		}
 
+		// Load equipped wings and settings from database
+		for (Player player : Bukkit.getOnlinePlayers()) {
+
+			CWPlayer cwPlayer = getCWPlayer(player);
+
+			String wingId = yamlDatabase.getPlayerEquippedWingID(player);
+			Boolean hideOtherPlayerWings = yamlDatabase.getPlayerHideOtherPlayerWings(player);
+
+			if (wingId != null) {
+				Wing wing = getWingByID(wingId);
+				if (wing != null) {
+					cwPlayer.setEquippedWing(wing);
+				}
+			}
+
+			// Only set if true, since false is the default
+			if (hideOtherPlayerWings) {
+				cwPlayer.setHideOtherPlayerWings(true);
+			}
+
+
+		}
+
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been enabled");
 	}
 
 	@Override
 	public void onDisable() {
 
-		// TODO Improve
-		for (Wing wing : getWings()) {
-			wing.removeAllPlayersWithWingActive();
-		}
-
-		// If a player has a CustomWings GUI open, close it
 		for (Player player : Bukkit.getOnlinePlayers()) {
+
+			CWPlayer cwPlayer = getCWPlayer(player);
+			Wing wing = cwPlayer.getEquippedWing();
+			Boolean hideOtherPlayerWings = cwPlayer.getHideOtherPlayerWings();
+
+			// Save player's equpped wing to the datbase
+			yamlDatabase.savePlayerEquippedWing(player, wing);
+			cwPlayer.setEquippedWing(null); // Remove the wing from the player
+
+			// Only save if true, as false is the default
+			if (hideOtherPlayerWings) {
+				yamlDatabase.savePlayerHideOtherPlayerWings(player, true);
+			}
+
+			// If a player has a CustomWings GUI open, close it
 			Inventory inv = player.getOpenInventory().getTopInventory();
 
 			if (inv.getHolder() instanceof MenuHolder) {
@@ -174,6 +208,10 @@ public class CustomWings extends JavaPlugin {
 		return menus;
 	}
 
+	public YamlDatabase getYamlDatabase() {
+		return yamlDatabase;
+	}
+
 	public List<Wing> getWings() {
 		return wings;
 	}
@@ -194,10 +232,11 @@ public class CustomWings extends JavaPlugin {
 
 		config.update();
 		messages.update();
+		yamlDatabase.update();
 
 		for (Wing wing : getWings()) {
 			wing.reload();
-			for (WingParticle wingParticle: wing.getConfig().getWingParticles()) {
+			for (WingParticle wingParticle : wing.getConfig().getWingParticles()) {
 				wingParticle.reload();
 			}
 		}
@@ -215,7 +254,7 @@ public class CustomWings extends JavaPlugin {
 		}
 
 		// If the player had a wing equiped, update it with the newest created winglist
-		for (CWPlayer cwPlayer : cwPlayerList.values()) {
+		for (CWPlayer cwPlayer : cwPlayerList) {
 			Wing wing = cwPlayer.getEquippedWing();
 			if (wing == null) {
 				continue;
@@ -303,16 +342,24 @@ public class CustomWings extends JavaPlugin {
 	}
 
 	public CWPlayer getCWPlayer(Player player) {
-		UUID uuid = player.getUniqueId();
 
-		CWPlayer cwPlayer = cwPlayerList.get(uuid);
-
-		if (cwPlayer == null) {
-			cwPlayer = new CWPlayer(uuid);
-			cwPlayerList.put(uuid, cwPlayer);
+		// Check if there already is a CWPlayer instance for player
+		for (CWPlayer cwPlayer : cwPlayerList) {
+			if (cwPlayer.getPlayer() == player) {
+				return cwPlayer;
+			}
 		}
 
+		// If not create it
+		CWPlayer cwPlayer = new CWPlayer(player);
+		cwPlayerList.add(cwPlayer);
+
 		return cwPlayer;
+	}
+
+	public void deleteCWPlayer(CWPlayer cwPlayer) {
+		cwPlayer.delete();
+		cwPlayerList.remove(cwPlayer);
 	}
 
 	private boolean isServerVersionSupported() {

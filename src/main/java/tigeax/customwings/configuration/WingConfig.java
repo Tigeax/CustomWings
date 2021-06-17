@@ -9,8 +9,8 @@ import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.settings.WingSetting;
 import tigeax.customwings.util.YamlFile;
 import tigeax.customwings.wing.WingParticle;
@@ -45,7 +45,7 @@ public class WingConfig extends YamlFile {
     // double[] functions as double[distance from player, height]
     private HashMap<double[], WingParticle> particleCoordinates;
 
-    public WingConfig(CustomWings plugin, File configFile) {
+    public WingConfig(JavaPlugin plugin, File configFile) {
         super(plugin, configFile);
 
         this.ID = configFile.getName().replace(".yml", "").toLowerCase();

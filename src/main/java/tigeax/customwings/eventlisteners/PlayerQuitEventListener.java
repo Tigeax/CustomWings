@@ -7,6 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.wing.Wing;
 
 /*
  * This EventListener Listends for when a player leaves the game
@@ -27,13 +28,21 @@ public class PlayerQuitEventListener implements Listener {
 
 		Player player = event.getPlayer();
 		CWPlayer cwPlayer = plugin.getCWPlayer(player);
-		
-		cwPlayer.setLastEditorMenu(null);
+		Wing wing = cwPlayer.getEquippedWing();
 
-		if (cwPlayer.getEquippedWing() != null) {
-			cwPlayer.getEquippedWing().removePlayersWithWingActive(player);
-			cwPlayer.setWaitingSetting(null);
+		if (wing == null) {
+			plugin.getYamlDatabase().savePlayerEquippedWing(player, null);
+		} else {
+			plugin.getYamlDatabase().savePlayerEquippedWing(player, wing);
 		}
+
+		if (cwPlayer.getHideOtherPlayerWings()) {
+			plugin.getYamlDatabase().savePlayerHideOtherPlayerWings(player, true);
+		} else {
+			plugin.getYamlDatabase().savePlayerHideOtherPlayerWings(player, null);
+		}
+
+		plugin.deleteCWPlayer(cwPlayer);
 	}
 	
 }

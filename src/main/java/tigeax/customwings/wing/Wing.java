@@ -25,14 +25,14 @@ public class Wing {
 	private Config config;
 	private WingConfig wingConfig;
 
-	private ArrayList<Player> playersWithWingActive;
+	private ArrayList<Player> playersWithWing;
 	private BukkitTask wingRunnable;
 
 	public Wing(CustomWings plugin, WingConfig wingConfig) {
 		this.wingConfig = wingConfig;
 		this.plugin = plugin;
 		this.config = plugin.getConfig();
-		this.playersWithWingActive = new ArrayList<>();
+		this.playersWithWing = new ArrayList<>();
 	}
 
 	public WingConfig getConfig() {
@@ -50,7 +50,16 @@ public class Wing {
 	}
 
 	public void removeAllPlayersWithWingActive() {
-		playersWithWingActive = new ArrayList<>();
+		playersWithWing = new ArrayList<>();
+	}
+
+	public boolean doesPlayerHaveWingEquipped(Player player) {
+		for (Player playerFromList : playersWithWing) {
+			if (playerFromList == player) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public String getPermission() {
@@ -58,21 +67,21 @@ public class Wing {
 	}
 
 	public ArrayList<Player> getPlayersWithWingActive() {
-		return playersWithWingActive;
+		return playersWithWing;
 	}
 
-	public void addPlayersWithWingActive(Player player) {
+	public void addPlayer(Player player) {
 
-		playersWithWingActive.add(player);
+		playersWithWing.add(player);
 
 		// If there where no players that had the wing equipped before, start the wing
 		// runnable
-		if (playersWithWingActive.size() == 1)
+		if (playersWithWing.size() == 1)
 			this.startWingRunnable();
 	}
 
-	public void removePlayersWithWingActive(Player player) {
-		playersWithWingActive.remove(player);
+	public void removePlayer(Player player) {
+		playersWithWing.remove(player);
 	}
 
 	private void startWingRunnable() {

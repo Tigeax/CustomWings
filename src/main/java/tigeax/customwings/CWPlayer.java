@@ -2,7 +2,6 @@ package tigeax.customwings;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,9 +22,10 @@ import tigeax.customwings.wing.Wing;
 
 public class CWPlayer {
 
+	private static final CustomWings plugin = CustomWings.getInstance();
+
 	private final Player player;
 
-	private Wing equippedWing;
 	private boolean hideOtherPlayerWings;
 	private String wingFilter;
 
@@ -33,26 +33,31 @@ public class CWPlayer {
 
 	private ItemMenu lastEditorMenu;
 
-	private Location wingPreviewLocation = null;
+	private Location wingPreviewLocation;
 
 	private long lastMove;
 
-	public CWPlayer(UUID uuid) {
+	public CWPlayer(Player player) {
 
-		player = Bukkit.getPlayer(uuid);
+		this.player = player;
 
-		this.equippedWing = null;
 		this.hideOtherPlayerWings = false;
-		this.wingFilter = "noFilter"; //Either 'noFilter', 'ownedWings', 'unownedWings'
+		this.wingFilter = "noFilter"; // Either 'noFilter', 'ownedWings', 'unownedWings'
 
+		this.wingPreviewLocation = null;
 		this.waitingSetting = null;
 		this.lastEditorMenu = null;
 
 		this.lastMove = Instant.now().getEpochSecond() - 1;
 	}
 
+	public Player getPlayer() {
+		return player;
+	}
+
 	/**
-	 * Own implmentaton to send a message to a player using {@link Util#sendMessage(CommandSender, String)}.
+	 * Own implmentaton to send a message to a player using
+	 * {@link Util#sendMessage(CommandSender, String)}.
 	 * 
 	 * @param message Message to send
 	 */
@@ -60,12 +65,42 @@ public class CWPlayer {
 		Util.sendMessage(player, message);
 	}
 
-	public Player getPlayer() {
-		return player;
+	/**
+	 * Get the wing the player has equpped. Returns null if no wing is equipped.
+	 * 
+	 * @return Wing or null
+	 */
+	public Wing getEquippedWing() {
+
+		for (Wing wing : plugin.getWings()) {
+			if (wing.doesPlayerHaveWingEquipped(player)) {
+				return wing;
+			}
+		}
+
+		return null;
+
 	}
 
-	public Wing getEquippedWing() {
-		return equippedWing;
+	public void setEquippedWing(Wing wing) {
+
+		Wing currentWing = getEquippedWing();
+
+		// Check if the player already has the wing equipped
+		if (currentWing == wing) {
+			return;
+		}
+
+		// Remove the player from the old wing
+		if (currentWing != null) {
+			currentWing.removePlayer(getPlayer());
+		}
+
+		// Add to the new wing, if it is not null
+		if (wing != null) {
+			wing.addPlayer(getPlayer());
+		}
+
 	}
 
 	public boolean isPreviewingWing() {
@@ -129,25 +164,6 @@ public class CWPlayer {
 		return getPlayer().hasPermission(wing.getPermission()) || getPlayer().hasPermission(("customwings.wing.*"));
 	}
 
-	public void setEquippedWing(Wing wing) {
-		if (this.equippedWing == wing) {
-			return;
-		}
-
-		// Remove the player from the old wing
-		if (this.equippedWing != null) {
-			setPreviewingWing(false); // Disable preview
-			this.equippedWing.removePlayersWithWingActive(getPlayer());
-		}
-
-		this.equippedWing = wing;
-
-		if (this.equippedWing != null) {
-			this.equippedWing.addPlayersWithWingActive(getPlayer());
-		}
-
-	}
-
 	public List<String> getWingMenuItemLore(Wing wing) {
 
 		WingConfig wingConfig = wing.getConfig();
@@ -204,5 +220,9 @@ public class CWPlayer {
 		}
 
 	}
+
+    public void delete() {
+		setEquippedWing(null);
+    }
 
 }
