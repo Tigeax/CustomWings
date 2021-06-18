@@ -1,41 +1,47 @@
 package tigeax.customwings.wingpurchase;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
 import tigeax.customwings.CustomWings;
-import tigeax.customwings.wings.Wing;
+import tigeax.customwings.configuration.WingConfig;
+import tigeax.customwings.util.Util;
+import tigeax.customwings.wing.Wing;
 
 public class BuyWings {
 
     public static boolean buyWing(Wing wing, Player player) {
 
-        String priceType = wing.getPriceType();
+        CustomWings plugin = CustomWings.getInstance();
+
+        WingConfig wingConfig = wing.getConfig();
+
+        String priceType = wingConfig.getPriceType();
 
         try {
-            if (priceType.equalsIgnoreCase("none") || wing.getWingPrice() == -1) {
-                player.sendMessage(CustomWings.getMessages().getNoPermissionEquipWing(wing));
+            if (priceType.equalsIgnoreCase("none") || wingConfig.getPrice() == -1) {
+                Util.sendMessage(player, plugin.getMessages().noPermissionToEquipWingError(wing));
                 return false;
             }
 
             if (priceType.equalsIgnoreCase("token")) {
                 if (CustomWings.getPlugin(CustomWings.class).getServer().getPluginManager().getPlugin("TokenManager") != null) {
-                    if (BuyTokenManager.makePayment(wing.getWingPrice(), player)) {
-                        CustomWings.getPermissions().playerAdd(null, player, "customwings.wing."+wing.getID().toLowerCase());
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
+                    if (BuyTokenManager.makePayment(wingConfig.getPrice(), player)) {
+                        plugin.getPermissions().playerAdd(null, player, "customwings.wing."+wingConfig.getID().toLowerCase());
+                        Util.sendMessage(player, plugin.getMessages().wingBuySuccess(wingConfig.getPrice()));
                     } else {
-                        player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
+                        Util.sendMessage(player, plugin.getMessages().cantAffordWingError(wing));
                     }
                     return true;
                 }
                 return false;
             } else if (priceType.equalsIgnoreCase("economy")) {
                 double playerbal = CustomWings.getEconomy().getBalance(player);
-                if (playerbal >= wing.getWingPrice()) {
-                    CustomWings.getEconomy().withdrawPlayer(player, wing.getWingPrice() );
-                    CustomWings.getPermissions().playerAdd(null, player, "customwings.wing." + wing.getID().toLowerCase());
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&',wing.getBuyMessage()));
+                if (playerbal >= wingConfig.getPrice()) {
+                    CustomWings.getEconomy().withdrawPlayer(player, wingConfig.getPrice() );
+                    plugin.getPermissions().playerAdd(null, player, "customwings.wing." + wingConfig.getID().toLowerCase());
+                    Util.sendMessage(player, plugin.getMessages().wingBuySuccess(wingConfig.getPrice()));
                 } else {
-                    player.sendMessage(CustomWings.getMessages().getCannotAffordWing(wing));
+                    Util.sendMessage(player, plugin.getMessages().cantAffordWingError(wing));
                 }
                 return true;
             }

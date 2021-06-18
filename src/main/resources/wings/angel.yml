@@ -1,0 +1,54 @@
+showWhenMoving: true
+
+whitelistedWorlds:
+  - "all"
+
+menuItem:
+  name: "&fAngel Wing"
+  material: FEATHER
+  slot: 2
+  page: 1
+  loreWhenEquipped: 
+    - "&6You have the &fAngel Wing &6equipped"
+  loreWhenUnequipped:
+    - "&3You do not have the &fAngel Wing &3equipped"
+  loreWhenNoPermission:
+    - "&cYou do not own the &fAngel Wing"
+
+wing:
+  startVertical: -0.1
+  startHorizontal: 0.2
+  distanceBetweenParticles: 0.1
+  wingTimer: 2
+  
+  wingAnimation: true
+  wingFlapSpeed: 4
+  
+  startOffset: 30
+  stopOffset: 70
+
+  particleLayout:
+    1:  "-,-,-,-,x,x,x,-,-,-"
+    2:  "-,-,-,x,x,x,x,x,-,-"
+    3:  "-,-,x,x,x,x,x,x,x,-"
+    4:  "-,x,x,x,x,x,x,x,x,-"
+    5:  "x,x,x,x,x,x,x,x,x,x"
+    6:  "x,x,x,x,x,x,x,x,x,x"
+    7:  "x,x,x,x,x,x,x,x,x,x"
+    8:  "x,x,x,x,x,x,x,x,x,x"
+    9:  "-,-,x,x,x,x,x,x,x,x"
+    10: "-,-,-,x,x,x,x,x,x,x"
+    11: "-,-,-,x,x,x,x,x,x,x"
+    12: "-,-,-,-,x,x,x,x,x,x"
+    13: "-,-,-,-,x,x,x,x,x,x"
+    14: "-,-,-,-,-,x,x,x,x,-"
+    15: "-,-,-,-,-,x,x,x,x,-"
+    16: "-,-,-,-,-,-,x,x,x,-"
+    17: "-,-,-,-,-,-,x,x,x,-"
+    18: "-,-,-,-,-,-,-,x,x,-"
+    19: "-,-,-,-,-,-,-,-,x,-"
+      
+  particles:
+      x:
+        particle: "FALLING_DUST"    
+        blockType: QUARTZ_BLOCK

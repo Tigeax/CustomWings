@@ -1,19 +1,36 @@
-noPermissionForCommand: "&b&l{CustomWings} &cYou do not have the required permission to use this command"
-noPermissionEquipWing: "&b&l{CustomWings} &cYou do not have the required permission to equip the &f{WINGNAME} &cwing"
-cantAffordWing: "&b&l{CustomWings} &cYou cannot afford {WINGNAME}"
-wingSelected: "&b&l{CustomWings} &3You have equiped the {WINGNAME} &3wing"
-seeOtherPlayersWingsON: "&b&l{CustomWings} &3Other players wings are now hidden for you"
-seeOtherPlayersWingsOFF: "&b&l{CustomWings} &3You can now see other players wings"
-missingArgumentsSetwing: "&b&l{CustomWings} &cMissing arguments, use /wings setwing [player] [wingID]"
-missingArgumentsTakeAwayWing: "&b&l{CustomWings} &cMissing arguments, use /wings takeaway [player] [wingID]"
-notAPlayerError: "&b&l{CustomWings} &cOnly players can execute this command!"
-invalidPlayerError: "&b&l{CustomWings} &cPlayer {PLAYERNAME} &cnot found!"
-setWingCommandWingSet: "&b&l{CustomWings} &bPlayer {PLAYERNAME} &bwing set to {WINGNAME}"
+
+# Wings
+wingEquipped: "&b&l{CustomWings} &3You have equiped the {WINGNAME} &3wing"
+hideOtherPlayerWingsON: "&b&l{CustomWings} &3Other players wings are now hidden for you"
+hideOtherPlayerWingsOFF: "&b&l{CustomWings} &3You can now see other players wings"
+
+
+# Editor
 settingChanged: "&b&l{CustomWings} &3Setting changed"
-settingCanceled: "&b&l{CustomWings} &cSetting change canceled"
-noWingToPreview: "&b&l{CustomWings} &3Equip a wing to preview it"
-typeSettingInChat: "&b&l{CustomWings} &3Please type the setting in chat"
-selectSettingMaterial: "&b&l{CustomWings} &3Please click the item in your inventory"
+settingCancelled: "&b&l{CustomWings} &cSetting change canceled"
+typeSettingInChat: "&b&l{CustomWings} &3Type the new value for the setting in chat. Use any commnd to cancel."
+selectSettingMaterial: "&b&l{CustomWings} &3Click an item in an inventory to select a material. Type anything in chat to stop selecting materials."
+
+
+# General
 reloadSucces: "&b&l{CustomWings} &3CustomWings has been reloaded"
-invalidWingsError: "&b&l{CustomWings} &c{WINGNAME} not found"
-wingsRemoved: "&b&l{CustomWings} &3{PLAYERNAME} had access to {WINGNAME} removed."
+setWingCommandSucces: "&b&l{CustomWings} &3Player {PLAYERNAME} wing set to {WINGNAME}"
+takeAwayWingCommandSucces: "&b&l{CustomWings} &3{PLAYERNAME} had access to {WINGNAME} &3removed."
+wingBuySuccess: "&b&l{CustomWings} You just bought the {WINGNAME} &3wing"
+
+
+# Error messages
+noPermissionForCommandError: "&b&l{CustomWings} &cYou do not have the required permission to use the command {COMMAND}. Required permission {PERMISSION}"
+noPermissionToEquipWingError: "&b&l{CustomWings} &cYou do not have the required permission to equip the {WINGNAME} &cwing. Required permission {PERMISSION}"
+notAPlayerError: "&b&l{CustomWings} &cOnly players can execute this command!"
+notConsoleError: "&b&l{CustomWings} &cOnly the console can execute this command!"
+invalidPlayerError: "&b&l{CustomWings} &cPlayer {PLAYERNAME} &cnot found!"
+invalidWingsError: "&b&l{CustomWings} &cWing {WINGNAME} &cnot found"
+noWingToPreviewError: "&b&l{CustomWings} &cEquip a wing to preview it"
+missingArugmentsError: "&b&l{CustomWings} &cMissing arguments"
+missingArgumentsSetwingError: "&b&l{CustomWings} &cMissing arguments, use /wings setwing [player] [wingID]"
+missingArgumentsTakeAwayWingError: "&b&l{CustomWings} &cMissing arguments, use /wings takeaway [player] [wingID]"
+cantAffordWingError: "&b&l{CustomWings} &cYou cannot afford {WINGNAME}"
+noVaultError: "&b&l{CustomWings} &cVault is needed to use this action"
+invalidSubCommandError: "&b&l{CustomWings} &cInvalid subcommand, use /wings <setwing/preview/edit/reload/takeawaywing>"
+

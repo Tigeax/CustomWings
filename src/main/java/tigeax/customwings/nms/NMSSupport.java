@@ -10,7 +10,7 @@ public class NMSSupport {
 
     public static Float getBodyRotation(LivingEntity livingEntity) {
         try {
-            String version = CustomWings.getServerVersion();
+            String version = CustomWings.getInstance().getServerVersion();
 
             Class<?> entity = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftLivingEntity");
             Method handle = entity.getMethod("getHandle");
@@ -25,7 +25,7 @@ public class NMSSupport {
 
     public static void setBodyRotation(LivingEntity livingEntity, float newRotation) {
         try {
-            String version = CustomWings.getServerVersion();
+            String version = CustomWings.getInstance().getServerVersion();
             Class<?> entity = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftLivingEntity");
             Method handle = entity.getMethod("getHandle");
             Object nmsEntity = handle.invoke(livingEntity);
@@ -38,6 +38,8 @@ public class NMSSupport {
 
     private static String getBodyRotationField(String version) {
         switch (version) {
+            case "v1_17_R1":
+                return "aX";
             case "v1_16_R3":
             case "v1_16_R2":
                 return "aA";
