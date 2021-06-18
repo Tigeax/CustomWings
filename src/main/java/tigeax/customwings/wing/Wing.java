@@ -128,7 +128,7 @@ public class Wing {
 		if (cwPlayer.isPreviewingWing()) {
 
 			Location wingLoc = cwPlayer.getPreviewWingLocation();
-			ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
+			ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(cwPlayer);
 
 			spawnWing(wingLoc, playersToShowWing, animationState);
 			return;
@@ -186,7 +186,7 @@ public class Wing {
 			wingLoc = wingLoc.add(0, -0.25, 0);
 		}
 
-		ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(wingOwner, wingLoc, false);
+		ArrayList<Player> playersToShowWing = getPlayersWhoSeeWing(cwPlayer);
 
 		spawnWing(wingLoc, playersToShowWing, animationState);
 	}
@@ -237,29 +237,40 @@ public class Wing {
 	}
 
 	// Return all the player that can see the wing of player
-	private ArrayList<Player> getPlayersWhoSeeWing(Player wingOwner, Location wingLocation, Boolean wingPreview) {
+	private ArrayList<Player> getPlayersWhoSeeWing(CWPlayer wingOwner) {
 
+		Location wingOwnerLoc = wingOwner.getPlayer().getLocation();
 		ArrayList<Player> playersWhoCanSeeWing = new ArrayList<>();
+		Location wingLocation;
+
+		if (wingOwner.isPreviewingWing()) {
+			wingLocation = wingOwner.getPreviewWingLocation();
+
+			// Add the player himself to the list if they are in the same world
+			if (wingOwnerLoc.getWorld() == wingLocation.getWorld()) {
+				playersWhoCanSeeWing.add(wingOwner.getPlayer());
+			}
+
+		} else {
+			wingLocation = wingOwnerLoc;
+
+			// Stop rendering wings for the player if they look down
+			if (wingOwnerLoc.getPitch() < config.getWingMaxPitch()) {
+				playersWhoCanSeeWing.add(wingOwner.getPlayer());
+			}
+		}
 
 		// Loop thought all the online players
 		for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 
+			// Skip if it is the wingOwner
+			if (onlinePlayer == wingOwner.getPlayer()) {
+				continue;
+			}
+
 			// Skip if the player is not in the same world as the wing
 			if (!(onlinePlayer.getWorld() == wingLocation.getWorld()))
 				continue;
-
-			// Add the player himself to the list
-			if (onlinePlayer == wingOwner) {
-
-				if (!wingPreview) {
-					// Stop rendering wings for the player if they look down
-					if (wingOwner.getLocation().getPitch() > config.getWingMaxPitch())
-						continue;
-				}
-
-				playersWhoCanSeeWing.add(onlinePlayer);
-				continue;
-			}
 
 			CWPlayer cwPlayer = CustomWings.getInstance().getCWPlayer(onlinePlayer);
 
