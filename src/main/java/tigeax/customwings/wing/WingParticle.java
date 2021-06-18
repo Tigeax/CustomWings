@@ -71,7 +71,7 @@ public class WingParticle {
 		if (particle == Particle.REDSTONE) {
 			this.particleData = dustOptions;
 		}
-
+		
 		if (particle == Particle.BLOCK_CRACK
 				|| particle == Particle.BLOCK_DUST
 				|| particle == Particle.FALLING_DUST) {

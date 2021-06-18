@@ -65,10 +65,10 @@ public enum ParticleItem {
 	WATER_WAKE("WATER_BUCKET", "Water Wake"),
 
 	// 1.14
-	COMPOSTER("WATER_BUCKET", "Composter"),
+	COMPOSTER("EMERALD", "Composter"),
 	CAMPFIRE_SIGNAL_SMOKE("CAMPFIRE", "Campfire Signal Smoke"),
 	CAMPFIRE_COSY_SMOKE("CAMPFIRE", "Campfire Cosy Smoke"),
-	SNEEZE("WATER_BUCKET", "Sneeze"),
+	SNEEZE("GREEN_DYE", "Sneeze"),
 
 	// 1.15
 	DRIPPING_HONEY("HONEYCOMB", "Dripping Honey"),
@@ -87,7 +87,24 @@ public enum ParticleItem {
 	SOUL("SOUL_SOIL", "Soul"),
 	SOUL_FIRE_FLAME("SOUL_SOIL", "SoulFire Flame"),
 	WARPED_SPORE("WARPED_FUNGUS", "Warped Spore"),
-	WHITE_ASH("SOUL_SOIL", "White Ash");
+	WHITE_ASH("SOUL_SOIL", "White Ash"),
+
+	// 1.17
+	LIGHT("YELLOW_CONCRETE_POWDER", "Light"),
+	FALLING_SPORE_BLOSSOM("SPORE_BLOSSOM", "Falling Spore Blossom"),
+	SPORE_BLOSSOM_AIR("SPORE_BLOSSOM", "Spoer Blossom Air"),
+	SMALL_FLAME("BLAZE_POWDER", "Small Flame"),
+	SNOWFLAKE("SNOWBALL", "Snowflake"),
+	DRIPPING_DRIPSTONE_LAVA("LAVA_BUCKET", "Dripping Dripstone Lava"),
+	FALLING_DRIPSTONE_LAVA("LAVA_BUCKET", "Falling Dripstone Lava"),
+	DRIPPING_DRIPSTONE_WATER("WATER_BUCKET", "Dripping Dripstone Water"),
+	FALLING_DRIPSTONE_WATER("WATER_BUCKET", "Falling Dripstone Water"),
+	GLOW_SQUID_INK("GLOW_INK_SAC", "Glow Squid Ink"),
+	GLOW("GLOWSTONE_DUST", "Glow"),
+	WAX_ON("COPPER_INGOT", "Wax On"),
+	WAX_OFF("IRON_INGOT", "Wax off"),
+	ELECTRIC_SPARK("LIGHT_GRAY_DYE", "Electric Spark"),
+	SCRAPE("CYAN_DYE", "Scrape");
 
 	private final String material;
 	private final String name;
