@@ -115,6 +115,7 @@ public class WingParticle {
 
 		double direction = loc.getYaw();
 
+		// TODO make this a math equation for better preformance
 		if (wingSide == Wing.WingSide.LEFT) direction = (direction + angle);
 		if (wingSide == Wing.WingSide.RIGHT) direction = (direction - angle);
 
@@ -124,7 +125,7 @@ public class WingParticle {
 
 		for (Player player : spawnForPlayers) {
 			// TODO
-			// Note changes based on xyz values? And potions (speed value?)
+			// Music Note changes based on xyz values? And potions (speed value?)
 			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
 		}
 	}
