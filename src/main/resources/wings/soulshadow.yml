@@ -103,17 +103,19 @@ wing:
         # The following particles can have a specific direction
         # EXPLOSION_NORMAL, FIREWORKS_SPARK, WATER_BUBBLE, WATER_WAKE, CRIT, CRIT_MAGIC, SMOKE_NORMAL, SMOKE_LARGE, PORTAL, ENCHANTMENT_TABLE, CLOUD, DRAGON_BREATH, END_ROD, DAMAGE_INDICATOR, TOTEM, SPIT, SQUID_INK, BUBBLE_POP, BUBBLE_COLUMN_UP, NAUTILUS
 
-        # "distance" is the horizontal distance the particle will move from it's original location
+        # "distance" is the horizontal distance the particle will move from it's original location in the direction of the angle
         # "height" is the vertical distance the particle will move from it's original location
         # "angle" is the angle at with the particle will fly towards. 0 = behind the player. 90 = beside the player. 180 = in front of the player.
         # "speed" is the velocity the particle will have
+        # Note that each type of particle will only stay 'alive' for a certain amount of time. This cannot be changed.
+        # So you will have to balance distance, height and speed to get the particle to end up where you want it to.
         distance: 0
         height: 0
         angle: 0
         speed: 0
 
-        # Redstone can have a color value. This is given in an RGB int
-        color: 0
+        # Redstone can have a color value. This is given in HEX format writting as 0xRRGGBB e.a 0xFF00FF
+        color: 0xFFFFFF
 
         # Some particles (ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST) require a blockType to work correctly
-        blockType: QUARTZ_BLOCK
+        blockType: DIRT

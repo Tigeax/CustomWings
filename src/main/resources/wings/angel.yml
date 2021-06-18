@@ -1,14 +1,9 @@
-showWhenMoving: false
+showWhenMoving: true
+
 whitelistedWorlds:
   - "all"
 
-economy:
-  priceType: economy
-  price: 10
-
 menuItem:
-  hideInMenu: false
-  
   name: "&fAngel Wing"
   material: FEATHER
   slot: 2
@@ -55,11 +50,5 @@ wing:
       
   particles:
       x:
-        particle: "FALLING_DUST"
-        distance: 0
-        height: 0
-        angle: 0
-        speed: 0
-        
+        particle: "FALLING_DUST"    
         blockType: QUARTZ_BLOCK
-        color: 1

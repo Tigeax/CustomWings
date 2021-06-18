@@ -1,14 +1,8 @@
-showWhenMoving: false
+
 whitelistedWorlds:
   - "all"
 
-economy:
-  priceType: economy
-  price: 10
-
-menuItem:
-  hideInMenu: false
-  
+menuItem:  
   name: "&fWisdom"
   material: ENCHANTED_BOOK
   slot: 4
@@ -25,12 +19,9 @@ wing:
   startHorizontal: 0.2
   distanceBetweenParticles: 0.2
   wingTimer: 6
-  
-  wingAnimation: false
-  wingFlapSpeed: 4
-  
+
   startOffset: 20
-  stopOffset: 90
+
 
   particleLayout:
     1:  "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,x,+"
@@ -64,20 +55,5 @@ wing:
   particles:
       x:
         particle: "ENCHANTMENT_TABLE"
-        distance: 0
-        height: 0
-        angle: 0
-        speed: 0
-        
-        blockType: QUARTZ_BLOCK
-        color: 1
-        
       +:
         particle: "SPELL"
-        distance: 0
-        height: 0
-        angle: 0
-        speed: 0
-        
-        blockType: QUARTZ_BLOCK
-        color: 1

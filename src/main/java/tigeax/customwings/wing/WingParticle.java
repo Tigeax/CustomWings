@@ -52,13 +52,18 @@ public class WingParticle {
 			this.particle = Particle.BARRIER;
 		}
 
-		this.distance = particleConfig.getDouble("distance");
-		this.height = particleConfig.getDouble("height");
-		this.angle = particleConfig.getInt("angle");
-		this.speed = particleConfig.getDouble("speed");
+		this.distance = particleConfig.getDouble("distance", 0);
+		this.height = particleConfig.getDouble("height", 0);
+		this.angle = particleConfig.getInt("angle", 0);
+		this.speed = particleConfig.getDouble("speed", 0);
 
-		this.material = Material.valueOf(particleConfig.getString("blockType"));
-		this.dustOptions = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color")), (float) 1);
+		try {
+			this.material = Material.valueOf(particleConfig.getString("blockType"));
+		} catch (Exception e) {
+			this.material = Material.DIRT;
+		}
+
+		this.dustOptions = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color", 0xFFFFFF)), (float) 1);
 
 		this.particleData = null;
 
@@ -115,13 +120,12 @@ public class WingParticle {
 
 		double direction = loc.getYaw();
 
-		// TODO make this a math equation for better preformance
 		if (wingSide == Wing.WingSide.LEFT) direction = (direction + angle);
 		if (wingSide == Wing.WingSide.RIGHT) direction = (direction - angle);
 
 		direction = Math.toRadians(direction);
-		double x = Math.cos(direction);
-		double z = Math.sin(direction);
+		double x = distance * Math.cos(direction);
+		double z = distance * Math.sin(direction);
 
 		for (Player player : spawnForPlayers) {
 			// TODO

@@ -69,13 +69,13 @@ public class WingConfig extends YamlFile {
     @Override
     protected void updateDataFromFile() {
 
-        showWhenMoving = getBoolean(WingSetting.SHOW_WHEN_MOVING.path);
+        showWhenMoving = getBoolean(WingSetting.SHOW_WHEN_MOVING.path, false);
         whitelistedWorlds = parseWhitelistedWorlds(getStringList(WingSetting.WHITELISTED_WORLDS.path).toString());
 
-        wingPrice = getInt(WingSetting.WHITELISTED_WORLDS.path);
-        priceType = getString(WingSetting.ECONOMY_PRICE.path);
+        wingPrice = getInt(WingSetting.WHITELISTED_WORLDS.path, -1);
+        priceType = getString(WingSetting.ECONOMY_PRICE.path, "economy");
 
-        hideInGUI = getBoolean(WingSetting.MENU_ITEM_HIDE_IN_MENU.path);
+        hideInGUI = getBoolean(WingSetting.MENU_ITEM_HIDE_IN_MENU.path, false);
 
         guiItemName = getColorString(WingSetting.MENU_ITEM_NAME.path);
         guiItemMaterial = Material.valueOf(getString(WingSetting.MENU_ITEM_MATERIAL.path));
@@ -92,10 +92,10 @@ public class WingConfig extends YamlFile {
         distanceBetweenParticles = getDouble(WingSetting.WING_DISTANCE_BETWEEN_PARTICLES.path);
         wingTimer = getInt(WingSetting.WING_TIMER.path);
 
-        wingAnimation = getBoolean(WingSetting.WING_FLAP_ANIMATION.path);
-        wingFlapSpeed = getInt(WingSetting.WING_WING_FLAP_SPEED.path);
-        startOffset = getInt(WingSetting.WING_START_OFFSET.path);
-        stopOffset = getInt(WingSetting.WING_STOP_OFFSET.path);
+        wingAnimation = getBoolean(WingSetting.WING_FLAP_ANIMATION.path, false);
+        wingFlapSpeed = getInt(WingSetting.WING_WING_FLAP_SPEED.path, 0);
+        startOffset = getInt(WingSetting.WING_START_OFFSET.path, 30);
+        stopOffset = getInt(WingSetting.WING_STOP_OFFSET.path, 70);
 
         particleCoordinates = parseParticleCoordinates(getConfigurationSection("wing.particleLayout"));
 

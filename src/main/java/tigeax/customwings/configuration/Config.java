@@ -44,11 +44,11 @@ public class Config extends YamlFile {
 
         wingViewDistance = getInt(ConfigSetting.WING_VIEW_DISTANCE.path);
         wingMaxPitch = getInt(ConfigSetting.WING_MAX_PITCH.path);
-        invisibilityPotionHidesWing = getBoolean(ConfigSetting.INVISIBILITY_POTION_HIDES_WING.path);
+        invisibilityPotionHidesWing = getBoolean(ConfigSetting.INVISIBILITY_POTION_HIDES_WING.path, true);
 
         wingSelectMenuName = getColorString(ConfigSetting.WING_SELECT_MENU_NAME.path);
         wingSelectMenuSize = getInt(ConfigSetting.WING_SELECT_MENU_SIZE.path);
-        wingSelectMenuPages = getInt(ConfigSetting.WING_SELECT_MENU_PAGES.path);
+        wingSelectMenuPages = getInt(ConfigSetting.WING_SELECT_MENU_PAGES.path, 1);
 
         removeWingItemName = getColorString(ConfigSetting.REMOVE_WING_ITEM_NAME.path);
         removeWingItemMaterial = getMaterial(ConfigSetting.REMOVE_WING_ITEM_MATERIAL.path);
@@ -60,27 +60,27 @@ public class Config extends YamlFile {
         hideWingsToggleOFFItemMaterial = getMaterial(ConfigSetting.HIDE_WINGS_TOGGLE_OFF_ITEM_MATERIAL.path);
         hideWingsToggleSlot = getInt(ConfigSetting.HIDE_WINGS_TOGGLE_SLOT.path);
 
-        navigationNextItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_NEXT_NAME.path);
-        navigationNextItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_NEXT_MATERIAL.path);
-        navigationNextSlot = getInt(ConfigSetting.NAGIVATION_ITEM_NEXT_SLOT.path);
+        navigationNextItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_NEXT_NAME.path, "&9Next Page");
+        navigationNextItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_NEXT_MATERIAL.path, Material.FEATHER);
+        navigationNextSlot = getInt(ConfigSetting.NAGIVATION_ITEM_NEXT_SLOT.path, 50);
 
-        navigationPreviousItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_NAME.path);
-        navigationPreviousItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_MATERIAL.path);
-        navigationPreviousSlot = getInt(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_SLOT.path);
+        navigationPreviousItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_NAME.path, "&9Previous Page");
+        navigationPreviousItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_MATERIAL.path, Material.FEATHER);
+        navigationPreviousSlot = getInt(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_SLOT.path, 48);
 
-        filterItemEnable = getBoolean(ConfigSetting.FILTER_ITEM_ENABLE.path);
-        filterSlot = getInt(ConfigSetting.FILTER_ITEM_SLOT.path);
+        filterItemEnable = getBoolean(ConfigSetting.FILTER_ITEM_ENABLE.path, true);
+        filterSlot = getInt(ConfigSetting.FILTER_ITEM_SLOT.path, 45);
 
-        filterNoneItemName = getColorString(ConfigSetting.FILTER_ITEM_NO_FILTER_NAME.path);
-        filterNoneItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_NO_FILTER_MATERIAL.path);
+        filterNoneItemName = getColorString(ConfigSetting.FILTER_ITEM_NO_FILTER_NAME.path, "&aNo filter");
+        filterNoneItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_NO_FILTER_MATERIAL.path, Material.BARRIER);
         filterNoneItemLore = getColorStringList(ConfigSetting.FILTER_ITEM_NO_FILTER_LORE.path);
 
-        filterOwnedItemName = getColorString(ConfigSetting.FILTER_ITEM_OWNED_WINGS_NAME.path);
-        filterOwnedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_OWNED_WINGS_MATERIAL.path);
+        filterOwnedItemName = getColorString(ConfigSetting.FILTER_ITEM_OWNED_WINGS_NAME.path, "&aOwned wings");
+        filterOwnedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_OWNED_WINGS_MATERIAL.path, Material.LIME_WOOL);
         filterOwnedItemLore = getColorStringList(ConfigSetting.FILTER_ITEM_OWNED_WINGS_LORE.path);
 
-        filterUnownedItemName = getColorString(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_NAME.path);
-        filterUnownedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL.path);
+        filterUnownedItemName = getColorString(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_NAME.path, "&cUnowned wings");
+        filterUnownedItemMaterial = getMaterial(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL.path, Material.RED_WOOL);
         filterUnownedItemLore = getColorStringList(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_LORE.path);
 
         // Make sure the removeWingSlot is always inside the menu
@@ -223,8 +223,12 @@ public class Config extends YamlFile {
     }
 
     public Material getMaterial(String path) {
+        return getMaterial(path, Material.DIRT);
+    }
 
-        Material material = null;
+    public Material getMaterial(String path, Material def) {
+
+        Material material = def;
 
         try {
             material = Material.valueOf(getString(path));

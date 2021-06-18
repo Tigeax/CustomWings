@@ -1,10 +1,6 @@
-showWhenMoving: false
 whitelistedWorlds:
   - "all"
 
-economy:
-  priceType: economy
-  price: 10
 
 menuItem:
   hideInMenu: false
@@ -26,12 +22,6 @@ wing:
   distanceBetweenParticles: 0.1
   wingTimer: 2
   
-  wingAnimation: true
-  wingFlapSpeed: 4
-  
-  startOffset: 30
-  stopOffset: 70
-
   particleLayout:
     1:  "-,-,-,-,x,x,x,-,-,-"
     2:  "-,-,-,x,x,x,x,x,-,-"
@@ -56,10 +46,4 @@ wing:
   particles:
       x:
         particle: "REDSTONE"
-        distance: 0
-        height: 0
-        angle: 0
-        speed: 0
-        
-        blockType: QUARTZ_BLOCK
-        color: 5036527
+        color: 0x03fcf4

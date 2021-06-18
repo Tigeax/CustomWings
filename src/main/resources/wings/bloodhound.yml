@@ -1,14 +1,9 @@
-showWhenMoving: false
+
 whitelistedWorlds:
   - "all"
 
-economy:
-  priceType: economy
-  price: 10
 
-menuItem:
-  hideInMenu: false
-  
+menuItem:  
   name: "&4Blood Hound"
   material: REDSTONE
   slot: 3
@@ -21,16 +16,14 @@ menuItem:
     - "&cYou do not own the &4Blood Hound Wing"
 
 wing:
+
   startVertical: 0.4
   startHorizontal: 0.2
   distanceBetweenParticles: 0.2
   wingTimer: 3
   
-  wingAnimation: false
-  wingFlapSpeed: 4
-  
   startOffset: 20
-  stopOffset: 90
+
 
   particleLayout:
     1:  "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,x,+"
@@ -64,20 +57,11 @@ wing:
   particles:
       x:
         particle: "REDSTONE"
-        distance: 0
-        height: 0
-        angle: 0
-        speed: 0
-        
-        blockType: QUARTZ_BLOCK
-        color: 16711680
+        color: 0xFF0000
         
       +:
-        particle: "FLAME"
-        distance: 1
-        height: 1
-        angle: 0
+        particle: FLAME
+        distance: 1.0
+        height: 1.0
+        angle: -90
         speed: 0.05
-        
-        blockType: QUARTZ_BLOCK
-        color: 1

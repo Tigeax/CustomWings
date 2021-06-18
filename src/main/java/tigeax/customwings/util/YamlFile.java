@@ -85,11 +85,15 @@ public abstract class YamlFile extends YamlConfiguration {
 
     
     public String getColorString(String path) {
+        return getColorString(path, "");
+    }
+
+    public String getColorString(String path, String def) {
 
         String string;
 
         try {
-            string = getString(path);
+            string = getString(path, def);
             string = Util.parseChatColors(string);
         } catch (IllegalArgumentException e) {
             string = "";
