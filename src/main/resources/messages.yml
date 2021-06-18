@@ -14,18 +14,18 @@ selectSettingMaterial: "&b&l{CustomWings} &3Click an item in an inventory to sel
 
 # General
 reloadSucces: "&b&l{CustomWings} &3CustomWings has been reloaded"
-setWingCommandSucces: "&b&l{CustomWings} &bPlayer {PLAYERNAME} &bwing set to {WINGNAME}"
-takeAwayWingCommandSucces: "&b&l{CustomWings} &3{PLAYERNAME} had access to {WINGNAME} removed."
-wingBuySuccess: "&b&l{CustomWings} You just bought the {WINGNAME} wing"
+setWingCommandSucces: "&b&l{CustomWings} &3Player {PLAYERNAME} wing set to {WINGNAME}"
+takeAwayWingCommandSucces: "&b&l{CustomWings} &3{PLAYERNAME} had access to {WINGNAME} &3removed."
+wingBuySuccess: "&b&l{CustomWings} You just bought the {WINGNAME} &3wing"
 
 
 # Error messages
 noPermissionForCommandError: "&b&l{CustomWings} &cYou do not have the required permission to use the command {COMMAND}. Required permission {PERMISSION}"
-noPermissionToEquipWingError: "&b&l{CustomWings} &cYou do not have the required permission to equip the {WINGNAME} wing. Required permission {PERMISSION}"
+noPermissionToEquipWingError: "&b&l{CustomWings} &cYou do not have the required permission to equip the {WINGNAME} &cwing. Required permission {PERMISSION}"
 notAPlayerError: "&b&l{CustomWings} &cOnly players can execute this command!"
 notConsoleError: "&b&l{CustomWings} &cOnly the console can execute this command!"
 invalidPlayerError: "&b&l{CustomWings} &cPlayer {PLAYERNAME} &cnot found!"
-invalidWingsError: "&b&l{CustomWings} &cWing {WINGNAME} not found"
+invalidWingsError: "&b&l{CustomWings} &cWing {WINGNAME} &cnot found"
 noWingToPreviewError: "&b&l{CustomWings} &cEquip a wing to preview it"
 missingArugmentsError: "&b&l{CustomWings} &cMissing arguments"
 missingArgumentsSetwingError: "&b&l{CustomWings} &cMissing arguments, use /wings setwing [player] [wingID]"

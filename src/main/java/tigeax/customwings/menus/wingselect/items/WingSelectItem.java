@@ -45,6 +45,11 @@ public class WingSelectItem extends MenuItem {
         Player player = event.getPlayer();
         CWPlayer cwPlayer = plugin.getCWPlayer(player);
 
+        if (!cwPlayer.hasPermissionForWing(wing)) {
+            cwPlayer.sendMessage(plugin.getMessages().noPermissionToEquipWingError(wing));
+            return;
+        }
+
         cwPlayer.setEquippedWing(wing);
 
         event.setWillClose(true);

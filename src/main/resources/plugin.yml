@@ -8,4 +8,17 @@ softdepend:
   - TokenManager
 permissions:
   customwings.command:
-    deflaut: op
+    default: true
+  customwings.setwing:
+    default: op
+  customwings.preview:
+    default: op
+  customwings.editor:
+    default: op
+  customwings.reload:
+    default: op
+  customwings.takeawaywing:
+    default: op
+  customwings.wing.*:
+    default: op
+  
