@@ -12,19 +12,13 @@ import java.time.Instant;
 
 public class PlayerMoveListener implements Listener {
 
-    CustomWings plugin;
-
-	public PlayerMoveListener() {
-		plugin = CustomWings.getInstance();
-	}
-
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onMoveEvent(org.bukkit.event.player.PlayerMoveEvent event) {
 
         Bukkit.getScheduler().runTaskAsynchronously(CustomWings.getPlugin(CustomWings.class), () -> {
 
             Player player = event.getPlayer();
-            CWPlayer cwPlayer = plugin.getCWPlayer(player);
+            CWPlayer cwPlayer = CustomWings.getCWPlayer(player);
 
             if (cwPlayer.getEquippedWing() == null) {
                 return;
@@ -34,7 +28,7 @@ public class PlayerMoveListener implements Listener {
 
             if (event.getFrom().distance(event.getTo()) > 0.2) {
                 NMSSupport.setBodyRotation(player, player.getLocation().getYaw());
-                plugin.getCWPlayer(player).setLastTimeMoving(now);
+                CustomWings.getCWPlayer(player).setLastTimeMoving(now);
             }
         });
 
