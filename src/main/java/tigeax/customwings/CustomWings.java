@@ -242,8 +242,6 @@ public class CustomWings extends JavaPlugin {
 			}
 		}
 
-		menus.reload();
-
 		// If a player has a CustomWings GUI open, update it
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			Inventory inv = player.getOpenInventory().getTopInventory();
