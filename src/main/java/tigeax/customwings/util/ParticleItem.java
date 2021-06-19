@@ -35,7 +35,7 @@ public enum ParticleItem {
 	HEART("ROSE_BUSH", "Heart"),
 	ITEM_CRACK("ITEM_FRAME", "Item Crack"),
 	LAVA("LAVA_BUCKET", "Lava"),
-	MOB_APPEARANCE("ELDER_GUARDIAN_SPAWN_EGG", "Mob Appearance"),
+	//MOB_APPEARANCE("ELDER_GUARDIAN_SPAWN_EGG", "Mob Appearance"),
 	NAUTILUS("CONDUIT", "Nautilus"),
 	NOTE("NOTE_BLOCK", "Note"),
 	PORTAL("OBSIDIAN", "Portal"),

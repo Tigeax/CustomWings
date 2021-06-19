@@ -32,7 +32,7 @@ public class ParticleSelectMenuPage extends ItemMenu {
 
 		setParent(parent);
 
-		int particleIndexStart = page * (particlesPerPage - 1) - (particlesPerPage - 1);
+		int particleIndexStart = page * particlesPerPage - particlesPerPage;
 
 		for (int i = 0; i < particlesPerPage && particleIndexStart + i < numParticles; i++) {
 			try {
