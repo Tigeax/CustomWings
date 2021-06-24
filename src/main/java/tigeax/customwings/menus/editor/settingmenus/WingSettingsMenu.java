@@ -21,8 +21,8 @@ public class WingSettingsMenu extends ItemMenu {
         setItem(4, new SettingItem(new Setting(WingSetting.WING_ONLY_ONLY_SIDE, wing),                 "&3Only one side",              Material.WHITE_TERRACOTTA));
 
         // Economy
-        setItem(6, new SettingItem(new Setting(WingSetting.ECONOMY_PRICE_TYPE, wing),                  "&3Economy type",               Material.YELLOW_DYE));
-        setItem(7, new SettingItem(new Setting(WingSetting.ECONOMY_PRICE, wing),                       "&3Economy price",              Material.YELLOW_DYE));
+        setItem(6, new SettingItem(new Setting(WingSetting.ECONOMY_PRICE_TYPE, wing),                  "&3Economy type",               Material.YELLOW_WOOL));
+        setItem(7, new SettingItem(new Setting(WingSetting.ECONOMY_PRICE, wing),                       "&3Economy price",              Material.YELLOW_WOOL));
 
         // Item
         setItem(9,  new SettingItem(new Setting(WingSetting.MENU_ITEM_MATERIAL, wing),                 "&3Menu item material"));

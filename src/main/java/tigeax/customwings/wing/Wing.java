@@ -7,7 +7,6 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Pose;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -215,8 +214,8 @@ public class Wing {
 		if (wingOwner.isInsideVehicle())
 			return false;
 
-		// Not when swimming or crawling
-		if (wingOwner.getPose().equals(Pose.SWIMMING))
+		// Not when swimming
+		if (wingOwner.isSwimming())
 			return false;
 
 		// Not when gliding gliding
