@@ -24,22 +24,18 @@ public class PlayerQuitEventListener implements Listener {
 	}
 
 	@EventHandler
-	public void event(PlayerQuitEvent event) {
+	public void PlayerQuitEvent(PlayerQuitEvent event) {
 
 		Player player = event.getPlayer();
 		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 		Wing wing = cwPlayer.getEquippedWing();
 
-		if (wing == null) {
-			plugin.getYamlDatabase().savePlayerEquippedWing(player, null);
-		} else {
-			plugin.getYamlDatabase().savePlayerEquippedWing(player, wing);
-		}
+		plugin.getDatabase().savePlayerEquippedWing(player, wing);
 
 		if (cwPlayer.getHideOtherPlayerWings()) {
-			plugin.getYamlDatabase().savePlayerHideOtherPlayerWings(player, true);
+			plugin.getDatabase().savePlayerHideOtherPlayerWings(player, true);
 		} else {
-			plugin.getYamlDatabase().savePlayerHideOtherPlayerWings(player, null);
+			plugin.getDatabase().savePlayerHideOtherPlayerWings(player, null);
 		}
 
 		plugin.deleteCWPlayer(cwPlayer);

@@ -16,8 +16,8 @@ import tigeax.customwings.wing.Wing;
 
 public class WingSelectMenuPage extends ItemMenu {
 
-    CustomWings plugin;
-    int page;
+    private final CustomWings plugin;
+    private int page;
 
     int totalPages;
 
@@ -30,16 +30,12 @@ public class WingSelectMenuPage extends ItemMenu {
         this.totalPages = config.getWingSelectMenuPages();
 
         // Wing items
-        for (Wing wing : plugin.getWings()) {
+        for (Wing wing : plugin.getWings().values()) {
             WingConfig wingConfig = wing.getConfig();
 
-            if (wingConfig.isHiddenInGUI()) {
-                continue;
-            }
+            if (wingConfig.isHiddenInGUI()) continue;
 
-            if (wingConfig.getGuiPage() != page) {
-                continue;
-            }
+            if (wingConfig.getGuiPage() != page) continue;
 
             setItem(wingConfig.getGuiSlot(), new WingSelectItem(plugin, wing));
 

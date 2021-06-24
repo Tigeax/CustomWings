@@ -25,6 +25,7 @@ public class CWPlayer {
 	private static final CustomWings plugin = CustomWings.getInstance();
 
 	private final Player player;
+	private Wing currentWing;
 
 	private boolean hideOtherPlayerWings;
 	private String wingFilter;
@@ -71,35 +72,25 @@ public class CWPlayer {
 	 * @return Wing or null
 	 */
 	public Wing getEquippedWing() {
-
-		for (Wing wing : plugin.getWings()) {
-			if (wing.doesPlayerHaveWingEquipped(this)) {
-				return wing;
-			}
-		}
-
-		return null;
-
+		return currentWing;
 	}
 
 	public void setEquippedWing(Wing wing) {
 
-		Wing currentWing = getEquippedWing();
-
 		// Check if the player already has the wing equipped
-		if (currentWing == wing) {
-			return;
-		}
+		if (currentWing == wing) return;
+
+		// Save player's wing to storage
+		CustomWings.getInstance().getDatabase().savePlayerEquippedWing(getPlayer(), wing);
 
 		// Remove the player from the old wing
-		if (currentWing != null) {
+		if (currentWing != null)
 			currentWing.removePlayer(this);
-		}
 
 		// Add to the new wing, if it is not null
-		if (wing != null) {
+		if (wing != null)
 			wing.addPlayer(this);
-		}
+		currentWing = wing;
 
 	}
 
@@ -132,6 +123,7 @@ public class CWPlayer {
 
 	public void setHideOtherPlayerWings(boolean hideOtherPlayerWings) {
 		this.hideOtherPlayerWings = hideOtherPlayerWings;
+		plugin.getDatabase().savePlayerHideOtherPlayerWings(player, hideOtherPlayerWings);
 	}
 
 	public ItemMenu getLastEditorMenu() {
@@ -190,14 +182,6 @@ public class CWPlayer {
 		this.lastMove = moveTimestamp;
 	}
 
-	public void closeInventory() {
-		// Open an empty inventory and then close it to make sure they cannot shift
-		// click items out of their inventory
-		Inventory emptyInv = Bukkit.createInventory(null, 54, "");
-		this.getPlayer().openInventory(emptyInv);
-		this.getPlayer().closeInventory();
-	}
-
 	public String getWingFilter() {
 		return wingFilter;
 	}
@@ -220,9 +204,5 @@ public class CWPlayer {
 		}
 
 	}
-
-    public void delete() {
-		setEquippedWing(null);
-    }
 
 }

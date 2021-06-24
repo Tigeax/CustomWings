@@ -14,7 +14,7 @@ import tigeax.customwings.wing.Wing;
 
 public class EditorMenuPage extends ItemMenu {
 
-    private CustomWings plugin;
+    private final CustomWings plugin;
     private Config config;
     private int page;
     private int totalPages;
@@ -39,13 +39,11 @@ public class EditorMenuPage extends ItemMenu {
         clearItems();
 
         // Wing items
-        for (Wing wing : plugin.getWings()) {
+        for (Wing wing : plugin.getWings().values()) {
 
             WingConfig wingConfig = wing.getConfig();
 
-            if (wingConfig.getGuiPage() != page) {
-                continue;
-            }
+            if (wingConfig.getGuiPage() != page) continue;
 
             WingSettingsMenu wingSettingsMenu = new WingSettingsMenu(wing);
             wingSettingsMenu.setParent(this);

@@ -16,7 +16,7 @@ import tigeax.customwings.wing.Wing;
 
 public class PlayerJoinEventListener implements Listener {
 
-	CustomWings plugin;
+	private final CustomWings plugin;
 
 	public PlayerJoinEventListener() {
 		plugin = CustomWings.getInstance();
@@ -28,18 +28,15 @@ public class PlayerJoinEventListener implements Listener {
 		Player player = event.getPlayer();
 		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 
-		String wingId = plugin.getYamlDatabase().getPlayerEquippedWingID(player);
+		String wingId = plugin.getDatabase().getPlayerEquippedWingID(player);
 
 		if (wingId != null) {
-
 			Wing wing = plugin.getWingByID(wingId);
-
-			if (wing != null) {
+			if (wing != null)
 				cwPlayer.setEquippedWing(wing);
-			}
 		}
 
-		Boolean hideOtherPlayerWings = plugin.getYamlDatabase().getPlayerHideOtherPlayerWings(player);
+		boolean hideOtherPlayerWings = plugin.getDatabase().getPlayerHideOtherPlayerWings(player);
 		cwPlayer.setHideOtherPlayerWings(hideOtherPlayerWings);
 
 	}
