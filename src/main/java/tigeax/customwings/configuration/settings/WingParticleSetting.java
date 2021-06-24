@@ -13,9 +13,10 @@ public enum WingParticleSetting implements SettingInterface {
     ANGLE("angle", SettingType.INT),
     SPEED("speed", SettingType.DOUBLE),
     COLOR("color", SettingType.COLOR),
+    NOTE_COLOR("noteColor", SettingType.INT),
     BLOCK_TYPE("blockType", SettingType.MATERIAL);
 
-    protected String path;
+    public String path;
     private SettingType settingType;
 
     WingParticleSetting(final String path, final SettingType settingType) {
@@ -53,7 +54,9 @@ public enum WingParticleSetting implements SettingInterface {
             case SPEED:
                 return wingParticle.getSpeed();
             case COLOR:
-                return wingParticle.getDustOptions().getColor().asRGB();
+                return wingParticle.getColor().asRGB();
+            case NOTE_COLOR:
+                return wingParticle.getNoteColor();
             case BLOCK_TYPE:
                 return wingParticle.getMaterialData();
             

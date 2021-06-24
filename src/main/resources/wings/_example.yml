@@ -1,0 +1,150 @@
+#-------------------------------------------------#
+#                 CustomWings                     #
+#             Example config file                 #
+#-------------------------------------------------#
+
+
+# This is a commented example config file for a wing.
+# All wing configs that you want to use have to be in the 'wings' folder.
+# The config's file name is the wing's ID. Used in the permission or the setwing command.
+# You can recreate this file and the default wings by deleting the wings folder and reloading the plugin.
+
+# When making changes in the main config or a wing config, you can use the customwings reload command.
+# Addiontally you can use the ingame editor menu to change the settings.
+# When deleting wings or change the config file names, you will have to restart your server.
+
+
+# If true the wing will be shown then the player is moving, otherwise it will stop spawning the wing particles when the player starts to move.
+showWhenMoving: true
+
+# The worlds where wing can be equipped. Use "all" for all worlds.
+whitelistedWorlds:
+  - "all"
+  - "world" # Default overworld
+  - "world_nether" # Default nether
+  - "world_the_end" # Default end
+
+# Requires vault. Allows players to buy the wings though the menu.
+# Will automatically be disabled if vault is not found.
+economy:
+  # Type of price to pay.
+  # "economy" - Default vault economy.
+  # "token" - TokenManager.
+  priceType: "economy"
+
+  # Price to pay to unlock the wings.
+  # -1 = cannot buy; 0 = free.
+  price: 10
+
+# The item that will show up in menu's.
+menuItem:
+
+  #If true the wing will not show up in the wing select menu. (Can still be equiped with the /wings setwing command)
+  hideInMenu: false
+
+  name: "&5Example Wing" # Also used in other places where the wing name is used.
+
+  material: DIRT
+  slot: 0
+  page: 1 # Has to be smaller or equal to the pages in the main config.
+
+  loreWhenEquipped:
+    - "&6You have the &5Example Wing &6equipped"
+  loreWhenUnequipped:
+    - "&3You do not have the &5Example Wing &3equipped"
+  loreWhenNoPermission:
+    - "&cYou do not own the &5Example Wing"
+  loreWhenCanBuy:
+    - "&eYou can buy this for ${PRICE}"
+
+
+# The settings for the actual wing.
+wing:
+
+  # The starting height of the wing, starting from the players feet. Can be negative
+  startVertical: -0.1
+
+  # Offset the wing to the left or right. Negative numbers are to the right
+  startHorizontalOffset: 0
+
+  # The starting distance from the player. Accepts negative numbers.
+  startDistanceToPlayer: 0.3
+
+  # The distance between each particle in the horizonal and vertical direction.
+  distanceBetweenParticles: 0.1
+
+  # The amount of game ticks between the spawing of the wing's particles.
+  timer: 2
+
+  # If true the wing will have a flapping animation.
+  flapAnimation: true
+
+  # The speed at which the wing should flap. (This is the degrees it moves everytime the wing's particles are spawned).
+  flapSpeed: 4
+
+  # The starting position of the wings in degrees. 0 = next to the player. 90 = behind the player.
+  startOffset: 30
+
+  # The stopping position of the wings in degrees. Only used when wingAnimation is enabled. 90 = behind the player. 0 = next to the player.
+  stopOffset: 70
+
+  # If true only the right side of the wing will be spawed. Usefully for text or pixelart that can't be mirrored. It won't be able to have a flapping animiation.
+  onlyOneSide: false
+
+  # The grid layout of the wing. Use an '-' to not spawn a particle. Any other character must have a maching on under 'particles'.
+  # You only need to make the right side of the wing, it will be duplicated to the other side
+  particleLayout:
+    1:  "-,-,-,-,x,x,x,-,-,-"
+    2:  "-,-,-,x,x,x,x,x,-,-"
+    3:  "-,-,x,x,x,x,x,x,x,-"
+    4:  "-,x,x,x,x,x,x,x,x,-"
+    5:  "x,x,x,x,x,x,x,x,x,x"
+    6:  "x,x,x,x,x,x,x,x,x,x"
+    7:  "x,x,x,x,x,x,x,x,x,x"
+    8:  "x,x,x,x,x,x,x,x,x,x"
+    9:  "-,-,x,x,x,x,x,x,x,x"
+    10: "-,-,-,x,x,x,x,x,x,x"
+    11: "-,-,-,x,x,x,x,x,x,x"
+    12: "-,-,-,-,x,x,x,x,x,x"
+    13: "-,-,-,-,x,x,x,x,x,x"
+    14: "-,-,-,-,-,x,x,x,x,-"
+    15: "-,-,-,-,-,x,x,x,x,-"
+    16: "-,-,-,-,-,-,x,x,x,-"
+    17: "-,-,-,-,-,-,x,x,x,-"
+    18: "-,-,-,-,-,-,-,x,x,-"
+    19: "-,-,-,-,-,-,-,-,x,-"
+
+  # The different particles that can be used in the particleLayout.
+  particles:
+    # The ID of the particle used as a character in the particleLayout.
+      x:
+        # The name of the particle that you want to use. All minecraft particles can be found here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html.
+        # Note that not all particles might be available in your minecraft version. If an invalid particle is given, a Barrier particle will be used instead.
+        particle: "CRIT_MAGIC"
+
+        # Directonal Particles
+        # The following particles can have a specific direction
+        # EXPLOSION_NORMAL, FIREWORKS_SPARK, WATER_BUBBLE, WATER_WAKE, CRIT, CRIT_MAGIC, SMOKE_NORMAL, SMOKE_LARGE, PORTAL, ENCHANTMENT_TABLE, CLOUD, DRAGON_BREATH, END_ROD, DAMAGE_INDICATOR, TOTEM, SPIT, SQUID_INK, BUBBLE_POP, BUBBLE_COLUMN_UP, NAUTILUS
+
+        # Some particles, like FIREWORKS_SPARK or FLAME, can have directional moving settings.
+
+        # "distance" is the horizontal distance the particle will move from it's original location in the direction of the angle
+        # "height" is the vertical distance the particle will move from it's original location
+        # "angle" is the angle at with the particle will fly towards. 0 is parallel to the wing, -90 is to the back of the wing.
+        # "speed" is the velocity the particle will have
+        # Note that each type of particle will only stay 'alive' for a certain amount of time. This cannot be changed.
+        # So you will have to balance distance, height and speed to get the particle to end up where you want it to.
+        distance: 0
+        height: 0
+        angle: 0
+        speed: 0
+
+        # Redstone, Spell_mob and Spell_mob_ambient can have a color value. This is given in HEX format writting as 0xRRGGBB e.a 0xFF00FF. Or as an RGB int.
+        color: 0xFFFFFF
+
+        # A note particle can also have a color. But it works a bit differently. Minecraft has 24 values for a note's color.
+        # So you can enter a value from 1-24 here.
+        noteColor: 6
+
+        # ITEM_CRACK, BLOCK_CRACK, BLOCK_DUST and FALLING_DUST require a material to work correctly.
+        blockType: DIRT

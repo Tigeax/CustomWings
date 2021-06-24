@@ -16,9 +16,9 @@ menuItem:
 
 wing:
   startVertical: 0.4
-  startHorizontal: 0.2
+  startDistanceToPlayer: 0.2
   distanceBetweenParticles: 0.2
-  wingTimer: 6
+  timer: 6
 
   startOffset: 20
 

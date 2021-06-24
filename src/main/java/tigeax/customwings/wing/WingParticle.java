@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import tigeax.customwings.configuration.WingConfig;
+import tigeax.customwings.configuration.settings.WingParticleSetting;
 
 /*
  * Class containing all information about a wingParticle
@@ -30,8 +31,10 @@ public class WingParticle {
 	private int angle;
 
 	private Object particleData;
+	private Color color;
 	private DustOptions dustOptions;
 	private Material material;
+	private int noteColor;
 
 	public WingParticle(WingConfig wingConfig, String id) {
 		this.wingConfig = wingConfig;
@@ -52,40 +55,41 @@ public class WingParticle {
 			this.particle = Particle.BARRIER;
 		}
 
-		this.distance = particleConfig.getDouble("distance", 0);
-		this.height = particleConfig.getDouble("height", 0);
-		this.angle = particleConfig.getInt("angle", 0);
-		this.speed = particleConfig.getDouble("speed", 0);
+		this.distance = particleConfig.getDouble(WingParticleSetting.DISTANCE.path, 0);
+		this.height = particleConfig.getDouble(WingParticleSetting.HEIGHT.path, 0);
+		this.angle = particleConfig.getInt(WingParticleSetting.ANGLE.path, 0);
+		this.speed = particleConfig.getDouble(WingParticleSetting.SPEED.path, 0);
 
 		try {
-			this.material = Material.valueOf(particleConfig.getString("blockType"));
+			this.material = Material.valueOf(particleConfig.getString(WingParticleSetting.BLOCK_TYPE.path));
 		} catch (Exception e) {
 			this.material = Material.DIRT;
 		}
 
-		this.dustOptions = new Particle.DustOptions(Color.fromRGB(particleConfig.getInt("color", 0xFFFFFF)), (float) 1);
+		this.color = Color.fromRGB(particleConfig.getInt(WingParticleSetting.COLOR.path, 0xFFFFFF));
+
+		this.dustOptions = new Particle.DustOptions(color, (float) 1);
 
 		this.particleData = null;
+
+		this.noteColor = particleConfig.getInt(WingParticleSetting.NOTE_COLOR.path, 1);
 
 		// Refractor
 		if (particle == Particle.REDSTONE) {
 			this.particleData = dustOptions;
 		}
 		
-		if (particle == Particle.BLOCK_CRACK
-				|| particle == Particle.BLOCK_DUST
-				|| particle == Particle.FALLING_DUST) {
+		if (particle == Particle.BLOCK_CRACK || particle == Particle.BLOCK_DUST || particle == Particle.FALLING_DUST) {
 			try {
 				this.particleData = material.createBlockData();
 			} catch (Exception e) {
 				e.printStackTrace();
 				this.particleData = Material.BARRIER.createBlockData();
 			}
-		} else
-			if (particle == Particle.ITEM_CRACK) {
-				this.particleData = new ItemStack(material);
-			}
-		
+		} else if (particle == Particle.ITEM_CRACK) {
+			this.particleData = new ItemStack(material);
+		}
+
 	}
 
 	public WingConfig getWingConfig() {
@@ -108,7 +112,9 @@ public class WingParticle {
 
 	public double getSpeed() { return speed; }
 
-	public DustOptions getDustOptions() { return dustOptions; }
+	public Color getColor() { return color; }
+
+	public int getNoteColor() { return noteColor; }
 
 	public Material getMaterialData() { return material; }
 
@@ -116,6 +122,7 @@ public class WingParticle {
 	// If the particle has velocity (defined by speed) we need to calculate the x and z values so the flies in the correct direction
 	// This direction is based on the yaw of the wing and the if the particle is part of the left or right side of the wing
 	// WingSide is a String of either 'left' or 'right'
+	// Extra info on particles https://www.spigotmc.org/threads/comprehensive-particle-spawning-guide-1-13.343001/
 	public void spawnParticle(Location loc, ArrayList<Player> spawnForPlayers, Wing.WingSide wingSide) {
 
 		double direction = loc.getYaw();
@@ -123,14 +130,31 @@ public class WingParticle {
 		if (wingSide == Wing.WingSide.LEFT) direction = (direction + angle);
 		if (wingSide == Wing.WingSide.RIGHT) direction = (direction - angle);
 
-		direction = Math.toRadians(direction);
-		double x = distance * Math.cos(direction);
-		double z = distance * Math.sin(direction);
+		double x, y, z, extra;
+
+		if (particle == Particle.NOTE) {
+			x = noteColor / 24D; // 6 is the value of the red note
+			y = 0;
+			z = 0;
+			extra = 1;
+
+		} else if (particle == Particle.SPELL_MOB || particle == Particle.SPELL_MOB_AMBIENT) {
+
+			x = color.getRed() / 255D;
+			y = color.getGreen() / 255D;
+			z = color.getBlue() / 255D;
+			extra = 1;
+
+		} else {
+			direction = Math.toRadians(direction);
+			x = distance * Math.cos(direction);
+			y = height;
+			z = distance * Math.sin(direction);
+			extra = speed;
+		}
 
 		for (Player player : spawnForPlayers) {
-			// TODO
-			// Music Note changes based on xyz values? And potions (speed value?)
-			player.spawnParticle(particle, loc, 0, x, height, z, speed, particleData);
+			player.spawnParticle(particle, loc, 0, x, y, z, extra, particleData);
 		}
 	}
 

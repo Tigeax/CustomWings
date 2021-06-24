@@ -7,7 +7,7 @@ menuItem:
   name: "&4Blood Hound"
   material: REDSTONE
   slot: 3
-  page: 1
+  page: 2
   loreWhenEquipped: 
     - "&6You have the &4Blood Hound Wing &6equipped"
   loreWhenUnequipped:
@@ -18,9 +18,9 @@ menuItem:
 wing:
 
   startVertical: 0.4
-  startHorizontal: 0.2
+  startDistanceToPlayer: 0.2
   distanceBetweenParticles: 0.2
-  wingTimer: 3
+  timer: 3
   
   startOffset: 20
 
@@ -62,6 +62,6 @@ wing:
       +:
         particle: FLAME
         distance: 1.0
-        height: 1.0
-        angle: -90
-        speed: 0.05
+        height: 0.5
+        angle: -45
+        speed: 0.15

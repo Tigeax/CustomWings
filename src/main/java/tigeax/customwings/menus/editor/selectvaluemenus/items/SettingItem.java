@@ -34,6 +34,10 @@ public class SettingItem extends MenuItem {
         setMaterial(material);  
     }
 
+    public SettingItem(Setting setting, String name, Setting materialSetting) {
+        this(setting, name, (Material) materialSetting.getCurrentValue(), false);
+    }
+
     public SettingItem(Setting setting, String name, Material material) {
         this(setting, name, material, false);
     }

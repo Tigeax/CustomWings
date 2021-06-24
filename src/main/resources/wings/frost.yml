@@ -8,7 +8,7 @@ menuItem:
   name: "&bFrost Wing"
   material: DIAMOND
   slot: 1
-  page: 1
+  page: 2
   loreWhenEquipped: 
     - "&6You have the &bFrost Wing &6equipped"
   loreWhenUnequipped:
@@ -18,9 +18,9 @@ menuItem:
 
 wing:
   startVertical: -0.1
-  startHorizontal: 0.2
+  startDistanceToPlayer: 0.2
   distanceBetweenParticles: 0.1
-  wingTimer: 2
+  timer: 2
   
   particleLayout:
     1:  "-,-,-,-,x,x,x,-,-,-"

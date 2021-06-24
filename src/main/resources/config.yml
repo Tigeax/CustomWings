@@ -1,13 +1,19 @@
-# To configure wing or add you own wings, edit or add the files in the 'wings' folder.
+#-------------------------------------------------#
+#                 CustomWings                     #
+#                 Main config                     #
+#-------------------------------------------------#
 
-# The main command of the plugin
+
+# To configure wings or add you own wings, edit or add the files in the 'wings' folder.
+
+# The main command of the plugin, you will have to restart your server when changing this.
 commandName: "customwings"
 commandAliases:
   - "wings"
   - "cw"
   - "w"
 
-# The distance players have to be within to see each others wings.
+# The distance (in blocks) players have to be within to see each others wings.
 wingViewDistance: 30
 
 # Maximum pitch at which wings will render for the player to allow them to look down without obstructing vision.
@@ -24,7 +30,7 @@ wingSelectMenu:
   size: 54 # Must be a multiple of 9.
   pages: 2
 
-  # Item plaeyrs can use to not equip any wing.
+  # Item player can use to not equip any wing.
   removeWingItem:
     name: "&4Remove Wing"
     material: BARRIER

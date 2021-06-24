@@ -7,7 +7,7 @@ menuItem:
   name: "&fAngel Wing"
   material: FEATHER
   slot: 2
-  page: 1
+  page: 2
   loreWhenEquipped: 
     - "&6You have the &fAngel Wing &6equipped"
   loreWhenUnequipped:
@@ -17,9 +17,9 @@ menuItem:
 
 wing:
   startVertical: -0.1
-  startHorizontal: 0.2
+  startDistanceToPlayer: 0.2
   distanceBetweenParticles: 0.1
-  wingTimer: 2
+  timer: 2
   
   wingAnimation: true
   wingFlapSpeed: 4

@@ -1,3 +1,8 @@
+#-------------------------------------------------#
+#                 CustomWings                     #
+#               Messages config                   #
+#-------------------------------------------------#
+
 
 # Wings
 wingEquipped: "&b&l{CustomWings} &3You have equiped the {WINGNAME} &3wing"

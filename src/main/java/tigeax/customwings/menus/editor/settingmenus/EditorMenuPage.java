@@ -15,19 +15,28 @@ import tigeax.customwings.wing.Wing;
 public class EditorMenuPage extends ItemMenu {
 
     private CustomWings plugin;
+    private Config config;
     private int page;
     private int totalPages;
+    private MainSettingsMenu mainSettingsMenu;
 
     public EditorMenuPage(CustomWings plugin, int page) {
         super("&cWings Editor", Rows.fit(plugin.getConfig().getWingSelectMenuSize()));
 
         this.plugin = plugin;
-        Config config = plugin.getConfig();
+        this.config = plugin.getConfig();
         this.page = page;
         this.totalPages = config.getWingSelectMenuPages();
 
-        MainSettingsMenu mainSettingsMenu = new MainSettingsMenu();
+        this.mainSettingsMenu = new MainSettingsMenu();
         mainSettingsMenu.setParent(this);
+
+        setItems();
+    }
+
+    private void setItems() {
+
+        clearItems();
 
         // Wing items
         for (Wing wing : plugin.getWings()) {
@@ -55,6 +64,12 @@ public class EditorMenuPage extends ItemMenu {
 		if (page < totalPages) {
 			setItem(config.getNavigationNextSlot(), new NextPageItem());
 		}
+    }
+
+    @Override
+    public void update(Player player) {
+        setItems();
+        super.update(player);
     }
 
     

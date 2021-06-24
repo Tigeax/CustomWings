@@ -73,7 +73,7 @@ public class CWPlayer {
 	public Wing getEquippedWing() {
 
 		for (Wing wing : plugin.getWings()) {
-			if (wing.doesPlayerHaveWingEquipped(player)) {
+			if (wing.doesPlayerHaveWingEquipped(this)) {
 				return wing;
 			}
 		}
@@ -93,12 +93,12 @@ public class CWPlayer {
 
 		// Remove the player from the old wing
 		if (currentWing != null) {
-			currentWing.removePlayer(getPlayer());
+			currentWing.removePlayer(this);
 		}
 
 		// Add to the new wing, if it is not null
 		if (wing != null) {
-			wing.addPlayer(getPlayer());
+			wing.addPlayer(this);
 		}
 
 	}

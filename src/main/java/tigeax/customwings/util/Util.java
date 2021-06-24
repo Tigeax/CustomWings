@@ -11,6 +11,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import tigeax.customwings.CustomWings;
@@ -115,6 +117,19 @@ public class Util {
         loreList = Arrays.asList(loreArray);
         
 		return loreList;
+	}
+
+    /**
+     * Check if a player is vanished
+     * @param player
+     * @return
+     */
+	public static boolean isPlayerVanished(Player player) {
+		for (MetadataValue meta : player.getMetadata("vanished")) {
+			if (meta.asBoolean())
+				return true;
+		}
+		return false;
 	}
 
 }

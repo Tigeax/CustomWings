@@ -29,10 +29,10 @@ public class WingConfig extends YamlFile {
     private boolean showWhenMoving;
     private List<String> whitelistedWorlds;
 
-    private double startVertical, startHorizontal, distanceBetweenParticles;
+    private double startVertical, startHorizontalOffset, startDistanceToPlayer, distanceBetweenParticles;
     private int wingTimer;
 
-    private boolean wingAnimation;
+    private boolean wingAnimation, onlyOneSide;
     private int wingFlapSpeed, startOffset, stopOffset;
 
     private ArrayList<WingParticle> wingParticles;
@@ -87,15 +87,18 @@ public class WingConfig extends YamlFile {
         loreWhenNoPermission = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_NO_PERMISSION.path);
         loreWhenCanBuy = getColorStringList(WingSetting.MENU_ITEM_LORE_WHEN_CAN_BUY.path);
 
-        startVertical = getDouble(WingSetting.WING_START_VERTICAL.path);
-        startHorizontal = getDouble(WingSetting.WING_START_HORIZONTAL.path);
-        distanceBetweenParticles = getDouble(WingSetting.WING_DISTANCE_BETWEEN_PARTICLES.path);
-        wingTimer = getInt(WingSetting.WING_TIMER.path);
+        startVertical = getDouble(WingSetting.WING_START_VERTICAL.path, 0);
+        startHorizontalOffset = getDouble(WingSetting.WING_START_HORIZONTAL_OFFSET.path, 0);
+        startDistanceToPlayer = getDouble(WingSetting.WING_START_DISTANCE_TO_PLAYER.path, 0);
+        distanceBetweenParticles = getDouble(WingSetting.WING_DISTANCE_BETWEEN_PARTICLES.path, 0.1);
+        wingTimer = getInt(WingSetting.WING_TIMER.path, 10);
 
         wingAnimation = getBoolean(WingSetting.WING_FLAP_ANIMATION.path, false);
         wingFlapSpeed = getInt(WingSetting.WING_WING_FLAP_SPEED.path, 0);
         startOffset = getInt(WingSetting.WING_START_OFFSET.path, 30);
         stopOffset = getInt(WingSetting.WING_STOP_OFFSET.path, 70);
+
+        onlyOneSide = getBoolean(WingSetting.WING_ONLY_ONLY_SIDE.path, false);
 
         particleCoordinates = parseParticleCoordinates(getConfigurationSection("wing.particleLayout"));
 
@@ -175,8 +178,12 @@ public class WingConfig extends YamlFile {
         return startVertical;
     }
 
-    public double getStartHorizontal() {
-        return startHorizontal;
+	public Double getStartHorizontalOffset() {
+		return startHorizontalOffset;
+	}
+
+    public Double getStartDistanceToPlayer() {
+        return startDistanceToPlayer;
     }
 
     public double getDistanceBetweenParticles() {
@@ -201,6 +208,10 @@ public class WingConfig extends YamlFile {
 
     public int getStopOffset() {
         return stopOffset;
+    }
+
+    public boolean getOnlyOneSide() {
+        return onlyOneSide;
     }
 
     public ArrayList<WingParticle> getWingParticles() {
@@ -246,7 +257,7 @@ public class WingConfig extends YamlFile {
         for (String rowNumber : rows) {
 
             height = height - distanceBetweenParticles;
-            distance = startHorizontal;
+            distance = startDistanceToPlayer;
 
             String[] particleLine = particleLayout.getString(rowNumber).split(",");
 

@@ -93,11 +93,13 @@ public class CustomWings extends JavaPlugin {
 		// Setup database
 		yamlDatabase = new YamlDatabase(this);
 
-		wings = setupWings();
+		cwPlayerList = new ArrayList<>();
+		wings = new ArrayList<>();
+
+		// Setup the wings
+		setupWings();
 
 		menus = new MenuManager(this);
-
-		cwPlayerList = new ArrayList<>();
 
 		// Setup command
 		registerCommand(new Wings(config.commandName(), config.commandAliases(), "customwings.command"));
@@ -234,6 +236,7 @@ public class CustomWings extends JavaPlugin {
 		config.update();
 		messages.update();
 		yamlDatabase.update();
+		setupWings();
 
 		for (Wing wing : getWings()) {
 			wing.reload();
@@ -251,22 +254,9 @@ public class CustomWings extends JavaPlugin {
 				menu.update(player);
 			}
 		}
-
-		// If the player had a wing equiped, update it with the newest created winglist
-		for (CWPlayer cwPlayer : cwPlayerList) {
-			Wing wing = cwPlayer.getEquippedWing();
-			if (wing == null) {
-				continue;
-			}
-			String wingID = wing.getConfig().getID();
-			Wing newWing = getWingByID(wingID);
-			cwPlayer.setEquippedWing(newWing);
-		}
 	}
 
-	private ArrayList<Wing> setupWings() {
-
-		ArrayList<Wing> wings = new ArrayList<>();
+	private void setupWings() {
 
 		File wingsFolder = new File(getDataFolder(), "wings");
 
@@ -278,6 +268,7 @@ public class CustomWings extends JavaPlugin {
 			wingsFolder.mkdirs(); // Create the folder
 
 			// Save the wing files
+			saveResource("wings/_example.yml", false);
 			saveResource("wings/angel.yml", false);
 			saveResource("wings/bloodhound.yml", false);
 			saveResource("wings/frost.yml", false);
@@ -289,15 +280,22 @@ public class CustomWings extends JavaPlugin {
 
 		for (File file : wingFiles) {
 
-			WingConfig wingConfig = new WingConfig(this, file);
+			String wingId = file.getName().replace(".yml", "").toLowerCase();
 
-			Wing wing = new Wing(this, wingConfig);
+			Wing wing = getWingByID(wingId);
 
-			wings.add(wing);
+			if (wing == null) {
+				// Add the new Wing
+				WingConfig wingConfig = new WingConfig(this, file);
 
+				Wing newWing = new Wing(this, wingConfig);
+
+				wings.add(newWing);
+			} else {
+				// Reload the wing
+				wing.reload();
+			}
 		}
-
-		return wings;
 	}
 
 	public Command getPluginCommand(String name) {

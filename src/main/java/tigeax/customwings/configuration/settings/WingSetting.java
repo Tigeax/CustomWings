@@ -27,14 +27,16 @@ public enum WingSetting implements SettingInterface {
     MENU_ITEM_LORE_WHEN_CAN_BUY("menuItem.loreWhenCanBuy", SettingType.STRINGLIST),
 
     WING_START_VERTICAL("wing.startVertical", SettingType.DOUBLE),
-    WING_START_HORIZONTAL("wing.startHorizontal", SettingType.DOUBLE),
+    WING_START_HORIZONTAL_OFFSET("wing.startHorizontalOffset", SettingType.DOUBLE),
+    WING_START_DISTANCE_TO_PLAYER("wing.startDistanceToPlayer", SettingType.DOUBLE),
     WING_DISTANCE_BETWEEN_PARTICLES("wing.distanceBetweenParticles", SettingType.DOUBLE),
-    WING_TIMER("wing.wingTimer", SettingType.INT),
+    WING_TIMER("wing.timer", SettingType.INT),
 
     WING_FLAP_ANIMATION("wing.flapAnimation", SettingType.BOOLEAN),
     WING_WING_FLAP_SPEED("wing.flapSpeed", SettingType.INT), 
     WING_START_OFFSET("wing.startOffset", SettingType.INT),
-    WING_STOP_OFFSET("wing.stopOffset", SettingType.INT);
+    WING_STOP_OFFSET("wing.stopOffset", SettingType.INT), 
+    WING_ONLY_ONLY_SIDE("wing.onlyOneSide", SettingType.BOOLEAN);
 
     public String path;
     private SettingType settingType;
@@ -91,8 +93,10 @@ public enum WingSetting implements SettingInterface {
                 return wingConfig.getloreWhenCanBuy();
             case WING_START_VERTICAL:
                 return wingConfig.getStartVertical();
-            case WING_START_HORIZONTAL:
-                return wingConfig.getStartHorizontal();
+            case WING_START_HORIZONTAL_OFFSET:
+                return wingConfig.getStartHorizontalOffset();
+            case WING_START_DISTANCE_TO_PLAYER:
+                return wingConfig.getStartDistanceToPlayer();
             case WING_DISTANCE_BETWEEN_PARTICLES:
                 return wingConfig.getDistanceBetweenParticles();
             case WING_TIMER:
@@ -105,6 +109,8 @@ public enum WingSetting implements SettingInterface {
                 return wingConfig.getStartOffset();
             case WING_STOP_OFFSET:
                 return wingConfig.getStopOffset();
+            case WING_ONLY_ONLY_SIDE:
+                return wingConfig.getOnlyOneSide();
         }
         return null;
     }
