@@ -122,12 +122,7 @@ wing:
         # Note that not all particles might be available in your minecraft version. If an invalid particle is given, a Barrier particle will be used instead.
         particle: "CRIT_MAGIC"
 
-        # Directonal Particles
-        # The following particles can have a specific direction
-        # EXPLOSION_NORMAL, FIREWORKS_SPARK, WATER_BUBBLE, WATER_WAKE, CRIT, CRIT_MAGIC, SMOKE_NORMAL, SMOKE_LARGE, PORTAL, ENCHANTMENT_TABLE, CLOUD, DRAGON_BREATH, END_ROD, DAMAGE_INDICATOR, TOTEM, SPIT, SQUID_INK, BUBBLE_POP, BUBBLE_COLUMN_UP, NAUTILUS
-
         # Some particles, like FIREWORKS_SPARK or FLAME, can have directional moving settings.
-
         # "distance" is the horizontal distance the particle will move from it's original location in the direction of the angle
         # "height" is the vertical distance the particle will move from it's original location
         # "angle" is the angle at with the particle will fly towards. 0 is parallel to the wing, -90 is to the back of the wing.
