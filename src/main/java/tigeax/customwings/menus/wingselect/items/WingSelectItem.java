@@ -12,8 +12,8 @@ import tigeax.customwings.wing.Wing;
 
 public class WingSelectItem extends MenuItem {
 
-    private CustomWings plugin;
-    private Wing wing;
+    private final CustomWings plugin;
+    private final Wing wing;
 
     public WingSelectItem(CustomWings plugin, Wing wing) {
         this.plugin = plugin;
@@ -26,7 +26,7 @@ public class WingSelectItem extends MenuItem {
 
         CWPlayer cwPlayer = plugin.getCWPlayer(player);
         String filterString = cwPlayer.getWingFilter();
-        Boolean permissonWing = cwPlayer.hasPermissionForWing(wing);
+        boolean permissonWing = cwPlayer.hasPermissionForWing(wing);
 
         if ((filterString.equals("ownedWings") && !permissonWing) || (filterString.equals("unownedWings") && permissonWing)) {
             // Don't show the wing
