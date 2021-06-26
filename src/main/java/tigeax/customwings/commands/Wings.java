@@ -74,7 +74,7 @@ public class Wings extends Command implements SubCommandManager {
     @Override
     public List<String> getTabCompletions(String[] args) {
 
-        List<String> subCommandNames = Arrays.asList("setwing", "preview", "edit", "reload", "takeawaywing");
+        List<String> subCommandNames = Arrays.asList("setwing", "preview", "editor", "reload", "takeawaywing");
 
         if (args.length == 0) {
             return subCommandNames;
