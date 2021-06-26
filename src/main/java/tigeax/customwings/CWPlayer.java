@@ -88,7 +88,8 @@ public class CWPlayer {
 		// Add to the new wing, if it is not null
 		if (wing != null)
 			wing.addPlayer(this);
-		currentWing = wing;
+
+		currentWing = wing; // Update the CWPlayer's reference to the wing
 
 	}
 
