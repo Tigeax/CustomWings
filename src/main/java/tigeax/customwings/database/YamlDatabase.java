@@ -25,9 +25,10 @@ public class YamlDatabase extends YamlFile implements Database {
     public void savePlayerEquippedWing(Player player, Wing wing) {
         if (wing == null) {
             set(player.getUniqueId() + ".wing", null);
-            return;
+        } else {
+            set(player.getUniqueId() + ".wing", wing.getConfig().getID());
         }
-        set(player.getUniqueId() + ".wing", wing.getConfig().getID());
+        
         changes = true;
     }
 
