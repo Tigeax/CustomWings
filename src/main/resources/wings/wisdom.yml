@@ -5,7 +5,7 @@ whitelistedWorlds:
 menuItem:  
   name: "&fWisdom"
   material: ENCHANTED_BOOK
-  slot: 4
+  slot: 0
   page: 2
   loreWhenEquipped: 
     - "&6You have the &fWisdom Wing &6equipped"

@@ -6,8 +6,8 @@ whitelistedWorlds:
 menuItem:
   name: "&fAngel Wing"
   material: FEATHER
-  slot: 2
-  page: 2
+  slot: 3
+  page: 1
   loreWhenEquipped: 
     - "&6You have the &fAngel Wing &6equipped"
   loreWhenUnequipped:

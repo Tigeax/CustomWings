@@ -15,8 +15,8 @@ menuItem:
   name: "&5Soul Shadow"
 
   material: ENDER_EYE
-  slot: 0
-  page: 2
+  slot: 1
+  page: 1
   loreWhenEquipped:
     - "&6You have the &5Soulshadow Wing &6equipped"
   loreWhenUnequipped:

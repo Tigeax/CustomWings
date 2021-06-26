@@ -7,8 +7,8 @@ menuItem:
   
   name: "&bFrost Wing"
   material: DIAMOND
-  slot: 1
-  page: 2
+  slot: 2
+  page: 1
   loreWhenEquipped: 
     - "&6You have the &bFrost Wing &6equipped"
   loreWhenUnequipped:

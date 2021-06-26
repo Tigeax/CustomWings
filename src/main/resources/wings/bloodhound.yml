@@ -6,8 +6,8 @@ whitelistedWorlds:
 menuItem:  
   name: "&4Blood Hound"
   material: REDSTONE
-  slot: 3
-  page: 2
+  slot: 4
+  page: 1
   loreWhenEquipped: 
     - "&6You have the &4Blood Hound Wing &6equipped"
   loreWhenUnequipped:
