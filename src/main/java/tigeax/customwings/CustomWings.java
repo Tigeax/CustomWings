@@ -53,8 +53,8 @@ public class CustomWings extends JavaPlugin {
 
 	private MenuManager menus;
 
-	private static ArrayList<CWPlayer> cwPlayerList;
-	private static HashMap<String,Wing> wings;
+	private static HashMap<UUID, CWPlayer> cwPlayerList;
+	private static HashMap<String, Wing> wings;
 
 	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
 
@@ -93,7 +93,7 @@ public class CustomWings extends JavaPlugin {
 		// Setup database
 		database = new YamlDatabase(this);
 
-		cwPlayerList = new ArrayList<>();
+		cwPlayerList = new HashMap<>();
 		wings = new HashMap<>();
 
 		// Setup the wings
@@ -306,22 +306,31 @@ public class CustomWings extends JavaPlugin {
 
 	public CWPlayer getCWPlayer(Player player) {
 
+		UUID uuid = player.getUniqueId();
+		CWPlayer cwPlayer = cwPlayerList.get(uuid);
+
 		// Check if there already is a CWPlayer instance for player
-		for (CWPlayer cwPlayer : cwPlayerList) {
-			if (cwPlayer.getPlayer() == player) return cwPlayer;
+		if (cwPlayer != null) {
+
+			return cwPlayer;
+
+		} else {
+
+			// If not create it
+			cwPlayer = new CWPlayer(player);
+			cwPlayerList.put(uuid, cwPlayer);
+
+			return cwPlayer;
+
 		}
-
-		// If not create it
-		CWPlayer cwPlayer = new CWPlayer(player);
-		cwPlayerList.add(cwPlayer);
-
-		return cwPlayer;
 	}
 
 	public void deleteCWPlayer(CWPlayer cwPlayer) {
+
 		Wing wing = cwPlayer.getEquippedWing();
 		if (wing != null) wing.removePlayer(cwPlayer);
-		cwPlayerList.remove(cwPlayer);
+		
+		cwPlayerList.remove(cwPlayer.getPlayer().getUniqueId());
 	}
 
 	private boolean isServerVersionSupported() {

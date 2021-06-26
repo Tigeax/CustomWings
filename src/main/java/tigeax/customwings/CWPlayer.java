@@ -3,11 +3,9 @@ package tigeax.customwings;
 import java.time.Instant;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 
 import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.configuration.settings.Setting;
