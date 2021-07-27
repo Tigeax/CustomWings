@@ -121,7 +121,8 @@ public class CustomWings extends JavaPlugin {
 				vault = true;
 				getLogger().info("Vault detected. Buy functionality enabled.");
 			} catch (Exception e) {
-				getLogger().info("Vault not detected. Buy functionality disabled.");
+				e.printStackTrace();
+				getLogger().info("Failed to load vault. Buy functionality disabled.");
 			}
 		} else {
 			getLogger().info("Vault not detected. Buy functionality disabled.");
