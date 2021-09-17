@@ -334,10 +334,14 @@ public class Wing {
 			double x = coordinate[0];
 			double y = coordinate[1];
 
-			Location particleLocLeft = getParticleSpawnLoc(wingLoc, x, y, WingSide.LEFT, animationState);
-			Location particleLocRight = getParticleSpawnLoc(wingLoc, x, y, WingSide.RIGHT, animationState);
+			if (!wingConfig.getOnlyOneSide()) {
+				// Spawn left side
+				Location particleLocLeft = getParticleSpawnLoc(wingLoc, x, y, WingSide.LEFT, animationState);
+				wingParticle.spawnParticle(particleLocLeft, players, WingSide.LEFT);
+			}
 
-			wingParticle.spawnParticle(particleLocLeft, players, WingSide.LEFT);
+			// Spawn right side
+			Location particleLocRight = getParticleSpawnLoc(wingLoc, x, y, WingSide.RIGHT, animationState);
 			wingParticle.spawnParticle(particleLocRight, players, WingSide.RIGHT);
 		}
 	}
