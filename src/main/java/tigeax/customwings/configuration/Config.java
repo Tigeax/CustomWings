@@ -33,7 +33,7 @@ public class Config extends YamlFile {
     @Override
     protected void initDataFromFile() {
 
-        commandName = getString("commandName");
+        commandName = getString("commandName", "customwings");
         commandAliases = getStringList("commandAliases");
 
         updateDataFromFile();
