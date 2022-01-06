@@ -75,8 +75,8 @@ public class CustomWings extends JavaPlugin {
 		getLogger().info("Server running on: " + VERSION);
 
 		if (!isServerVersionSupported()) {
-			getLogger().severe("CustomWings does not support this server version! Plugin will now disable.");
-			getServer().getPluginManager().disablePlugin(this);
+			getLogger().severe("CustomWings does not support this server version! Use at your own risk!");
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "CustomWings does not support this server version! Use at your own risk!");
 		}
 
 		// Check if there is a newer version available on Spigot
@@ -343,7 +343,8 @@ public class CustomWings extends JavaPlugin {
 				"v1_16_R1",
 				"v1_16_R2",
 				"v1_16_R3",
-				"v1_17_R1");
+				"v1_17_R1",
+				"v1_18_R1");
 		return supportedVersions.contains(VERSION);
 	}
 

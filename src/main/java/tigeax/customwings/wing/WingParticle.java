@@ -52,7 +52,7 @@ public class WingParticle {
 			this.particle = Particle.valueOf(particleConfig.getString("particle"));
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.particle = Particle.BARRIER;
+			this.particle = Particle.REDSTONE;
 		}
 
 		this.distance = particleConfig.getDouble(WingParticleSetting.DISTANCE.path, 0);
