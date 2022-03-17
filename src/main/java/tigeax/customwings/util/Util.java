@@ -25,7 +25,7 @@ public class Util {
 			if (plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
                 plugin.getLogger().info("You are running the latest version of this plugin");
 			} else {
-                plugin.getLogger().info("There is a new version of this plugin avaiable on Spigot: https://www.spigotmc.org/resources/ " + spigotResourceId +  "/");
+                plugin.getLogger().info("There is a new version of this plugin avaiable on Spigot: https://www.spigotmc.org/resources/" + spigotResourceId +  "/");
 			}
 		});
     }
