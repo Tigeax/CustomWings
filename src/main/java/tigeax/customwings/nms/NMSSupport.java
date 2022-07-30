@@ -57,7 +57,7 @@ public class NMSSupport {
             case "v1_13_R2":
                 return "aQ";
             default:
-                return "";
+                return "aY"; // Use latest value by default, allowing newer versions to still work as long as nms was not changed
         }
     }
 
