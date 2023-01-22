@@ -8,11 +8,11 @@ import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.menu.ItemClickEvent;
 import tigeax.customwings.util.menu.MenuItem;
 
-public class HideWingsToggleItem extends MenuItem {
+public class WingShowToggleItem extends MenuItem {
 
     private CustomWings plugin;
 
-    public HideWingsToggleItem(CustomWings plugin) {
+    public WingShowToggleItem(CustomWings plugin) {
         this.plugin = plugin;
     }
 
@@ -22,7 +22,7 @@ public class HideWingsToggleItem extends MenuItem {
         CWPlayer cwPlayer = plugin.getCWPlayer(player);
 
         // Toggle hide other player wings
-        cwPlayer.setHideOtherPlayerWings(!cwPlayer.getHideOtherPlayerWings());
+        cwPlayer.setShowWing(!cwPlayer.getShowWing());
 
         event.setWillUpdate(true);
     }
@@ -32,24 +32,24 @@ public class HideWingsToggleItem extends MenuItem {
 
         CWPlayer cwPlayer = plugin.getCWPlayer(player);
 
-        if (cwPlayer.getHideOtherPlayerWings()) {
-            setHideWingToggleONItem();
+        if (cwPlayer.getShowWing()) {
+            setShowWingToggleONItem();
         } else {
-            setHideWingToggleOFFItem();
+            setShowWingToggleOFFItem();
         }
 
         return super.getFinalItem(player);
     }
     
 
-    public void setHideWingToggleONItem() {
-        setDisplayName(plugin.getConfig().getHideWingsToggleONItemName());
-        setMaterial(plugin.getConfig().getHideWingsToggleONItemMaterial());
+    public void setShowWingToggleONItem() {
+        setDisplayName(plugin.getConfig().getShowWingToggleONItemName());
+        setMaterial(plugin.getConfig().getShowWingToggleONItemMaterial());
     }
 
-    public void setHideWingToggleOFFItem() {
-        setDisplayName(plugin.getConfig().getHideWingsToggleOFFItemName());
-        setMaterial(plugin.getConfig().getHideWingsToggleOFFItemMaterial());
+    public void setShowWingToggleOFFItem() {
+        setDisplayName(plugin.getConfig().getShowWingToggleOFFItemName());
+        setMaterial(plugin.getConfig().getShowWingToggleOFFItemMaterial());
     }
     
 }

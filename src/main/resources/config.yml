@@ -36,6 +36,14 @@ wingSelectMenu:
     material: BARRIER
     slot: 53
 
+  # Item players can use to toggle if they want to see their own wing
+  showWingToggleItem:
+    nameON: "&4Hide wing"
+    materialON: GREEN_STAINED_GLASS
+    nameOFF: "&5Show wing"
+    materialOFF: RED_STAINED_GLASS
+    slot: 51
+
   # Item players can use to toggle if they want to see other player wings.
   hideWingsToggleItem:
     nameON: "&5Show player wings"

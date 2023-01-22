@@ -9,7 +9,7 @@ import tigeax.customwings.wing.Wing;
 public class Messages extends YamlFile {
 
     private String wingEquipped, hideOtherPlayerWingsON, hideOtherPlayerWingsOFF, settingChanged, settingChangeCancelled,
-            typeSettingInChat, selectSettingMaterial, reloadSucces, setWingCommandSucces, takeAwayWingCommandSucces,
+            typeSettingInChat, selectSettingMaterial, reloadSucces, setWingCommandSucces, showWingCommandSucces, takeAwayWingCommandSucces,
             wingBuySuccess, noPermissionForCommandError, noPermissionToEquipWingError, notAPlayerError, notConsoleError,
             invalidPlayerError, invalidWingsError, noWingToPreviewError, missingArugmentsError,
             missingArgumentsSetwingError, missingArgumentsTakeAwayWingError, cantAffordWingError, noVaultError,
@@ -39,6 +39,7 @@ public class Messages extends YamlFile {
         // General
         reloadSucces = getColorString("reloadSucces");
         setWingCommandSucces = getColorString("setWingCommandSucces");
+        showWingCommandSucces = getColorString("showWingCommandSucces");
         takeAwayWingCommandSucces = getColorString("takeAwayWingCommandSucces");
         wingBuySuccess = getColorString("wingBuySuccess");
         // Error messages
@@ -92,6 +93,14 @@ public class Messages extends YamlFile {
 
     public String setWingCommandSucces(Player player, String wingName) {
         return setWingCommandSucces.replace("{PLAYERNAME}", player.getDisplayName()).replace("{WINGNAME}", wingName);
+    }
+
+    public String showWingCommandSucces(Player player, boolean show) {
+        String showState = "off";
+        if (show) {
+            showState = "on";
+        }
+        return showWingCommandSucces.replace("{PLAYERNAME}", player.getDisplayName()).replace("{SHOW}", showState);
     }
 
     public String takeAwayWingCommandSucces(Player player, Wing wing) {

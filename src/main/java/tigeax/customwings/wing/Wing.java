@@ -130,13 +130,14 @@ public class Wing {
 
 	private void showWing(CWPlayer wingOwner, int animationState) {
 
-		if (wingOwner.isPreviewingWing()) {
-			Location wingLoc = wingOwner.getPreviewWingLocation();
-			spawnPreviewWing(wingLoc, animationState);
-		} else {
-			spawnAttachedWing(wingOwner, animationState);
-		}
-
+        if (wingOwner.getShowWing()) {
+            if (wingOwner.isPreviewingWing()) {
+                Location wingLoc = wingOwner.getPreviewWingLocation();
+                spawnPreviewWing(wingLoc, animationState);
+            } else {
+                spawnAttachedWing(wingOwner, animationState);
+            }
+        }
 	}
 
 	private void spawnPreviewWing(Location wingLoc, int animationState) {

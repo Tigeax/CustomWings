@@ -29,6 +29,8 @@ public class PlayerJoinEventListener implements Listener {
 		CWPlayer cwPlayer = plugin.getCWPlayer(player);
 
 		String wingId = plugin.getDatabase().getPlayerEquippedWingID(player);
+        boolean hideOtherPlayerWings = plugin.getDatabase().getPlayerHideOtherPlayerWings(player);
+        boolean showWing = plugin.getDatabase().getPlayerShowWing(player);
 
 		if (wingId != null) {
 			Wing wing = plugin.getWingByID(wingId);
@@ -36,9 +38,8 @@ public class PlayerJoinEventListener implements Listener {
 				cwPlayer.setEquippedWing(wing);
 		}
 
-		boolean hideOtherPlayerWings = plugin.getDatabase().getPlayerHideOtherPlayerWings(player);
-		cwPlayer.setHideOtherPlayerWings(hideOtherPlayerWings);
-
+        cwPlayer.setHideOtherPlayerWings(hideOtherPlayerWings);
+        cwPlayer.setShowWing(showWing);
 	}
 
 }

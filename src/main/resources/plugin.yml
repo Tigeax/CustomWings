@@ -19,6 +19,8 @@ permissions:
     default: op
   customwings.takeawaywing:
     default: op
+  customwings.show:
+    default: op
   customwings.wing.*:
     default: op
   

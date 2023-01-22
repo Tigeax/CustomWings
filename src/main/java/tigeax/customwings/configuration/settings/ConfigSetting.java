@@ -19,11 +19,17 @@ public enum ConfigSetting implements SettingInterface {
     REMOVE_WING_ITEM_MATERIAL("wingSelectMenu.removeWingItem.material", SettingType.MATERIAL),
     REMOVE_WING_ITEM_SLOT("wingSelectMenu.removeWingItem.slot", SettingType.GUISLOT),
 
-    HIDE_WINGS_TOGGLE_ON_ITEM_NAME("wingSelectMenu.hideWingsToggleItem.nameON", SettingType.STRING),
-    HIDE_WINGS_TOGGLE_ON_ITEM_MATERIAL("wingSelectMenu.hideWingsToggleItem.materialON", SettingType.MATERIAL),
-    HIDE_WINGS_TOGGLE_OFF_ITEM_NAME("wingSelectMenu.hideWingsToggleItem.nameOFF", SettingType.STRING),
-    HIDE_WINGS_TOGGLE_OFF_ITEM_MATERIAL("wingSelectMenu.hideWingsToggleItem.materialOFF", SettingType.MATERIAL),
-    HIDE_WINGS_TOGGLE_SLOT("wingSelectMenu.hideWingsToggleItem.slot", SettingType.GUISLOT),
+    HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_NAME("wingSelectMenu.hideWingsToggleItem.nameON", SettingType.STRING),
+    HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_MATERIAL("wingSelectMenu.hideWingsToggleItem.materialON", SettingType.MATERIAL),
+    HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_NAME("wingSelectMenu.hideWingsToggleItem.nameOFF", SettingType.STRING),
+    HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_MATERIAL("wingSelectMenu.hideWingsToggleItem.materialOFF", SettingType.MATERIAL),
+    HIDE_OTHER_WINGS_TOGGLE_SLOT("wingSelectMenu.hideWingsToggleItem.slot", SettingType.GUISLOT),
+
+    SHOW_WING_TOGGLE_ON_ITEM_NAME("wingSelectMenu.showWingToggleItem.nameON", SettingType.STRING),
+    SHOW_WING_TOGGLE_ON_ITEM_MATERIAL("wingSelectMenu.showWingToggleItem.materialON", SettingType.MATERIAL),
+    SHOW_WING_TOGGLE_OFF_ITEM_NAME("wingSelectMenu.showWingToggleItem.nameOFF", SettingType.STRING),
+    SHOW_WING_TOGGLE_OFF_ITEM_MATERIAL("wingSelectMenu.showWingToggleItem.materialOFF", SettingType.MATERIAL),
+    SHOW_WING_TOGGLE_SLOT("wingSelectMenu.showWingToggleItem.slot", SettingType.GUISLOT),
 
     NAGIVATION_ITEM_NEXT_NAME("wingSelectMenu.navigationItem.next.name", SettingType.STRING),
     NAGIVATION_ITEM_NEXT_MATERIAL("wingSelectMenu.navigationItem.next.material", SettingType.MATERIAL),
@@ -93,16 +99,26 @@ public enum ConfigSetting implements SettingInterface {
                 return config.getRemoveWingItemMaterial();
             case REMOVE_WING_ITEM_SLOT:
                 return config.getRemoveWingSlot();
-            case HIDE_WINGS_TOGGLE_ON_ITEM_NAME:
-                return config.getHideWingsToggleONItemName();
-            case HIDE_WINGS_TOGGLE_ON_ITEM_MATERIAL:
-                return config.getHideWingsToggleONItemMaterial();
-            case HIDE_WINGS_TOGGLE_OFF_ITEM_NAME:
-                return config.getHideWingsToggleOFFItemName();
-            case HIDE_WINGS_TOGGLE_OFF_ITEM_MATERIAL:
-                return config.getHideWingsToggleOFFItemMaterial();
-            case HIDE_WINGS_TOGGLE_SLOT:
-                return config.getHideWingsToggleSlot();
+            case HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_NAME:
+                return config.getHideOtherWingsToggleONItemName();
+            case HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_MATERIAL:
+                return config.getHideOtherWingsToggleONItemMaterial();
+            case HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_NAME:
+                return config.getHideOtherWingsToggleOFFItemName();
+            case HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_MATERIAL:
+                return config.getHideOtherWingsToggleOFFItemMaterial();
+            case HIDE_OTHER_WINGS_TOGGLE_SLOT:
+                return config.getHideOtherWingsToggleSlot();
+            case SHOW_WING_TOGGLE_ON_ITEM_NAME:
+                return config.getShowWingToggleONItemName();
+            case SHOW_WING_TOGGLE_ON_ITEM_MATERIAL:
+                return config.getShowWingToggleONItemMaterial();
+            case SHOW_WING_TOGGLE_OFF_ITEM_NAME:
+                return config.getShowWingToggleOFFItemName();
+            case SHOW_WING_TOGGLE_OFF_ITEM_MATERIAL:
+                return config.getShowWingToggleOFFItemMaterial();
+            case SHOW_WING_TOGGLE_SLOT:
+                return config.getShowWingToggleSlot();
             case NAGIVATION_ITEM_NEXT_NAME:
                 return config.getNavigationNextItemName();
             case NAGIVATION_ITEM_NEXT_MATERIAL:

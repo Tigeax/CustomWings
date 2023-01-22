@@ -20,6 +20,7 @@ selectSettingMaterial: "&b&l{CustomWings} &3Click an item in an inventory to sel
 # General
 reloadSucces: "&b&l{CustomWings} &3CustomWings has been reloaded"
 setWingCommandSucces: "&b&l{CustomWings} &3Player {PLAYERNAME} wing set to {WINGNAME}"
+showWingCommandSucces: "&b&l{CustomWings} &3Player {PLAYERNAME} set showing {SHOW}"
 takeAwayWingCommandSucces: "&b&l{CustomWings} &3{PLAYERNAME} had access to {WINGNAME} &3removed."
 wingBuySuccess: "&b&l{CustomWings} You just bought the {WINGNAME} &3wing"
 

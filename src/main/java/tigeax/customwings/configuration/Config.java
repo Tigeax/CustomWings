@@ -13,15 +13,17 @@ public class Config extends YamlFile {
     private int wingViewDistance, wingMaxPitch, wingSelectMenuSize;
     private int wingSelectMenuPages;
     private int removeWingSlot;
-    private int hideWingsToggleSlot;
+    private int hideOtherWingsToggleSlot;
+    private int showWingToggleSlot;
     private int navigationNextSlot;
     private int navigationPreviousSlot;
     private int filterSlot;
-    private String commandName, wingSelectMenuName, removeWingItemName, hideWingsToggleONItemName,
-            hideWingsToggleOFFItemName, navigationNextItemName, navigationPreviousItemName, filterNoneItemName,
+    private String commandName, wingSelectMenuName, removeWingItemName, hideOtherWingsToggleONItemName,
+            hideOtherWingsToggleOFFItemName, showWingToggleONItemName, showWingToggleOFFItemName, 
+            navigationNextItemName, navigationPreviousItemName, filterNoneItemName,
             filterOwnedItemName, filterUnownedItemName;
     private List<String> commandAliases, filterNoneItemLore, filterOwnedItemLore, filterUnownedItemLore;
-    private Material removeWingItemMaterial, hideWingsToggleONItemMaterial, hideWingsToggleOFFItemMaterial,
+    private Material removeWingItemMaterial, hideOtherWingsToggleONItemMaterial, hideOtherWingsToggleOFFItemMaterial, showWingToggleONItemMaterial, showWingToggleOFFItemMaterial,
             navigationNextItemMaterial, navigationPreviousItemMaterial, filterNoneItemMaterial, filterOwnedItemMaterial,
             filterUnownedItemMaterial;
     private boolean invisibilityPotionHidesWing, filterItemEnable;
@@ -54,11 +56,17 @@ public class Config extends YamlFile {
         removeWingItemMaterial = getMaterial(ConfigSetting.REMOVE_WING_ITEM_MATERIAL.path);
         removeWingSlot = getInt(ConfigSetting.REMOVE_WING_ITEM_SLOT.path);
 
-        hideWingsToggleONItemName = getColorString(ConfigSetting.HIDE_WINGS_TOGGLE_ON_ITEM_NAME.path);
-        hideWingsToggleONItemMaterial = getMaterial(ConfigSetting.HIDE_WINGS_TOGGLE_ON_ITEM_MATERIAL.path);
-        hideWingsToggleOFFItemName = getColorString(ConfigSetting.HIDE_WINGS_TOGGLE_OFF_ITEM_NAME.path);
-        hideWingsToggleOFFItemMaterial = getMaterial(ConfigSetting.HIDE_WINGS_TOGGLE_OFF_ITEM_MATERIAL.path);
-        hideWingsToggleSlot = getInt(ConfigSetting.HIDE_WINGS_TOGGLE_SLOT.path);
+        hideOtherWingsToggleONItemName = getColorString(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_NAME.path);
+        hideOtherWingsToggleONItemMaterial = getMaterial(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_MATERIAL.path);
+        hideOtherWingsToggleOFFItemName = getColorString(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_NAME.path);
+        hideOtherWingsToggleOFFItemMaterial = getMaterial(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_MATERIAL.path);
+        hideOtherWingsToggleSlot = getInt(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_SLOT.path);
+
+        showWingToggleONItemName = getColorString(ConfigSetting.SHOW_WING_TOGGLE_ON_ITEM_NAME.path);
+        showWingToggleONItemMaterial = getMaterial(ConfigSetting.SHOW_WING_TOGGLE_ON_ITEM_MATERIAL.path);
+        showWingToggleOFFItemName = getColorString(ConfigSetting.SHOW_WING_TOGGLE_OFF_ITEM_NAME.path);
+        showWingToggleOFFItemMaterial = getMaterial(ConfigSetting.SHOW_WING_TOGGLE_OFF_ITEM_MATERIAL.path);
+        showWingToggleSlot = getInt(ConfigSetting.SHOW_WING_TOGGLE_SLOT.path);
 
         navigationNextItemName = getColorString(ConfigSetting.NAGIVATION_ITEM_NEXT_NAME.path, "&9Next Page");
         navigationNextItemMaterial = getMaterial(ConfigSetting.NAGIVATION_ITEM_NEXT_MATERIAL.path, Material.FEATHER);
@@ -134,24 +142,44 @@ public class Config extends YamlFile {
         return removeWingSlot;
     }
 
-    public String getHideWingsToggleONItemName() {
-        return hideWingsToggleONItemName;
+    public String getHideOtherWingsToggleONItemName() {
+        return hideOtherWingsToggleONItemName;
     }
 
-    public Material getHideWingsToggleONItemMaterial() {
-        return hideWingsToggleONItemMaterial;
+    public Material getHideOtherWingsToggleONItemMaterial() {
+        return hideOtherWingsToggleONItemMaterial;
     }
 
-    public String getHideWingsToggleOFFItemName() {
-        return hideWingsToggleOFFItemName;
+    public String getHideOtherWingsToggleOFFItemName() {
+        return hideOtherWingsToggleOFFItemName;
     }
 
-    public Material getHideWingsToggleOFFItemMaterial() {
-        return hideWingsToggleOFFItemMaterial;
+    public Material getHideOtherWingsToggleOFFItemMaterial() {
+        return hideOtherWingsToggleOFFItemMaterial;
     }
 
-    public int getHideWingsToggleSlot() {
-        return hideWingsToggleSlot;
+    public int getHideOtherWingsToggleSlot() {
+        return hideOtherWingsToggleSlot;
+    }
+
+    public String getShowWingToggleONItemName() {
+        return showWingToggleONItemName;
+    }
+
+    public Material getShowWingToggleONItemMaterial() {
+        return showWingToggleONItemMaterial;
+    }
+
+    public String getShowWingToggleOFFItemName() {
+        return showWingToggleOFFItemName;
+    }
+
+    public Material getShowWingToggleOFFItemMaterial() {
+        return showWingToggleOFFItemMaterial;
+    }
+
+    public int getShowWingToggleSlot() {
+        return showWingToggleSlot;
     }
 
     public String getNavigationNextItemName() {

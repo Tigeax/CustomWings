@@ -23,12 +23,16 @@ public class MainSettingsMenu extends ItemMenu {
         setItem(6, new SettingItem(new Setting(ConfigSetting.WING_SELECT_MENU_SIZE),                "&3Wing select menu size",              Material.CHEST));
         setItem(7, new SettingItem(new Setting(ConfigSetting.WING_SELECT_MENU_PAGES),               "&3Wing select menu pages",             Material.CHEST));
 
-        // Hide wings toggle item
-        setItem(11, new SettingItem(new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_ON_ITEM_NAME),      "&3Hide wings toggle ON item name",     new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_ON_ITEM_MATERIAL)));
-        setItem(12, new SettingItem(new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_ON_ITEM_MATERIAL),  "&3Hide wings woggle ON item material"));
-        setItem(13, new SettingItem(new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_OFF_ITEM_NAME),     "&3Hide wings toggle OFF item name",    new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_OFF_ITEM_MATERIAL)));
-        setItem(14, new SettingItem(new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_OFF_ITEM_MATERIAL), "&3Hide wings woggle OFF item material"));
-        setItem(15, new SettingItem(new Setting(ConfigSetting.HIDE_WINGS_TOGGLE_SLOT),              "&3Hide wings woggle item slot",        Material.ENDER_EYE));
+        // Filter item
+        setItem(9, new SettingItem(new Setting(ConfigSetting.FILTER_ITEM_ENABLE),                  "&3Filter item enable",                 Material.BUCKET));
+        setItem(10, new SettingItem(new Setting(ConfigSetting.FILTER_ITEM_SLOT),                    "&3Filter item slot",                   Material.BUCKET));
+
+        // Hide other wings toggle item
+        setItem(12, new SettingItem(new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_NAME),      "&3Hide wings toggle ON item name",     new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_MATERIAL)));
+        setItem(13, new SettingItem(new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_ON_ITEM_MATERIAL),  "&3Hide wings woggle ON item material"));
+        setItem(14, new SettingItem(new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_NAME),     "&3Hide wings toggle OFF item name",    new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_MATERIAL)));
+        setItem(15, new SettingItem(new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_OFF_ITEM_MATERIAL), "&3Hide wings toggle OFF item material"));
+        setItem(16, new SettingItem(new Setting(ConfigSetting.HIDE_OTHER_WINGS_TOGGLE_SLOT),              "&3Hide wings toggle item slot",        Material.ENDER_EYE));
 
         // Navigation previous item
         setItem(19, new SettingItem(new Setting(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_NAME),       "&3Navigation item previous name",      new Setting(ConfigSetting.NAGIVATION_ITEM_PREVIOUS_MATERIAL)));
@@ -60,9 +64,12 @@ public class MainSettingsMenu extends ItemMenu {
         setItem(43, new SettingItem(new Setting(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL),  "&3Navigation item unowned wings material"));
         setItem(44, new SettingItem(new Setting(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_LORE),      "&3Navigation item unowned wings lore", new Setting(ConfigSetting.FILTER_ITEM_UNOWNED_WINGS_MATERIAL)));
 
-        // Filter item
-        setItem(48, new SettingItem(new Setting(ConfigSetting.FILTER_ITEM_ENABLE),                  "&3Filter item enable",                 Material.BUCKET));
-        setItem(50, new SettingItem(new Setting(ConfigSetting.FILTER_ITEM_SLOT),                    "&3Filter item slot",                   Material.BUCKET));
+        // Show wing toggle item
+        setItem(47, new SettingItem(new Setting(ConfigSetting.SHOW_WING_TOGGLE_ON_ITEM_NAME),      "&3Hide wing toggle ON item name",     new Setting(ConfigSetting.SHOW_WING_TOGGLE_ON_ITEM_MATERIAL)));
+        setItem(48, new SettingItem(new Setting(ConfigSetting.SHOW_WING_TOGGLE_ON_ITEM_MATERIAL),  "&3Hide wing woggle ON item material"));
+        setItem(49, new SettingItem(new Setting(ConfigSetting.SHOW_WING_TOGGLE_OFF_ITEM_NAME),     "&3Hide wing toggle OFF item name",    new Setting(ConfigSetting.SHOW_WING_TOGGLE_OFF_ITEM_MATERIAL)));
+        setItem(50, new SettingItem(new Setting(ConfigSetting.SHOW_WING_TOGGLE_OFF_ITEM_MATERIAL), "&3Hide wing toggle OFF item material"));
+        setItem(51, new SettingItem(new Setting(ConfigSetting.SHOW_WING_TOGGLE_SLOT),              "&3Hide wing toggle item slot",        Material.ENDER_EYE));
 
         // Go back item
         setItem(53, new GoBackItem());

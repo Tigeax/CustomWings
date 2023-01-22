@@ -46,4 +46,13 @@ public class YamlDatabase extends YamlFile implements Database {
         return getBoolean(player.getUniqueId() + ".hideOtherWings", false);
     }
 
+    public void savePlayerShowWing(Player player, Boolean show) {
+        set(player.getUniqueId() + ".show", show);
+        changes = true;
+    }
+
+    public boolean getPlayerShowWing(Player player) {
+        return getBoolean(player.getUniqueId() + ".show", true);
+    }
+
 }

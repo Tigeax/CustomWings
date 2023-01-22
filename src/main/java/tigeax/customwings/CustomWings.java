@@ -134,6 +134,7 @@ public class CustomWings extends JavaPlugin {
 
 			String wingId = database.getPlayerEquippedWingID(player);
 			boolean hideOtherPlayerWings = database.getPlayerHideOtherPlayerWings(player);
+			boolean showWing = database.getPlayerShowWing(player);
 
 			if (wingId != null) {
 				Wing wing = getWingByID(wingId);
@@ -142,10 +143,8 @@ public class CustomWings extends JavaPlugin {
 				}
 			}
 
-			// Only set if true, since false is the default
-			if (hideOtherPlayerWings) {
-				cwPlayer.setHideOtherPlayerWings(true);
-			}
+			cwPlayer.setHideOtherPlayerWings(hideOtherPlayerWings);
+            cwPlayer.setShowWing(showWing);
 		}
 
 		Bukkit.getConsoleSender().sendMessage(ChatColor.AQUA + "{CustomWings} CustomWings has been enabled");

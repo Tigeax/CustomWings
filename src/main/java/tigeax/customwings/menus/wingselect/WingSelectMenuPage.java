@@ -8,9 +8,10 @@ import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.menus.items.NextPageItem;
 import tigeax.customwings.menus.items.PreviousPageItem;
 import tigeax.customwings.menus.wingselect.items.FilterCycleItem;
-import tigeax.customwings.menus.wingselect.items.HideWingsToggleItem;
+import tigeax.customwings.menus.wingselect.items.HideOtherWingsToggleItem;
 import tigeax.customwings.menus.wingselect.items.WingRemoveItem;
 import tigeax.customwings.menus.wingselect.items.WingSelectItem;
+import tigeax.customwings.menus.wingselect.items.WingShowToggleItem;
 import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.wing.Wing;
 
@@ -48,7 +49,10 @@ public class WingSelectMenuPage extends ItemMenu {
         setItem(config.getRemoveWingSlot(), new WingRemoveItem(plugin));
 
         // Hide other players wing item
-        setItem(config.getHideWingsToggleSlot(), new HideWingsToggleItem(plugin));
+        setItem(config.getHideOtherWingsToggleSlot(), new HideOtherWingsToggleItem(plugin));
+
+        // Show wing item
+        setItem(config.getShowWingToggleSlot(), new WingShowToggleItem(plugin));
 
         
         if (page > 1) {

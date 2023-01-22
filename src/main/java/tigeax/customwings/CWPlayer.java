@@ -26,6 +26,7 @@ public class CWPlayer {
 	private Wing currentWing;
 
 	private boolean hideOtherPlayerWings;
+    private boolean showWing;
 	private String wingFilter;
 
 	private Setting waitingSetting;
@@ -91,6 +92,20 @@ public class CWPlayer {
 
 		currentWing = wing; // Update the CWPlayer's reference to the wing
 
+	}
+
+    public boolean getShowWing() {
+		return showWing;
+	}
+
+    public void setShowWing(boolean show) {
+        
+        if (showWing == show) return;
+
+        // Save player's show state to storage
+		CustomWings.getInstance().getDatabase().savePlayerShowWing(getPlayer(), show);
+
+        showWing = show;
 	}
 
 	public boolean isPreviewingWing() {

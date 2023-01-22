@@ -12,6 +12,7 @@ import tigeax.customwings.commands.subcommands.Editor;
 import tigeax.customwings.commands.subcommands.Preview;
 import tigeax.customwings.commands.subcommands.Reload;
 import tigeax.customwings.commands.subcommands.SetWing;
+import tigeax.customwings.commands.subcommands.Show;
 import tigeax.customwings.commands.subcommands.TakeAwayWing;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.commands.Command;
@@ -37,6 +38,7 @@ public class Wings extends Command implements SubCommandManager {
         subCommands.add(new Editor("editor", "customwings.editor").setAliases(Arrays.asList("edit", "e")));
         subCommands.add(new Reload("reload", "customwings.reload").setAliases(Arrays.asList("r")));
         subCommands.add(new TakeAwayWing("takeawaywing", "customwings.takeawaywing"));
+        subCommands.add(new Show("show", "customwings.show").setAliases(Arrays.asList("s")));
     }
 
     @Override
@@ -49,9 +51,9 @@ public class Wings extends Command implements SubCommandManager {
                 Util.sendMessage(sender, plugin.getMessages().notAPlayerError());
                 return;
             }
-    
+
             Player player = (Player) sender;
-    
+
             plugin.getMenus().openWingSelectMenu(player);
 
             return;
@@ -74,7 +76,7 @@ public class Wings extends Command implements SubCommandManager {
     @Override
     public List<String> getTabCompletions(String[] args) {
 
-        List<String> subCommandNames = Arrays.asList("setwing", "preview", "editor", "reload", "takeawaywing");
+        List<String> subCommandNames = Arrays.asList("setwing", "preview", "editor", "reload", "takeawaywing", "show");
 
         if (args.length == 0) {
             return subCommandNames;
