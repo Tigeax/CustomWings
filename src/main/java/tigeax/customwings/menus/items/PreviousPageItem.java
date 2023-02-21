@@ -9,7 +9,7 @@ public class PreviousPageItem extends MenuItem {
     public PreviousPageItem() {
         CustomWings plugin = CustomWings.getInstance();
         setDisplayName(plugin.getConfig().getNavigationPreviousItemName());
-        setMaterial(plugin.getConfig().getNavigationNextItemMaterial());
+        setMaterial(plugin.getConfig().getNavigationPreviousItemMaterial());
     }
 
     @Override
