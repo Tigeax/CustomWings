@@ -16,7 +16,7 @@ public class NMSSupport {
             Method handle = entity.getMethod("getHandle");
             Object nmsEntity = handle.invoke(livingEntity);
             Field bodyRotation = nmsEntity.getClass().getField(getBodyRotationField(version));
-            return (Float) bodyRotation.get(nmsEntity);
+            return ((Integer) bodyRotation.get(nmsEntity)).floatValue();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -30,7 +30,7 @@ public class NMSSupport {
             Method handle = entity.getMethod("getHandle");
             Object nmsEntity = handle.invoke(livingEntity);
             Field bodyRotation = nmsEntity.getClass().getField(getBodyRotationField(version));
-            bodyRotation.set(nmsEntity, newRotation);
+            bodyRotation.set(nmsEntity, (int) newRotation);
         } catch (Exception e) {
             e.printStackTrace();
         }
