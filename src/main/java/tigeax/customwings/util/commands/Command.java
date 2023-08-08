@@ -9,6 +9,7 @@ import org.bukkit.command.defaults.BukkitCommand;
 import org.bukkit.entity.Player;
 
 import tigeax.customwings.CustomWings;
+import tigeax.customwings.eventlisteners.OnTabComplete;
 import tigeax.customwings.util.Util;
 
 /**

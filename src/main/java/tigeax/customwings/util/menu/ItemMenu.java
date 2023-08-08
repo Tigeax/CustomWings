@@ -24,7 +24,6 @@ public class ItemMenu {
      *
      * @param name   The name of the inventory.
      * @param size   The {@link ItemMenu.Rows} of the inventory.
-     * @param plugin The {@link org.bukkit.plugin.java.JavaPlugin} instance.
      * @param parent The ItemMenu's parent.
      */
     public ItemMenu(String name, Rows size, ItemMenu parent) {
@@ -39,7 +38,6 @@ public class ItemMenu {
      *
      * @param name   The name of the inventory.
      * @param size   The {@link ItemMenu.Rows} of the inventory.
-     * @param plugin The Plugin instance.
      */
     public ItemMenu(String name, Rows size) {
         this(name, size, null);

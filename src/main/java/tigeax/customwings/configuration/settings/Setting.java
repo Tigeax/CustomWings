@@ -4,7 +4,7 @@ import tigeax.customwings.wing.Wing;
 import tigeax.customwings.wing.WingParticle;
 
 
-/** Wrapper class for the {@link ConfigSetting}, {@link wingSetting} and {@link wingParticleSetting} Enums */
+/** Wrapper class for the {@link ConfigSetting}, {@link WingSetting} and {@link WingParticleSetting} Enums */
 public class Setting implements SettingInterface {
 
     SettingInterface setting;

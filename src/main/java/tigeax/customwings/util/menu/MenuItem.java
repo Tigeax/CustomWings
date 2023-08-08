@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * An Item inside an {@link ninja.amp.ampmenus.menus.ItemMenu}.
+ * An Item inside an {@link ItemMenu}.
  */
 public class MenuItem {
     private String displayName;

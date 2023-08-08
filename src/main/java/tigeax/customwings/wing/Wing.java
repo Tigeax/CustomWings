@@ -183,7 +183,7 @@ public class Wing {
 
 	/**
 	 * Check if a wing should be spawned based on the state of the wing owner player
-	 * @param wingOwner
+	 * @param cwWingOwner
 	 * @return
 	 */
 	private boolean shouldAttachedWingBeSpawned(CWPlayer cwWingOwner) {
@@ -265,7 +265,7 @@ public class Wing {
 
 	/**
 	 * Get the players that are able to see a wing attached to the wing owner
-	 * @param wingLoc Location the wing is spawned at
+	 * @param cwWingOwner
 	 * @return
 	 */
 	private ArrayList<Player> getPlayersWhoSeeAttachedWing(CWPlayer cwWingOwner) {
