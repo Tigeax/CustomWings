@@ -5,7 +5,8 @@
 
 
 # To configure wings or add you own wings, edit or add the files in the 'wings' folder.
-
+# check for updates on startu
+UpdateChecker: true
 # The main command of the plugin, you will have to restart your server when changing this.
 commandName: "customwings"
 commandAliases:

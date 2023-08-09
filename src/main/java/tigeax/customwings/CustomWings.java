@@ -1,8 +1,7 @@
 package tigeax.customwings;
 
-import java.io.File;
-import java.util.*;
-
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,23 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
 import tigeax.customwings.commands.Wings;
 import tigeax.customwings.configuration.Config;
 import tigeax.customwings.configuration.Messages;
 import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.database.Database;
 import tigeax.customwings.database.YamlDatabase;
-import tigeax.customwings.eventlisteners.AsyncPlayerChatEventListener;
-import tigeax.customwings.eventlisteners.InventoryClickEventListener;
-import tigeax.customwings.eventlisteners.InventoryCloseEventListener;
-import tigeax.customwings.eventlisteners.OnTabComplete;
-import tigeax.customwings.eventlisteners.PlayerCommandPreprocessEventListener;
-import tigeax.customwings.eventlisteners.PlayerJoinEventListener;
-import tigeax.customwings.eventlisteners.PlayerMoveListener;
-import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
+import tigeax.customwings.eventlisteners.*;
 import tigeax.customwings.menus.MenuManager;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
@@ -36,6 +25,9 @@ import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.util.menu.MenuHolder;
 import tigeax.customwings.wing.Wing;
 import tigeax.customwings.wing.WingParticle;
+
+import java.io.File;
+import java.util.*;
 
 /*
  * Main class of the CustomWings plugin
@@ -78,9 +70,6 @@ public class CustomWings extends JavaPlugin {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[CustomWings] CustomWings does not support this server version! Use at your own risk!");
 		}
 
-		// Check if there is a newer version available on Spigot
-		Util.runUpdateChecker(this, spigotResourceId);
-
 		// bStats setup
 		int pluginId = 8227;
 		new Metrics(this, pluginId);
@@ -89,6 +78,10 @@ public class CustomWings extends JavaPlugin {
 		config = new Config(this);
 		messages = new Messages(this);
 
+		// Check if there is a newer version available on Spigot
+		if(config.getBoolean("UpdateChecker")) {
+			Util.runUpdateChecker(this, spigotResourceId);
+		}
 		// Setup database
 		database = new YamlDatabase(this);
 
@@ -328,7 +321,7 @@ public class CustomWings extends JavaPlugin {
 
 		Wing wing = cwPlayer.getEquippedWing();
 		if (wing != null) wing.removePlayer(cwPlayer);
-		
+
 		cwPlayerList.remove(cwPlayer.getPlayer().getUniqueId());
 	}
 
