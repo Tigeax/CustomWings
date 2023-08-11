@@ -78,18 +78,19 @@ public class CustomWings extends JavaPlugin {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[CustomWings] CustomWings does not support this server version! Use at your own risk!");
 		}
 
+        // Setup Configuration
+        config = new Config(this);
+        messages = new Messages(this);
+
 		// Check if there is a newer version available on Spigot
         if (!config.getDisableUpdateCheck()) {
 		    Util.runUpdateChecker(this, spigotResourceId);
-        };
+        }
 
 		// bStats setup
 		int pluginId = 8227;
 		new Metrics(this, pluginId);
 
-		// Setup Configuration
-		config = new Config(this);
-		messages = new Messages(this);
 
 		// Setup database
 		database = new YamlDatabase(this);
