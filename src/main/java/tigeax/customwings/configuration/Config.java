@@ -19,14 +19,14 @@ public class Config extends YamlFile {
     private int navigationPreviousSlot;
     private int filterSlot;
     private String commandName, wingSelectMenuName, removeWingItemName, hideOtherWingsToggleONItemName,
-            hideOtherWingsToggleOFFItemName, showWingToggleONItemName, showWingToggleOFFItemName, 
+            hideOtherWingsToggleOFFItemName, showWingToggleONItemName, showWingToggleOFFItemName,
             navigationNextItemName, navigationPreviousItemName, filterNoneItemName,
             filterOwnedItemName, filterUnownedItemName;
     private List<String> commandAliases, filterNoneItemLore, filterOwnedItemLore, filterUnownedItemLore;
     private Material removeWingItemMaterial, hideOtherWingsToggleONItemMaterial, hideOtherWingsToggleOFFItemMaterial, showWingToggleONItemMaterial, showWingToggleOFFItemMaterial,
             navigationNextItemMaterial, navigationPreviousItemMaterial, filterNoneItemMaterial, filterOwnedItemMaterial,
             filterUnownedItemMaterial;
-    private boolean invisibilityPotionHidesWing, filterItemEnable;
+    private boolean invisibilityPotionHidesWing, filterItemEnable, disableUpdateCheck;
 
     public Config(JavaPlugin plugin) {
         super(plugin, "config.yml");
@@ -37,6 +37,7 @@ public class Config extends YamlFile {
 
         commandName = getString("commandName", "customwings");
         commandAliases = getStringList("commandAliases");
+        disableUpdateCheck = getBoolean("disableUpdateCheck", false);
 
         updateDataFromFile();
     }
@@ -104,6 +105,10 @@ public class Config extends YamlFile {
 
     public List<String> commandAliases() {
         return commandAliases;
+    }
+
+    public boolean getDisableUpdateCheck() {
+        return disableUpdateCheck;
     }
 
     public int getWingViewDistance() {

@@ -79,7 +79,9 @@ public class CustomWings extends JavaPlugin {
 		}
 
 		// Check if there is a newer version available on Spigot
-		Util.runUpdateChecker(this, spigotResourceId);
+        if (!config.getDisableUpdateCheck()) {
+		    Util.runUpdateChecker(this, spigotResourceId);
+        };
 
 		// bStats setup
 		int pluginId = 8227;
