@@ -13,6 +13,9 @@ commandAliases:
   - "cw"
   - "w"
 
+# Disable the check for new versions of this plugin on spigot at startup.
+disableUpdateCheck: false
+
 # The distance (in blocks) players have to be within to see each others wings.
 wingViewDistance: 30
 
