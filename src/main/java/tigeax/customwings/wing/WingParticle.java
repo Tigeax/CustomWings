@@ -52,7 +52,7 @@ public class WingParticle {
 			this.particle = Particle.valueOf(particleConfig.getString("particle"));
 		} catch (Exception e) {
 			e.printStackTrace();
-			this.particle = Particle.REDSTONE;
+			this.particle = Particle.DUST;
 		}
 
 		this.distance = particleConfig.getDouble(WingParticleSetting.DISTANCE.path, 0);
@@ -75,18 +75,18 @@ public class WingParticle {
 		this.noteColor = particleConfig.getInt(WingParticleSetting.NOTE_COLOR.path, 1);
 
 		// Refractor
-		if (particle == Particle.REDSTONE) {
+		if (particle == Particle.DUST) {
 			this.particleData = dustOptions;
 		}
 		
-		if (particle == Particle.BLOCK_CRACK || particle == Particle.BLOCK_DUST || particle == Particle.FALLING_DUST) {
+		if (particle == Particle.BLOCK || particle == Particle.FALLING_DUST) {
 			try {
 				this.particleData = material.createBlockData();
 			} catch (Exception e) {
 				e.printStackTrace();
 				this.particleData = Material.BARRIER.createBlockData();
 			}
-		} else if (particle == Particle.ITEM_CRACK) {
+		} else if (particle == Particle.ITEM) {
 			this.particleData = new ItemStack(material);
 		}
 
@@ -138,7 +138,7 @@ public class WingParticle {
 			z = 0;
 			extra = 1;
 
-		} else if (particle == Particle.SPELL_MOB || particle == Particle.SPELL_MOB_AMBIENT) {
+		} else if (particle == Particle.ENTITY_EFFECT) {
 
 			x = color.getRed() / 255D;
 			y = color.getGreen() / 255D;
