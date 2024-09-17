@@ -367,7 +367,8 @@ public class CustomWings extends JavaPlugin {
             "1.19.2",
             "1.19.3",
             "1.20.1",
-            "1.21"
+            "1.21",
+			"1.21.1"
         );
 		return supportedVersions.contains(VERSION);
 	}
