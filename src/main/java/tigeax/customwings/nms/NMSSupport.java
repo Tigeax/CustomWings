@@ -51,6 +51,8 @@ public class NMSSupport {
 
     private static String getBodyRotationField(String version) {
         switch (version) {
+            case "1.21.2":
+                return "aX";
             case "1.21.1":
             case "1.21":
                 return "aY";
@@ -79,7 +81,7 @@ public class NMSSupport {
             case "1.13.2":
                 return "aQ";
             default:
-                return "aY"; // Use latest value by default, allowing newer versions to still work as long as nms was not changed
+                return "aX"; // Use latest value by default, allowing newer versions to still work as long as nms was not changed
         }
     }
 
