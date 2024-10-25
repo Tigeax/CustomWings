@@ -10,12 +10,18 @@ public class NMSSupport {
 
     public static Float getBodyRotation(LivingEntity livingEntity) {
         try {
-            String version = CustomWings.getInstance().getServerVersion();
+            String bukkitVersion = CustomWings.getInstance().getBukkitVersion();
 
-            Class<?> entity = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftLivingEntity");
+            Class<?> entity;
+            if (bukkitVersion.isEmpty()) {
+                entity = Class.forName("org.bukkit.craftbukkit.entity.CraftLivingEntity");
+            } else {
+                entity = Class.forName("org.bukkit.craftbukkit." + bukkitVersion + ".entity.CraftLivingEntity");
+            }
+
             Method handle = entity.getMethod("getHandle");
             Object nmsEntity = handle.invoke(livingEntity);
-            Field bodyRotation = nmsEntity.getClass().getField(getBodyRotationField(version));
+            Field bodyRotation = nmsEntity.getClass().getField(getBodyRotationField(CustomWings.getInstance().getServerVersion()));
             return (Float) bodyRotation.get(nmsEntity);
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,11 +31,18 @@ public class NMSSupport {
 
     public static void setBodyRotation(LivingEntity livingEntity, float newRotation) {
         try {
-            String version = CustomWings.getInstance().getServerVersion();
-            Class<?> entity = Class.forName("org.bukkit.craftbukkit." + version + ".entity.CraftLivingEntity");
+            String bukkitVersion = CustomWings.getInstance().getBukkitVersion();
+
+            Class<?> entity;
+            if (bukkitVersion.isEmpty()) {
+                entity = Class.forName("org.bukkit.craftbukkit.entity.CraftLivingEntity");
+            } else {
+                entity = Class.forName("org.bukkit.craftbukkit." + bukkitVersion + ".entity.CraftLivingEntity");
+            }
+
             Method handle = entity.getMethod("getHandle");
             Object nmsEntity = handle.invoke(livingEntity);
-            Field bodyRotation = nmsEntity.getClass().getField(getBodyRotationField(version));
+            Field bodyRotation = nmsEntity.getClass().getField(getBodyRotationField(CustomWings.getInstance().getServerVersion()));
             bodyRotation.set(nmsEntity, newRotation);
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,32 +51,38 @@ public class NMSSupport {
 
     private static String getBodyRotationField(String version) {
         switch (version) {
-            case "v1_20_R1":
-                return "aV";
-            case "v1_19_R3":
-                return "aT";
-            case "v1_19_R2":
+            case "1.21.3":
+            case "1.21.2":
                 return "aX";
-            case "v1_19_R1":
-            case "v1_18_R2":
-            case "v1_18_R1":
+            case "1.21.1":
+            case "1.21":
                 return "aY";
-            case "v1_17_R1":
+            case "1.20.1":
+                return "aV";
+            case "1.19.3":
+                return "aT";
+            case "1.19.2":
                 return "aX";
-            case "v1_16_R3":
-            case "v1_16_R2":
+            case "1.19.1":
+            case "1.18.2":
+            case "1.18.1":
+                return "aY";
+            case "1.17.1":
+                return "aX";
+            case "1.16.3":
+            case "1.16.2":
                 return "aA";
-            case "v1_16_R1":
+            case "1.16.1":
                 return "aH";
-            case "v1_15_R1":
+            case "1.15.1":
                 return "aI";
-            case "v1_14_R1":
+            case "1.14.1":
                 return "aK";
-            case "v1_13_R1":
-            case "v1_13_R2":
+            case "1.13.1":
+            case "1.13.2":
                 return "aQ";
             default:
-                return "aV"; // Use latest value by default, allowing newer versions to still work as long as nms was not changed
+                return "aX"; // Use latest value by default, allowing newer versions to still work as long as nms was not changed
         }
     }
 

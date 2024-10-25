@@ -56,7 +56,8 @@ public class CustomWings extends JavaPlugin {
 	private static HashMap<UUID, CWPlayer> cwPlayerList;
 	private static HashMap<String, Wing> wings;
 
-	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
+	private final static String VERSION = Bukkit.getServer().getBukkitVersion().split("-")[0];
+    private final static String BUKKIT_VERSION;
 
 	private static Economy econ = null;
 	private static Permission perms = null;
@@ -66,6 +67,17 @@ public class CustomWings extends JavaPlugin {
 	private static final int spigotResourceId = 59912;
 
 	private final ArrayList<Command> commands = new ArrayList<>();
+
+    static {
+        String bukkitVersion;
+        try {
+            Class.forName("com.destroystokyo.paper.ParticleBuilder");
+            bukkitVersion = "";
+        } catch (ClassNotFoundException ignored) {
+            bukkitVersion = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
+        }
+        BUKKIT_VERSION = bukkitVersion;
+    }
 
 	@Override
 	public void onEnable() {
@@ -183,7 +195,11 @@ public class CustomWings extends JavaPlugin {
 		return VERSION;
 	}
 
-	@Override
+    public String getBukkitVersion() {
+        return BUKKIT_VERSION;
+    }
+
+    @Override
 	public Config getConfig() {
 		return config;
 	}
@@ -337,20 +353,22 @@ public class CustomWings extends JavaPlugin {
 
 	private boolean isServerVersionSupported() {
 		List<String> supportedVersions = Arrays.asList(
-            "v1_13_R1",
-            "v1_13_R2",
-            "v1_14_R1",
-            "v1_15_R1",
-            "v1_16_R1",
-            "v1_16_R2",
-            "v1_16_R3",
-            "v1_17_R1",
-            "v1_18_R1",
-            "v1_18_R2",
-            "v1_19_R1",
-            "v1_19_R2",
-            "v1_19_R3",
-            "v1_20_R1"
+            "1.13.1",
+            "1.13.2",
+            "1.14.1",
+            "1.15.1",
+            "1.16.1",
+            "1.16.2",
+            "1.16.3",
+            "1.17.1",
+            "1.18.1",
+            "1.18.2",
+            "1.19.1",
+            "1.19.2",
+            "1.19.3",
+            "1.20.1",
+            "1.21",
+			"1.21.1"
         );
 		return supportedVersions.contains(VERSION);
 	}
