@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 
 import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.configuration.settings.Setting;
-import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.util.Util;
 import tigeax.customwings.util.menu.ItemMenu;
 import tigeax.customwings.wing.Wing;
@@ -116,7 +115,7 @@ public class CWPlayer {
 
 		if (previewing) {
 			Location loc = getPlayer().getLocation();
-			loc.setYaw(NMSSupport.getBodyRotation(getPlayer()));
+            loc.setYaw(getPlayer().getBodyYaw());
 			wingPreviewLocation = loc;
 		} else {
 			wingPreviewLocation = null;

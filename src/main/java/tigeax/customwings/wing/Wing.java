@@ -16,7 +16,6 @@ import tigeax.customwings.CWPlayer;
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.configuration.Config;
 import tigeax.customwings.configuration.WingConfig;
-import tigeax.customwings.nms.NMSSupport;
 import tigeax.customwings.util.Util;
 
 public class Wing {
@@ -168,7 +167,7 @@ public class Wing {
 
 		// Instead of using the Yaw of the head of the player we will try to use the Yaw
 		// of the player's body
-		float bodyYaw = NMSSupport.getBodyRotation(wingOwner);
+		float bodyYaw = wingOwner.getBodyYaw(); 
 		wingLoc.setYaw(bodyYaw);
 
 		// Shift the wing down if the player is sneaking
