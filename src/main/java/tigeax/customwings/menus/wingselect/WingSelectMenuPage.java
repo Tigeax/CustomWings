@@ -43,7 +43,9 @@ public class WingSelectMenuPage extends ItemMenu {
         }
 
         // Wing filter item
-        setItem(config.getFilterSlot(), new FilterCycleItem(plugin));
+        if (config.getFilterItemEnable()) {
+            setItem(config.getFilterSlot(), new FilterCycleItem(plugin));
+        }
 
         // Remove wing item
         setItem(config.getRemoveWingSlot(), new WingRemoveItem(plugin));
