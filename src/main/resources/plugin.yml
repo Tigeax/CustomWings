@@ -2,7 +2,7 @@ name: ${pom.name}
 main: tigeax.customwings.CustomWings
 author: Tigeax
 version: ${pom.version}
-api-version: 1.13
+api-version: "1.21.1"
 softdepend:
   - Vault
   - TokenManager
