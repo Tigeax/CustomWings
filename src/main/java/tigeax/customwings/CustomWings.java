@@ -29,7 +29,6 @@ import tigeax.customwings.eventlisteners.PlayerJoinEventListener;
 import tigeax.customwings.eventlisteners.PlayerMoveListener;
 import tigeax.customwings.eventlisteners.PlayerQuitEventListener;
 import tigeax.customwings.menus.MenuManager;
-import tigeax.customwings.util.Util;
 import tigeax.customwings.util.YamlFile;
 import tigeax.customwings.util.commands.Command;
 import tigeax.customwings.util.menu.ItemMenu;
@@ -56,14 +55,10 @@ public class CustomWings extends JavaPlugin {
 	private static HashMap<UUID, CWPlayer> cwPlayerList;
 	private static HashMap<String, Wing> wings;
 
-	private final static String VERSION = Bukkit.getServer().getClass().getPackage().getName().replace("org.bukkit.craftbukkit", "").replace(".", "");
-
 	private static Economy econ = null;
 	private static Permission perms = null;
 
 	private static boolean vault = false;
-
-	private static final int spigotResourceId = 59912;
 
 	private final ArrayList<Command> commands = new ArrayList<>();
 
@@ -72,20 +67,9 @@ public class CustomWings extends JavaPlugin {
 
 		setInstance(this);
 
-		getLogger().info("Server running on: " + VERSION);
-
-		if (!isServerVersionSupported()) {
-			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[CustomWings] CustomWings does not support this server version! Use at your own risk!");
-		}
-
         // Setup Configuration
         config = new Config(this);
         messages = new Messages(this);
-
-		// Check if there is a newer version available on Spigot
-        if (!config.getDisableUpdateCheck()) {
-		    Util.runUpdateChecker(this, spigotResourceId);
-        }
 
 		// bStats setup
 		int pluginId = 8227;
@@ -177,10 +161,6 @@ public class CustomWings extends JavaPlugin {
 
 	private void registerCommand(Command commandObj) {
 		commands.add(commandObj);
-	}
-
-	public String getServerVersion() {
-		return VERSION;
 	}
 
 	@Override
@@ -333,26 +313,6 @@ public class CustomWings extends JavaPlugin {
 		if (wing != null) wing.removePlayer(cwPlayer);
 
 		cwPlayerList.remove(cwPlayer.getPlayer().getUniqueId());
-	}
-
-	private boolean isServerVersionSupported() {
-		List<String> supportedVersions = Arrays.asList(
-            "v1_13_R1",
-            "v1_13_R2",
-            "v1_14_R1",
-            "v1_15_R1",
-            "v1_16_R1",
-            "v1_16_R2",
-            "v1_16_R3",
-            "v1_17_R1",
-            "v1_18_R1",
-            "v1_18_R2",
-            "v1_19_R1",
-            "v1_19_R2",
-            "v1_19_R3",
-            "v1_20_R1"
-        );
-		return supportedVersions.contains(VERSION);
 	}
 
 }

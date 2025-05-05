@@ -13,22 +13,11 @@ import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import tigeax.customwings.CustomWings;
 import tigeax.customwings.util.commands.SubCommand;
 
 public class Util {
-
-    public static void runUpdateChecker(JavaPlugin plugin, int spigotResourceId) {
-        new UpdateChecker(plugin, spigotResourceId).getVersion(version -> {
-			if (plugin.getDescription().getVersion().equalsIgnoreCase(version)) {
-                plugin.getLogger().info("You are running the latest version of this plugin");
-			} else {
-                plugin.getLogger().info("There is a new version of this plugin avaiable on Spigot: https://www.spigotmc.org/resources/" + spigotResourceId +  "/");
-			}
-		});
-    }
 
     /**
      * Translates a string using the '&' color code character into a string that
