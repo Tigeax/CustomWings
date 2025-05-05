@@ -1,5 +1,6 @@
 package tigeax.customwings.menus.editor.selectvaluemenus;
 
+import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 
 import tigeax.customwings.CustomWings;
@@ -8,7 +9,6 @@ import tigeax.customwings.menus.editor.selectvaluemenus.items.ParticleSelectItem
 import tigeax.customwings.menus.items.GoBackItem;
 import tigeax.customwings.menus.items.NextPageItem;
 import tigeax.customwings.menus.items.PreviousPageItem;
-import tigeax.customwings.util.ParticleItem;
 import tigeax.customwings.util.menu.ItemMenu;
 
 public class ParticleSelectMenuPage extends ItemMenu {
@@ -18,7 +18,7 @@ public class ParticleSelectMenuPage extends ItemMenu {
 	private ItemMenu parent;
 
 	private int particlesPerPage = 45;
-	private int numParticles = ParticleItem.values().length;
+	private int numParticles = Particle.values().length;
 	private int totalPages = (int) Math.ceil((numParticles * 1.0) / (particlesPerPage * 1.0)); // Mutlpy by 1.0 to convert to doubles
 
 	public ParticleSelectMenuPage(ItemMenu parent, Setting setting, int page) {
@@ -36,7 +36,7 @@ public class ParticleSelectMenuPage extends ItemMenu {
 
 		for (int i = 0; i < particlesPerPage && particleIndexStart + i < numParticles; i++) {
 			try {
-				setItem(i, new ParticleSelectItem(ParticleItem.values()[particleIndexStart + i]));
+				setItem(i, new ParticleSelectItem(Particle.values()[particleIndexStart + i]));
 			} catch (Exception e) {
 				continue;
 			}

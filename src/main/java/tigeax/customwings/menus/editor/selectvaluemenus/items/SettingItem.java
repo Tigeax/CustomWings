@@ -17,7 +17,6 @@ import tigeax.customwings.menus.editor.selectvaluemenus.MenuSizeSelectMenu;
 import tigeax.customwings.menus.editor.selectvaluemenus.MenuSlotSelectMenu;
 import tigeax.customwings.menus.editor.selectvaluemenus.NumberSelectMenu;
 import tigeax.customwings.menus.editor.selectvaluemenus.ParticleSelectMenuPage;
-import tigeax.customwings.util.ParticleItem;
 import tigeax.customwings.util.menu.ItemClickEvent;
 import tigeax.customwings.util.menu.MenuItem;
 
@@ -53,7 +52,7 @@ public class SettingItem extends MenuItem {
 
         if (currentValue instanceof Particle) {
             Particle particleCurrentValue = (Particle) currentValue;
-            setMaterial(ParticleItem.valueOf(particleCurrentValue.toString()).getMaterial());
+            setMaterial(ParticleSelectItem.getMaterial(particleCurrentValue));
             setLore(MenuManager.parseLoreForItem(particleCurrentValue.toString()));
 
         } else if (currentValue instanceof DustOptions) {

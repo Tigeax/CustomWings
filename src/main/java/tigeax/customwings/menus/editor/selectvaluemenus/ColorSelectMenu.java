@@ -18,18 +18,18 @@ public class ColorSelectMenu extends ItemMenu {
 
         setParent(parent);
 
-        setItem(0, new ColorSelectItem(16711680, Material.RED_TERRACOTTA));
-        setItem(1, new ColorSelectItem(65280, Material.GREEN_TERRACOTTA));
-        setItem(2, new ColorSelectItem(255, Material.BLUE_TERRACOTTA));
-        setItem(3, new ColorSelectItem(0, Material.BLACK_TERRACOTTA));
-        setItem(4, new ColorSelectItem(16777215, Material.WHITE_TERRACOTTA));
-        setItem(5, new ColorSelectItem(16776960, Material.YELLOW_TERRACOTTA));
-        setItem(6, new ColorSelectItem(16711935, Material.PURPLE_TERRACOTTA));
-        setItem(7, new ColorSelectItem(65535, Material.CYAN_TERRACOTTA));
-        setItem(8, new ColorSelectItem(16744448, Material.ORANGE_TERRACOTTA));
-        setItem(9, new ColorSelectItem(12582656, Material.LIME_TERRACOTTA));
-        setItem(10, new ColorSelectItem(9849600, Material.BROWN_TERRACOTTA));
-        setItem(11, new ColorSelectItem(16761035, Material.PINK_TERRACOTTA));
+        setItem(0, new ColorSelectItem(16711680, "Red", Material.RED_TERRACOTTA));
+        setItem(1, new ColorSelectItem(65280, "Green", Material.GREEN_TERRACOTTA));
+        setItem(2, new ColorSelectItem(255, "Blue", Material.BLUE_TERRACOTTA));
+        setItem(3, new ColorSelectItem(0, "Black", Material.BLACK_TERRACOTTA));
+        setItem(4, new ColorSelectItem(16777215, "White", Material.WHITE_TERRACOTTA));
+        setItem(5, new ColorSelectItem(16776960, "Yellow", Material.YELLOW_TERRACOTTA));
+        setItem(6, new ColorSelectItem(16711935, "Purple", Material.PURPLE_TERRACOTTA));
+        setItem(7, new ColorSelectItem(65535, "Cyan", Material.CYAN_TERRACOTTA));
+        setItem(8, new ColorSelectItem(16744448, "Orange", Material.ORANGE_TERRACOTTA));
+        setItem(9, new ColorSelectItem(12582656, "Lime", Material.LIME_TERRACOTTA));
+        setItem(10, new ColorSelectItem(9849600, "Brown", Material.BROWN_TERRACOTTA));
+        setItem(11, new ColorSelectItem(16761035, "Pink", Material.PINK_TERRACOTTA));
 
         setItem(53, new GoBackItem());
 

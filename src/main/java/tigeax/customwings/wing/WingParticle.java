@@ -7,9 +7,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Particle.DustOptions;
+import org.bukkit.Particle.DustTransition;
+import org.bukkit.Particle.Trail;
+import org.bukkit.Vibration;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import com.destroystokyo.paper.ParticleBuilder;
 
 import tigeax.customwings.configuration.WingConfig;
 import tigeax.customwings.configuration.settings.WingParticleSetting;
@@ -30,9 +35,8 @@ public class WingParticle {
 	private double distance, height, speed;
 	private int angle;
 
-	private Object particleData;
+	private Object data;
 	private Color color;
-	private DustOptions dustOptions;
 	private Material material;
 	private int noteColor;
 
@@ -43,7 +47,6 @@ public class WingParticle {
 		reload();
 	}
 
-	// TODO refractor
 	public void reload() {
 
 		particleConfig = wingConfig.getConfigurationSection("wing.particles." + id);
@@ -67,29 +70,22 @@ public class WingParticle {
 		}
 
 		this.color = Color.fromRGB(particleConfig.getInt(WingParticleSetting.COLOR.path, 0xFFFFFF));
-
-		this.dustOptions = new Particle.DustOptions(color, (float) 1);
-
-		this.particleData = null;
-
-		this.noteColor = particleConfig.getInt(WingParticleSetting.NOTE_COLOR.path, 1);
-
-		// Refractor
-		if (particle == Particle.DUST) {
-			this.particleData = dustOptions;
-		}
 		
-		if (particle == Particle.BLOCK || particle == Particle.FALLING_DUST) {
-			try {
-				this.particleData = material.createBlockData();
-			} catch (Exception e) {
-				e.printStackTrace();
-				this.particleData = Material.BARRIER.createBlockData();
-			}
-		} else if (particle == Particle.ITEM) {
-			this.particleData = new ItemStack(material);
-		}
+        this.noteColor = particleConfig.getInt(WingParticleSetting.NOTE_COLOR.path, 1);
 
+        this.data = switch (particle.getDataType().getSimpleName()) {
+            case "BlockData" -> this.material.createBlockData();
+            case "ItemStack" -> new ItemStack(this.material);
+            case "DustOptions" -> new DustOptions(this.color, (float) 1);
+            case "DustTransition" -> new DustTransition(this.color, this.color, (float) 1); 
+            case "Color" -> this.color;
+            case "Vibration" -> null; 
+            case "Trail" -> null;
+            case "Float" -> 0.0;
+            case "Integer" -> 0; 
+
+            default -> null;
+        };
 	}
 
 	public WingConfig getWingConfig() {
@@ -132,30 +128,35 @@ public class WingParticle {
 
 		double x, y, z, extra;
 
-		if (particle == Particle.NOTE) {
-			x = noteColor / 24D; // 6 is the value of the red note
+        direction = Math.toRadians(direction);
+        x = distance * Math.cos(direction);
+        y = height;
+        z = distance * Math.sin(direction);
+        extra = speed;
+
+        if (particle.getDataType().equals(Trail.class)) {
+            this.data = new Trail(loc.add(x, y, z), this.color, (int) speed);
+        }
+
+        if (particle == Particle.NOTE) {
+			x = noteColor / 24D;
 			y = 0;
 			z = 0;
 			extra = 1;
+        }
 
-		} else if (particle == Particle.ENTITY_EFFECT) {
+        ParticleBuilder builder = particle.builder();
+        builder.location(loc);
+        builder.count(0); // Count needs to be 0 otherwise offset is the spawn offset (instead of movement direction)
 
-			x = color.getRed() / 255D;
-			y = color.getGreen() / 255D;
-			z = color.getBlue() / 255D;
-			extra = 1;
+        builder.offset(x, y, z);
+        builder.extra(extra);
+        builder.data(this.data);
+        
+        builder.receivers(spawnForPlayers);
+        builder.spawn();
 
-		} else {
-			direction = Math.toRadians(direction);
-			x = distance * Math.cos(direction);
-			y = height;
-			z = distance * Math.sin(direction);
-			extra = speed;
-		}
 
-		for (Player player : spawnForPlayers) {
-			player.spawnParticle(particle, loc, 0, x, y, z, extra, particleData);
-		}
 	}
 
 }

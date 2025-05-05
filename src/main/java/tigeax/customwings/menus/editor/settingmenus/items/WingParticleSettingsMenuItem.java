@@ -3,8 +3,8 @@ package tigeax.customwings.menus.editor.settingmenus.items;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import tigeax.customwings.menus.editor.selectvaluemenus.items.ParticleSelectItem;
 import tigeax.customwings.menus.editor.settingmenus.WingParticleSettingsMenu;
-import tigeax.customwings.util.ParticleItem;
 import tigeax.customwings.util.menu.SubMenuItem;
 import tigeax.customwings.wing.WingParticle;
 
@@ -24,8 +24,8 @@ public class WingParticleSettingsMenuItem extends SubMenuItem {
 
     @Override
     public ItemStack getFinalItem(Player player) {
-
-        setMaterial(ParticleItem.valueOf(wingParticle.getParticle().toString()).getMaterial());
+        
+        setMaterial(ParticleSelectItem.getMaterial(wingParticle.getParticle()));
 
         return super.getFinalItem(player);
     }

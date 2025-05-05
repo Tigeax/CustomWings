@@ -32,14 +32,21 @@ public class PlayerJoinEventListener implements Listener {
         boolean hideOtherPlayerWings = plugin.getDatabase().getPlayerHideOtherPlayerWings(player);
         boolean showWing = plugin.getDatabase().getPlayerShowWing(player);
 
-		if (wingId != null) {
-			Wing wing = plugin.getWingByID(wingId);
-			if (wing != null)
-				cwPlayer.setEquippedWing(wing);
-		}
-
         cwPlayer.setHideOtherPlayerWings(hideOtherPlayerWings);
         cwPlayer.setShowWing(showWing);
-	}
+        
+        if (wingId == null)
+            return;
 
+        Wing wing = plugin.getWingByID(wingId);
+        if (wing == null)
+            return;
+
+        if (!cwPlayer.hasPermissionForWing(wing)) {
+            cwPlayer.sendMessage(plugin.getMessages().noPermissionToEquipWingError(wing));
+            return;
+        }
+
+        cwPlayer.setEquippedWing(wing);
+    }
 }

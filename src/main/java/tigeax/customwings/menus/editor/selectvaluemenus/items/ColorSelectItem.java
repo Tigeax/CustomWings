@@ -12,9 +12,10 @@ public class ColorSelectItem extends MenuItem {
 
     int color;
 
-    public ColorSelectItem(int color, Material material) {
+    public ColorSelectItem(int color, String name, Material material) {
         this.color = color;
 
+        setDisplayName(name);
         setMaterial(material);
     }
 
